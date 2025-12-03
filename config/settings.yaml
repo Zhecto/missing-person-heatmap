@@ -1,0 +1,28 @@
+project:
+  name: missing-person-heatmap
+  description: Missing person analytics and mapping prototype for the Philippines.
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  interim_dir: data/interim
+  external_dir: data/external
+
+features:
+  geographic_levels:
+    - national
+    - regional
+    - provincial
+  target_statuses:
+    - open
+    - resolved
+
+modeling:
+  clustering_method: dbscan
+  spatial_bandwidth_km: 25
+  random_seed: 42
+
+app:
+  default_start_year: 2015
+  default_end_year: 2024
+  map_tile_provider: cartodbpositron
