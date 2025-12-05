@@ -25,9 +25,11 @@ This system processes missing persons data to:
 ### PROCESS
 1. **Load Data** - CSV validation and schema checking
 2. **Preprocessing** - Handle missing values, encode categories, standardize
-3. **Clustering** - K-means/DBSCAN to identify hotspots
-4. **Visualization** - Generate heatmaps and statistical charts
-5. **Prediction** - Train models to predict next-year hotspots
+3. **Clustering** - K-means/DBSCAN to identify hotspots (auto-runs after cleaning)
+4. **Prediction** - Train models to predict next-year hotspots
+   - **Gradient Boosting**: High accuracy, ensemble learning
+   - **Poisson Regression**: Interpretable coefficients, count data modeling
+5. **Visualization** - Generate heatmaps and statistical charts
 
 ### OUTPUT
 - Interactive heatmap showing high-risk areas
@@ -81,6 +83,26 @@ You'll see the complete web interface where you can:
 - ✅ View results in real-time
 
 **API Documentation**: http://localhost:8000/docs
+
+### Option 1: Streamlit Interface (Recommended for Academic Use)
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+**Benefits**:
+- Pure Python - no HTML/CSS/JS needed
+- Interactive model comparison
+- Perfect for presentations and demos
+- See [STREAMLIT_GUIDE.md](STREAMLIT_GUIDE.md) for details
+
+### Option 2: FastAPI + Web Frontend
+
+```powershell
+python -m uvicorn src.backend.main:app --reload
+```
+
+Access at http://localhost:8000
 
 ### 2. Run Demo
 
@@ -195,9 +217,19 @@ optimal = model.find_optimal_k(df_clean, k_range=(2, 10))
 from core.analysis.predictor import SpatialPredictor
 
 predictor = SpatialPredictor()
+
+# Option 1: Gradient Boosting (High Accuracy)
 metrics = predictor.train_hotspot_intensity_predictor(df_clean)
 predictions = predictor.predict_next_year_hotspots(df_clean, next_year=2026)
 feature_importance = predictor.get_feature_importance()
+
+# Option 2: Poisson Regression (Interpretable)
+metrics = predictor.train_poisson_regressor(df_clean)
+predictions = predictor.predict_next_year_hotspots_poisson(df_clean, next_year=2026)
+coefficients = predictor.get_poisson_coefficients()
+
+# Option 3: Compare Both Models
+comparison = predictor.compare_models(df_clean)
 ```
 
 ### 5. Visualization (`core/visualization/visualizer.py`)
@@ -229,9 +261,11 @@ charts.save_all_charts("output/charts/")
 - `GET /api/data/status` - Check pipeline status
 
 ### Analysis
-- `POST /api/analysis/clustering` - Run clustering analysis
-- `GET /api/analysis/optimal-clusters` - Find optimal K
+- `POST /api/analysis/clustering` - Run clustering analysis (K-means/DBSCAN)
+- `GET /api/analysis/optimal-clusters` - Find optimal K value
 - `POST /api/analysis/predict` - Train and predict hotspots
+  - Supports `model_type`: "gradient_boosting", "poisson"
+  - Set `compare_models: true` to compare both models
 - `GET /api/analysis/trends` - Analyze temporal trends
 
 ### Visualization
@@ -282,9 +316,11 @@ heatmap.save_map(Path("output/heatmap.html"))
 
 - **Data Processing**: pandas, numpy
 - **Machine Learning**: scikit-learn
+- **Statistical Modeling**: statsmodels (Poisson Regression)
 - **Geospatial**: folium, geopandas, shapely
 - **Visualization**: plotly, matplotlib, seaborn
 - **Web Framework**: FastAPI, uvicorn
+- **UI Alternative**: Streamlit (for academic use)
 - **Data Validation**: pydantic
 
 ## 📈 Methodology
@@ -311,10 +347,18 @@ Map each reported case onto Manila using latitude/longitude coordinates.
 Tools: Leaflet.js, Folium, or Kepler.gl
 
 ### 5. Pattern Analysis using Clustering
-Use unsupervised machine learning (K-means or DBSCAN) to detect underlying pattern groups.
+Use unsupervised machine learning to detect underlying pattern groups:
+- **K-means**: Partitions data into k distinct clusters
+- **DBSCAN**: Density-based clustering, robust to outliers
+
+Both algorithms are compared to find the most effective approach.
 
 ### 6. Predictive Modeling
-Predict which barangays will likely record more missing person cases next year using spatial prediction models.
+Predict which barangays will likely record more missing person cases using multiple models:
+- **Gradient Boosting Regressor**: Ensemble learning for maximum accuracy
+- **Poisson Regression**: Statistical model for count data with interpretable coefficients
+
+Model comparison allows selecting the best approach balancing accuracy and interpretability.
 
 ## 📝 Expected Results
 

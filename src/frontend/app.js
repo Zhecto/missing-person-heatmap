@@ -46,12 +46,9 @@ function updateStatus(status) {
     
     // Enable/disable buttons
     document.getElementById('cleanBtn').disabled = !status.data_loaded;
-    document.getElementById('clusterBtn').disabled = !status.data_cleaned;
-    document.getElementById('findOptimalBtn').disabled = !status.data_cleaned;
-    document.getElementById('predictBtn').disabled = !status.data_cleaned;
-    document.getElementById('trendsBtn').disabled = !status.data_cleaned;
-    document.getElementById('generateHeatmapBtn').disabled = !status.data_cleaned;
-    document.getElementById('generateChartsBtn').disabled = !status.data_cleaned;
+    document.getElementById('predictBtn').disabled = !status.clustering_done;
+    document.getElementById('generateHeatmapBtn').disabled = !status.clustering_done;
+    document.getElementById('generateChartsBtn').disabled = !status.clustering_done;
 }
 
 function updateStatusBadge(elementId, active) {
@@ -202,6 +199,8 @@ async function cleanData() {
             displayResult('cleanResult', data, 'success');
             await checkStatus();
             await loadSummary();
+            // Auto-run clustering after cleaning
+            await runClusteringAuto();
         } else {
             showToast('Cleaning failed', 'error');
             displayResult('cleanResult', data, 'error');
@@ -239,20 +238,12 @@ async function loadSummary() {
     }
 }
 
-async function runClustering() {
-    const algorithm = document.getElementById('clusterAlgo').value;
+async function runClusteringAuto() {
+    // Auto-run clustering with optimal parameters
     const requestData = {
-        algorithm: algorithm
+        algorithm: 'kmeans',
+        n_clusters: 5  // Default optimal K
     };
-    
-    if (algorithm === 'kmeans') {
-        requestData.n_clusters = parseInt(document.getElementById('numClusters').value);
-    } else {
-        requestData.eps = parseFloat(document.getElementById('epsValue').value);
-        requestData.min_samples = parseInt(document.getElementById('minSamples').value);
-    }
-    
-    showLoading();
     
     try {
         const response = await fetch(`${API_BASE_URL}/api/analysis/clustering`, {
@@ -265,19 +256,20 @@ async function runClustering() {
         hideLoading();
         
         if (data.status === 'success') {
-            showToast('Clustering completed', 'success');
+            showToast('Clustering analysis completed', 'success');
             
-            // Display results
-            let resultHtml = `<div class="result-box success">`;
-            resultHtml += `<h6>✓ ${data.algorithm.toUpperCase()} Clustering Complete</h6>`;
-            resultHtml += `<p><strong>Number of Clusters:</strong> ${data.n_clusters}</p>`;
+            // Display results in clean result area
+            let resultHtml = `<div class="result-box success mt-3">`;
+            resultHtml += `<h6>✓ Clustering Analysis Complete</h6>`;
+            resultHtml += `<p><strong>Identified ${data.n_clusters} clusters</strong></p>`;
             
             if (data.evaluation_metrics) {
-                resultHtml += `<p><strong>Silhouette Score:</strong> ${data.evaluation_metrics.silhouette_score?.toFixed(3) || 'N/A'}</p>`;
+                resultHtml += `<p><small>Quality Score: ${data.evaluation_metrics.silhouette_score?.toFixed(3) || 'N/A'}</small></p>`;
             }
             
             resultHtml += `</div>`;
-            displayResult('clusterResult', resultHtml);
+            const cleanResultDiv = document.getElementById('cleanResult');
+            cleanResultDiv.innerHTML += resultHtml;
             
             // Show results tables
             if (data.cluster_statistics) {
@@ -471,23 +463,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Preprocessing
     document.getElementById('cleanBtn').addEventListener('click', cleanData);
     
-    // Clustering
-    document.getElementById('clusterAlgo').addEventListener('change', function(e) {
-        if (e.target.value === 'kmeans') {
-            document.getElementById('kmeansOptions').style.display = 'block';
-            document.getElementById('dbscanOptions').style.display = 'none';
-        } else {
-            document.getElementById('kmeansOptions').style.display = 'none';
-            document.getElementById('dbscanOptions').style.display = 'block';
-        }
-    });
-    
-    document.getElementById('clusterBtn').addEventListener('click', runClustering);
-    document.getElementById('findOptimalBtn').addEventListener('click', findOptimalClusters);
-    
     // Prediction
     document.getElementById('predictBtn').addEventListener('click', runPrediction);
-    document.getElementById('trendsBtn').addEventListener('click', analyzeTrends);
     
     // Visualization
     document.getElementById('generateHeatmapBtn').addEventListener('click', generateHeatmap);

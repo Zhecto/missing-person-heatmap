@@ -10,6 +10,8 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score, classification_report
+import statsmodels.api as sm
+from statsmodels.discrete.discrete_model import Poisson
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -20,10 +22,12 @@ class SpatialPredictor:
     def __init__(self):
         """Initialize spatial predictor."""
         self.model: Optional[object] = None
+        self.poisson_model: Optional[object] = None
         self.scaler = StandardScaler()
         self.model_type: str = ''
         self.feature_columns: List[str] = []
         self.is_fitted: bool = False
+        self.poisson_fitted: bool = False
     
     def prepare_temporal_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -229,6 +233,232 @@ class SpatialPredictor:
         
         return metrics
     
+    def train_poisson_regressor(
+        self,
+        df: pd.DataFrame,
+        test_size: float = 0.2
+    ) -> Dict[str, float]:
+        """
+        Train Poisson Regression model to predict count data.
+        
+        Poisson Regression is specifically designed for count data (non-negative integers)
+        and models the rate of incident occurrence. It's more interpretable than
+        Gradient Boosting for understanding factors affecting incident rates.
+        
+        Args:
+            df: Aggregated DataFrame with case counts per location/time
+            test_size: Proportion of data for testing
+            
+        Returns:
+            Dictionary with training metrics
+        """
+        # Aggregate by location and year
+        agg_df = self.aggregate_by_location_time(df)
+        
+        # Create lag features (previous year's count)
+        agg_df = agg_df.sort_values(['Barangay District', 'Year'])
+        agg_df['Prev_Year_Count'] = agg_df.groupby('Barangay District')['Case_Count'].shift(1)
+        agg_df = agg_df.dropna(subset=['Prev_Year_Count'])
+        
+        # Define features
+        feature_cols = ['Latitude', 'Longitude', 'Year', 'Prev_Year_Count', 'Age']
+        self.feature_columns = [col for col in feature_cols if col in agg_df.columns]
+        
+        # Prepare X and y
+        X = agg_df[self.feature_columns]
+        y = agg_df['Case_Count']
+        
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=42
+        )
+        
+        # Scale features for numerical stability
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_test_scaled = self.scaler.transform(X_test)
+        
+        # Add constant for intercept
+        X_train_scaled = sm.add_constant(X_train_scaled)
+        X_test_scaled = sm.add_constant(X_test_scaled)
+        
+        # Train Poisson Regression
+        try:
+            self.poisson_model = sm.GLM(
+                y_train, 
+                X_train_scaled,
+                family=sm.families.Poisson()
+            ).fit()
+            
+            self.poisson_fitted = True
+            
+            # Predictions
+            y_pred_train = self.poisson_model.predict(X_train_scaled)
+            y_pred_test = self.poisson_model.predict(X_test_scaled)
+            
+            # Calculate metrics
+            train_rmse = np.sqrt(mean_squared_error(y_train, y_pred_train))
+            test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_test))
+            train_r2 = r2_score(y_train, y_pred_train)
+            test_r2 = r2_score(y_test, y_pred_test)
+            
+            metrics = {
+                'train_r2': train_r2,
+                'test_r2': test_r2,
+                'train_rmse': train_rmse,
+                'test_rmse': test_rmse,
+                'aic': self.poisson_model.aic,
+                'bic': self.poisson_model.bic,
+                'deviance': self.poisson_model.deviance,
+                'n_features': len(self.feature_columns),
+                'n_samples': len(X),
+                'model_type': 'poisson_regression'
+            }
+            
+            print(f"✓ Poisson Regression trained: R² = {test_r2:.3f}, AIC = {metrics['aic']:.2f}")
+            
+            return metrics
+            
+        except Exception as e:
+            print(f"✗ Poisson Regression training failed: {str(e)}")
+            raise
+    
+    def predict_next_year_hotspots_poisson(
+        self,
+        df: pd.DataFrame,
+        next_year: int,
+        top_n: int = 10
+    ) -> pd.DataFrame:
+        """
+        Predict top hotspot locations for next year using Poisson Regression.
+        
+        Args:
+            df: Historical data
+            next_year: Year to predict for
+            top_n: Number of top hotspots to return
+            
+        Returns:
+            DataFrame with predicted hotspots and rate ratios
+        """
+        if not self.poisson_fitted:
+            raise ValueError("Poisson model not trained yet. Call train_poisson_regressor first.")
+        
+        # Get unique locations with their coordinates
+        locations = df.groupby('Barangay District').agg({
+            'Latitude': 'mean',
+            'Longitude': 'mean',
+            'Age': 'mean'
+        }).reset_index()
+        
+        # Get previous year's count
+        agg_df = self.aggregate_by_location_time(df)
+        prev_year_data = agg_df[agg_df['Year'] == next_year - 1][
+            ['Barangay District', 'Case_Count']
+        ].rename(columns={'Case_Count': 'Prev_Year_Count'})
+        
+        # Merge
+        locations = locations.merge(prev_year_data, on='Barangay District', how='left')
+        locations['Prev_Year_Count'].fillna(0, inplace=True)
+        locations['Year'] = next_year
+        
+        # Prepare features
+        X_pred = locations[self.feature_columns]
+        X_pred_scaled = self.scaler.transform(X_pred)
+        X_pred_scaled = sm.add_constant(X_pred_scaled)
+        
+        # Predict
+        predictions = self.poisson_model.predict(X_pred_scaled)
+        locations['Predicted_Cases'] = predictions
+        
+        # Calculate rate ratio (effect size)
+        locations['Rate_Ratio'] = locations['Predicted_Cases'] / (locations['Prev_Year_Count'] + 1)
+        
+        # Get top N
+        top_hotspots = locations.nlargest(top_n, 'Predicted_Cases')[
+            ['Barangay District', 'Latitude', 'Longitude', 'Predicted_Cases', 
+             'Prev_Year_Count', 'Rate_Ratio']
+        ]
+        
+        print(f"✓ Predicted top {top_n} hotspots for {next_year} (Poisson Regression)")
+        
+        return top_hotspots
+    
+    def get_poisson_coefficients(self) -> pd.DataFrame:
+        """
+        Get interpretable coefficients from Poisson Regression.
+        
+        Returns:
+            DataFrame with coefficients, their exponentials (rate ratios), 
+            p-values, and confidence intervals
+        """
+        if not self.poisson_fitted:
+            raise ValueError("Poisson model not trained yet")
+        
+        # Get coefficients
+        coef_names = ['Intercept'] + self.feature_columns
+        coefficients = self.poisson_model.params
+        std_errors = self.poisson_model.bse
+        p_values = self.poisson_model.pvalues
+        conf_int = self.poisson_model.conf_int()
+        
+        # Create DataFrame
+        coef_df = pd.DataFrame({
+            'Feature': coef_names,
+            'Coefficient': coefficients.values,
+            'Std_Error': std_errors.values,
+            'Rate_Ratio': np.exp(coefficients.values),  # Exponentiated coefficient
+            'P_Value': p_values.values,
+            'CI_Lower': conf_int.iloc[:, 0].values,
+            'CI_Upper': conf_int.iloc[:, 1].values,
+            'Significant': ['***' if p < 0.001 else '**' if p < 0.01 else '*' if p < 0.05 else '' 
+                          for p in p_values.values]
+        })
+        
+        return coef_df
+    
+    def compare_models(
+        self,
+        df: pd.DataFrame,
+        test_size: float = 0.2
+    ) -> pd.DataFrame:
+        """
+        Train and compare both Gradient Boosting and Poisson Regression models.
+        
+        Args:
+            df: Training data
+            test_size: Proportion of data for testing
+            
+        Returns:
+            DataFrame comparing model performance
+        """
+        print("\n🔬 Training and comparing prediction models...")
+        print("=" * 60)
+        
+        # Train Gradient Boosting
+        print("\n1️⃣  Training Gradient Boosting Regressor...")
+        gb_metrics = self.train_hotspot_intensity_predictor(df, test_size)
+        
+        # Train Poisson Regression
+        print("\n2️⃣  Training Poisson Regression...")
+        poisson_metrics = self.train_poisson_regressor(df, test_size)
+        
+        # Create comparison DataFrame
+        comparison = pd.DataFrame({
+            'Model': ['Gradient Boosting', 'Poisson Regression'],
+            'Test_R2': [gb_metrics['test_r2'], poisson_metrics['test_r2']],
+            'Test_RMSE': [gb_metrics['test_rmse'], poisson_metrics['test_rmse']],
+            'Train_R2': [gb_metrics['train_r2'], poisson_metrics['train_r2']],
+            'AIC': [None, poisson_metrics['aic']],
+            'Interpretability': ['Low (Black-box)', 'High (Coefficients)'],
+            'Use_Case': ['Maximum Accuracy', 'Statistical Inference']
+        })
+        
+        print("\n" + "=" * 60)
+        print("📊 Model Comparison:")
+        print(comparison.to_string(index=False))
+        print("=" * 60)
+        
+        return comparison
+
     def predict_next_year_hotspots(
         self,
         df: pd.DataFrame,

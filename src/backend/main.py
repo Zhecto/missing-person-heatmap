@@ -80,6 +80,8 @@ class PredictionRequest(BaseModel):
     """Request model for predictions."""
     target_year: int
     top_n: int = 10
+    model_type: str = "gradient_boosting"  # "gradient_boosting" or "poisson"
+    compare_models: bool = False  # Whether to compare both models
 
 
 # Root endpoint - serve frontend
@@ -335,11 +337,14 @@ async def run_prediction(request: PredictionRequest):
     """
     Train prediction model and predict future hotspots.
     
+    Supports both Gradient Boosting and Poisson Regression models.
+    Can compare both models if compare_models=True.
+    
     Args:
         request: Prediction configuration
         
     Returns:
-        Prediction results
+        Prediction results with model metrics
     """
     if state.df_cleaned is None:
         raise HTTPException(status_code=400, detail="No cleaned data available")
@@ -347,26 +352,65 @@ async def run_prediction(request: PredictionRequest):
     try:
         state.predictor_model = SpatialPredictor()
         
-        # Train model
-        metrics = state.predictor_model.train_hotspot_intensity_predictor(state.df_cleaned)
-        
-        # Predict
-        predictions = state.predictor_model.predict_next_year_hotspots(
-            state.df_cleaned,
-            next_year=request.target_year,
-            top_n=request.top_n
-        )
-        
-        # Get feature importance
-        feature_importance = state.predictor_model.get_feature_importance()
-        
-        return {
+        response_data = {
             "status": "success",
             "target_year": request.target_year,
-            "training_metrics": metrics,
-            "predictions": predictions.to_dict(orient='records'),
-            "feature_importance": feature_importance.to_dict(orient='records')
+            "model_type": request.model_type
         }
+        
+        # Compare both models if requested
+        if request.compare_models:
+            comparison = state.predictor_model.compare_models(state.df_cleaned)
+            response_data["model_comparison"] = comparison.to_dict(orient='records')
+            
+            # Get predictions from both models
+            predictions_gb = state.predictor_model.predict_next_year_hotspots(
+                state.df_cleaned,
+                next_year=request.target_year,
+                top_n=request.top_n
+            )
+            
+            predictions_poisson = state.predictor_model.predict_next_year_hotspots_poisson(
+                state.df_cleaned,
+                next_year=request.target_year,
+                top_n=request.top_n
+            )
+            
+            response_data["predictions_gradient_boosting"] = predictions_gb.to_dict(orient='records')
+            response_data["predictions_poisson"] = predictions_poisson.to_dict(orient='records')
+            response_data["feature_importance"] = state.predictor_model.get_feature_importance().to_dict(orient='records')
+            
+            if state.predictor_model.poisson_fitted:
+                response_data["poisson_coefficients"] = state.predictor_model.get_poisson_coefficients().to_dict(orient='records')
+        
+        # Use specified model
+        elif request.model_type == "poisson":
+            # Train and predict with Poisson Regression
+            metrics = state.predictor_model.train_poisson_regressor(state.df_cleaned)
+            predictions = state.predictor_model.predict_next_year_hotspots_poisson(
+                state.df_cleaned,
+                next_year=request.target_year,
+                top_n=request.top_n
+            )
+            
+            response_data["training_metrics"] = metrics
+            response_data["predictions"] = predictions.to_dict(orient='records')
+            response_data["poisson_coefficients"] = state.predictor_model.get_poisson_coefficients().to_dict(orient='records')
+        
+        else:  # gradient_boosting (default)
+            # Train and predict with Gradient Boosting
+            metrics = state.predictor_model.train_hotspot_intensity_predictor(state.df_cleaned)
+            predictions = state.predictor_model.predict_next_year_hotspots(
+                state.df_cleaned,
+                next_year=request.target_year,
+                top_n=request.top_n
+            )
+            
+            response_data["training_metrics"] = metrics
+            response_data["predictions"] = predictions.to_dict(orient='records')
+            response_data["feature_importance"] = state.predictor_model.get_feature_importance().to_dict(orient='records')
+        
+        return response_data
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")

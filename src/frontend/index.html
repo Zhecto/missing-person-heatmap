@@ -155,44 +155,10 @@
 
         <!-- Analysis Section -->
         <div class="row mb-4" id="analysis">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-warning">
-                        <h5><i class="fas fa-project-diagram"></i> Clustering Analysis</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Algorithm</label>
-                            <select class="form-select" id="clusterAlgo">
-                                <option value="kmeans">K-Means</option>
-                                <option value="dbscan">DBSCAN</option>
-                            </select>
-                        </div>
-                        <div class="mb-3" id="kmeansOptions">
-                            <label class="form-label">Number of Clusters (K)</label>
-                            <input type="number" class="form-control" id="numClusters" value="5" min="2" max="10">
-                        </div>
-                        <div class="mb-3" id="dbscanOptions" style="display: none;">
-                            <label class="form-label">Epsilon (eps)</label>
-                            <input type="number" class="form-control" id="epsValue" value="0.01" step="0.001">
-                            <label class="form-label mt-2">Min Samples</label>
-                            <input type="number" class="form-control" id="minSamples" value="5" min="2">
-                        </div>
-                        <button class="btn btn-warning" id="clusterBtn" disabled>
-                            <i class="fas fa-cogs"></i> Run Clustering
-                        </button>
-                        <button class="btn btn-outline-warning ms-2" id="findOptimalBtn" disabled>
-                            <i class="fas fa-search"></i> Find Optimal K
-                        </button>
-                        <div id="clusterResult" class="mt-3"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bg-danger text-white">
-                        <h5><i class="fas fa-chart-line"></i> Predictive Modeling</h5>
+                        <h5><i class="fas fa-chart-line"></i> Analysis & Prediction</h5>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
@@ -204,10 +170,7 @@
                             <input type="number" class="form-control" id="topN" value="10" min="5" max="20">
                         </div>
                         <button class="btn btn-danger" id="predictBtn" disabled>
-                            <i class="fas fa-crystal-ball"></i> Train & Predict
-                        </button>
-                        <button class="btn btn-outline-danger ms-2" id="trendsBtn" disabled>
-                            <i class="fas fa-chart-area"></i> Analyze Trends
+                            <i class="fas fa-magic"></i> Run Analysis & Prediction
                         </button>
                         <div id="predictResult" class="mt-3"></div>
                     </div>

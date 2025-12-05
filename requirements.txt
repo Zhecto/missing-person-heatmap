@@ -2,6 +2,7 @@
 pandas>=2.1.0
 numpy>=1.26.0
 scikit-learn>=1.4.0
+statsmodels>=0.14.0
 
 # Geospatial libraries
 geopandas>=0.14.0
@@ -24,3 +25,6 @@ pydantic>=2.5.0
 # Utilities
 python-dateutil>=2.8.2
 openpyxl>=3.1.0
+
+# Streamlit (alternative interface)
+streamlit>=1.29.0
