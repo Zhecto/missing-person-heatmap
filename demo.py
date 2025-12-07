@@ -21,7 +21,7 @@ from core.visualization.visualizer import HeatmapGenerator, ChartGenerator
 
 def generate_sample_data(n_records: int = 500) -> pd.DataFrame:
     """
-    Generate sample missing persons data for demonstration.
+    Generate sample missing persons data for Metro Manila (NCR).
     
     Args:
         n_records: Number of records to generate
@@ -29,30 +29,49 @@ def generate_sample_data(n_records: int = 500) -> pd.DataFrame:
     Returns:
         Sample DataFrame
     """
-    print(f"\nGenerating {n_records} sample records...")
+    print(f"\nGenerating {n_records} sample records for Metro Manila (NCR)...")
     
     np.random.seed(42)
     
-    # Manila coordinates (approximate bounds)
-    lat_min, lat_max = 14.4, 14.8
-    lon_min, lon_max = 120.9, 121.1
+    # Metro Manila (NCR) coordinates (expanded bounds covering 16 cities + 1 municipality)
+    lat_min, lat_max = 14.35, 14.85
+    lon_min, lon_max = 120.90, 121.15
     
-    # Generate hotspot centers
+    # Generate hotspot centers across different NCR cities
     hotspots = [
-        (14.5995, 120.9842),  # Manila center
+        (14.5995, 120.9842),  # Manila City center
         (14.6091, 121.0223),  # Makati
-        (14.6507, 121.0494),  # Quezon City
+        (14.6760, 121.0437),  # Quezon City (north)
+        (14.6507, 121.0494),  # Quezon City (central)
         (14.5547, 121.0244),  # Mandaluyong
-        (14.5764, 120.9772),  # Ermita
+        (14.5764, 120.9772),  # Manila - Ermita
+        (14.5350, 121.0500),  # Pasig
+        (14.6504, 120.9830),  # Caloocan
+        (14.4500, 121.0400),  # Taguig/BGC
     ]
     
     data = []
-    start_date = datetime(2020, 1, 1)
+    start_date = datetime(2019, 1, 1)  # Starting from 2019
     
+    # Barangays from different cities across Metro Manila
     barangays = [
-        'Poblacion', 'San Miguel', 'Santa Cruz', 'Ermita', 'Malate',
-        'Sampaloc', 'Tondo', 'Quiapo', 'Binondo', 'San Nicolas',
-        'Sta. Mesa', 'Pandacan', 'Paco', 'Port Area', 'Intramuros'
+        # Manila City
+        'Tondo', 'Pandacan', 'Santa Cruz', 'Sampaloc', 'Quiapo', 'Binondo', 'Ermita', 'Malate',
+        'San Miguel', 'Sta. Mesa', 'Port Area', 'Intramuros', 'Paco', 'San Nicolas',
+        # Quezon City
+        'Commonwealth', 'Batasan Hills', 'Fairview', 'Novaliches', 'Cubao', 'Diliman',
+        # Makati
+        'Poblacion', 'Bel-Air', 'San Lorenzo', 'Pio del Pilar',
+        # Pasig
+        'Kapitolyo', 'Rosario', 'Manggahan', 'Santolan',
+        # Caloocan
+        'Bagong Silang', 'Camarin', 'Bagumbong',
+        # Taguig
+        'Fort Bonifacio', 'Western Bicutan', 'Upper Bicutan',
+        # Mandaluyong
+        'Highway Hills', 'Wack-Wack', 'Plainview',
+        # Other NCR areas
+        'Marikina Heights', 'Pasay', 'Parañaque', 'Las Piñas', 'Muntinlupa'
     ]
     
     for i in range(n_records):
@@ -65,8 +84,8 @@ def generate_sample_data(n_records: int = 500) -> pd.DataFrame:
         lat = np.clip(lat, lat_min, lat_max)
         lon = np.clip(lon, lon_min, lon_max)
         
-        # Random date within range
-        days_offset = np.random.randint(0, 365 * 5)
+        # Random date within range (2019-2024, ~6 years of data)
+        days_offset = np.random.randint(0, 365 * 6)
         report_date = start_date + timedelta(days=days_offset)
         
         # Generate demographics
@@ -106,6 +125,7 @@ def demo_pipeline():
     
     print("="*70)
     print("MISSING PERSON HEATMAP ANALYSIS - DEMO")
+    print("Metro Manila (National Capital Region)")
     print("="*70)
     
     # Step 1: Generate sample data

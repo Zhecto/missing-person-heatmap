@@ -2,7 +2,7 @@
 
 **Pattern Analysis and Prediction of Missing Persons Using Data Mining Techniques**
 
-A comprehensive data mining system for analyzing missing person cases in Manila, Philippines. This project uses clustering, predictive modeling, and interactive visualizations to identify hotspots and patterns.
+A comprehensive data mining system for analyzing missing person cases in Metro Manila (National Capital Region), Philippines. This project uses clustering, predictive modeling, and interactive visualizations to identify hotspots and patterns.
 
 ## Project Overview
 
@@ -16,7 +16,7 @@ This system processes missing persons data to:
 ## Input/Process/Output
 
 ### INPUT
-- Cleaned CSV dataset of missing persons in Manila with fields:
+- Cleaned CSV dataset of missing persons in Metro Manila (NCR) with fields:
   - Person ID, Gender, Age
   - Date/Time Reported Missing
   - Location, Latitude, Longitude
@@ -339,9 +339,9 @@ Gather real-world missing persons data from Facebook posts and pages dedicated t
 Initial exploration to understand trends and distributions.
 
 ### 4. Spatial Analysis (Heat Mapping)
-Map each reported case onto Manila using latitude/longitude coordinates.
-- Obtain GeoJSON boundary map of Manila
-- Plot missing person reports
+Map each reported case onto Metro Manila (NCR) using latitude/longitude coordinates.
+- Obtain GeoJSON boundary map of Metro Manila
+- Plot missing person reports across 16 cities and 1 municipality
 - Generate heatmap showing hotspots (high/moderate/low density areas)
 
 Tools: Leaflet.js, Folium, or Kepler.gl

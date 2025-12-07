@@ -28,7 +28,7 @@ from core.visualization.visualizer import HeatmapGenerator, ChartGenerator
 # Initialize FastAPI app
 app = FastAPI(
     title="Missing Person Heatmap API",
-    description="API for analyzing and visualizing missing person data in Manila",
+    description="API for analyzing and visualizing missing person data in Metro Manila (NCR)",
     version="1.0.0"
 )
 

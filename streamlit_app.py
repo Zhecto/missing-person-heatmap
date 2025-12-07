@@ -26,7 +26,7 @@ from core.visualization.visualizer import HeatmapGenerator, ChartGenerator
 
 # Page configuration
 st.set_page_config(
-    page_title="Missing Person Hotspot Analysis",
+    page_title="Missing Person Hotspot Analysis - Metro Manila (NCR)",
     page_icon="🗺️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -69,6 +69,8 @@ if 'cluster_results' not in st.session_state:
 
 # Header
 st.markdown('<div class="main-header">🗺️ Missing Person Hotspot Analysis System</div>', 
+            unsafe_allow_html=True)
+st.markdown('<p style="text-align: center; color: #666; font-size: 1.1rem;">Metro Manila (National Capital Region)</p>',
             unsafe_allow_html=True)
 st.markdown("---")
 

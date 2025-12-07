@@ -129,8 +129,8 @@ class DataLoader:
     
     def validate_coordinates(self, df: Optional[pd.DataFrame] = None) -> bool:
         """
-        Validate latitude and longitude values are within Manila bounds.
-        Manila approximate bounds: Lat 14.4-14.8, Lon 120.9-121.1
+        Validate latitude and longitude values are within Metro Manila (NCR) bounds.
+        Metro Manila approximate bounds: Lat 14.35-14.85, Lon 120.90-121.15
         
         Args:
             df: DataFrame to validate. Uses instance df if not provided.
@@ -144,7 +144,7 @@ class DataLoader:
             self.validation_errors.append("No data loaded")
             return False
         
-        # Manila bounds (approximate)
+        # Metro Manila (NCR) bounds (approximate, with tolerance)
         LAT_MIN, LAT_MAX = 14.0, 15.0
         LON_MIN, LON_MAX = 120.5, 121.5
         
