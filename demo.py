@@ -289,8 +289,8 @@ def demo_pipeline():
     print(f"  R² Score: {metrics['test_r2']:.3f}")
     print(f"  RMSE: {metrics['test_rmse']:.2f}")
     
-    # Predict next year hotspots
-    next_year = 2026
+    # Predict next year hotspots (2025 for validation)
+    next_year = 2025
     print(f"\nPredicting top hotspots for {next_year}...")
     predictions = predictor.predict_next_year_hotspots(df_clean, next_year, top_n=10)
     print("\nTop 10 Predicted Hotspots:")

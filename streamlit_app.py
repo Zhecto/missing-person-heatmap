@@ -462,7 +462,7 @@ elif page == "📊 Clustering Results":
 # PAGE 4: Prediction Results
 # =============================================================================
 elif page == "🔮 Prediction Results":
-    st.header("🔮 Hotspot Prediction for 2026")
+    st.header("🔮 Hotspot Prediction for 2025 (with Validation)")
     
     if not st.session_state.geocoding_done:
         st.warning("⚠️ Please complete data upload and geocoding first")
@@ -470,7 +470,11 @@ elif page == "🔮 Prediction Results":
         df = st.session_state.df_geocoded.dropna(subset=['Latitude', 'Longitude']).copy()
         
         model_display = PREDICTION_MODEL.replace('_', ' ').title()
-        st.info(f"Predicting future hotspots using {model_display} model on {len(df)} records")
+        st.info(f"""
+        **Training Strategy:** Train on 2019-2024 data → Predict 2025 → Validate against actual 2025 data
+        
+        Using {model_display} model on {len(df)} records
+        """)
         
         # Auto-run prediction
         if not st.session_state.prediction_done:
@@ -481,10 +485,10 @@ elif page == "🔮 Prediction Results":
                     # Train configured model
                     metrics = predictor.train_configured_model(df, model_name=PREDICTION_MODEL)
                     
-                    # Generate predictions for 2026
+                    # Generate predictions for 2025
                     predictions = predictor.predict_next_year_hotspots(
                         df,
-                        next_year=2026,
+                        next_year=2025,
                         top_n=10
                     )
                     
@@ -532,7 +536,7 @@ elif page == "🔮 Prediction Results":
             st.markdown("---")
             
             # Top predicted hotspots
-            st.subheader("🎯 Top 10 Predicted Hotspots for 2026")
+            st.subheader("🎯 Top 10 Predicted Hotspots for 2025")
             
             pred_df = results['predictions'].copy()
             pred_df.index = range(1, len(pred_df) + 1)  # Start ranking from 1
@@ -583,7 +587,7 @@ elif page == "🔮 Prediction Results":
             st.download_button(
                 "💾 Download Predictions",
                 csv,
-                "hotspot_predictions_2026.csv",
+                "hotspot_predictions_2025.csv",
                 "text/csv",
                 use_container_width=True
             )
