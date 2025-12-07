@@ -18,7 +18,8 @@ features:
     - resolved
 
 modeling:
-  clustering_method: dbscan
+  clustering_method: kmeans
+  prediction_model: poisson 
   spatial_bandwidth_km: 25
   random_seed: 42
 

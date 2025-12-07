@@ -19,17 +19,22 @@ from core.analysis.predictor import SpatialPredictor, TrendAnalyzer
 from core.visualization.visualizer import HeatmapGenerator, ChartGenerator
 
 
-def generate_sample_data(n_records: int = 500) -> pd.DataFrame:
+def generate_sample_data(n_records: int = 500, include_2025: bool = True) -> pd.DataFrame:
     """
     Generate sample missing persons data for Metro Manila (NCR).
     
     Args:
-        n_records: Number of records to generate
+        n_records: Number of records to generate for historical data (2019-2024)
+        include_2025: If True, generate additional ~100 records for 2025
         
     Returns:
         Sample DataFrame
     """
-    print(f"\nGenerating {n_records} sample records for Metro Manila (NCR)...")
+    total_records = n_records + (100 if include_2025 else 0)
+    print(f"\nGenerating {total_records} sample records for Metro Manila (NCR)...")
+    if include_2025:
+        print(f"  - Historical data (2019-2024): {n_records} records")
+        print(f"  - Future data (2025): 100 records")
     
     np.random.seed(42)
     
@@ -103,7 +108,7 @@ def generate_sample_data(n_records: int = 500) -> pd.DataFrame:
             'Person ID': f'MP{i+1:05d}',
             'Gender': gender,
             'Age': age,
-            'Date Reported Missing': report_date.strftime('%Y-%m-%d'),
+            'Date Reported Missing': report_date.strftime('%Y-%m-%d %H:%M:%S'),
             'Time Reported Missing': f"{np.random.randint(0, 24):02d}:{np.random.randint(0, 60):02d}",
             'Location last seen': f"Street {np.random.randint(1, 100)}",
             'Latitude': lat,
@@ -114,8 +119,57 @@ def generate_sample_data(n_records: int = 500) -> pd.DataFrame:
         
         data.append(record)
     
+    # Generate 2025 data if requested
+    if include_2025:
+        print("  Historical data (2019-2024) generated")
+        print("  Generating 2025 predictions...")
+        
+        start_2025 = datetime(2025, 1, 1)
+        
+        for i in range(100):
+            # Select a random hotspot and add noise
+            hotspot = hotspots[np.random.choice(len(hotspots))]
+            lat = np.random.normal(hotspot[0], 0.02)
+            lon = np.random.normal(hotspot[1], 0.02)
+            
+            # Ensure within Manila bounds
+            lat = np.clip(lat, lat_min, lat_max)
+            lon = np.clip(lon, lon_min, lon_max)
+            
+            # Random date in 2025
+            days_offset = np.random.randint(0, 365)
+            report_date = start_2025 + timedelta(days=days_offset)
+            
+            # Generate demographics (same distribution as historical)
+            age = np.random.choice([
+                np.random.randint(0, 12),    # Children
+                np.random.randint(13, 17),   # Teens
+                np.random.randint(18, 30),   # Young adults
+                np.random.randint(31, 50),   # Adults
+                np.random.randint(51, 80),   # Seniors
+            ], p=[0.15, 0.25, 0.35, 0.15, 0.10])
+            
+            gender = np.random.choice(['Male', 'Female'], p=[0.45, 0.55])
+            
+            record = {
+                'Person ID': f'MP{n_records + i + 1:05d}',
+                'Gender': gender,
+                'Age': age,
+                'Date Reported Missing': report_date.strftime('%Y-%m-%d %H:%M:%S'),
+                'Time Reported Missing': f"{np.random.randint(0, 24):02d}:{np.random.randint(0, 60):02d}",
+                'Location last seen': f"Street {np.random.randint(1, 100)}",
+                'Latitude': lat,
+                'Longitude': lon,
+                'Barangay District': np.random.choice(barangays),
+                'Post URL': f'https://example.com/post/{n_records + i + 1}'
+            }
+            
+            data.append(record)
+        
+        print(" 2025 data generated")
+    
     df = pd.DataFrame(data)
-    print("✓ Sample data generated")
+    print("Complete dataset generated")
     
     return df
 
@@ -228,8 +282,9 @@ def demo_pipeline():
     
     predictor = SpatialPredictor()
     print("Training hotspot intensity predictor...")
+    print(f"Using model from config/settings.yaml: {predictor.configured_model}")
     
-    metrics = predictor.train_hotspot_intensity_predictor(df_clean)
+    metrics = predictor.train_configured_model(df_clean)
     print(f"\nModel Performance:")
     print(f"  R² Score: {metrics['test_r2']:.3f}")
     print(f"  RMSE: {metrics['test_rmse']:.2f}")

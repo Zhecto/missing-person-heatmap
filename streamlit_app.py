@@ -22,14 +22,24 @@ from core.preprocessing.data_cleaner import DataCleaner
 from core.analysis.clustering import ClusteringModel
 from core.analysis.predictor import SpatialPredictor, TrendAnalyzer
 from core.visualization.visualizer import HeatmapGenerator, ChartGenerator
+import yaml
 
-# CLUSTERING MODEL 
-CLUSTERING_MODEL = "kmeans"
-CLUSTERING_PARAMS = {'n_clusters': 3}
+# Load configuration
+config_path = Path(__file__).parent / 'config' / 'settings.yaml'
+if config_path.exists():
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
+        CLUSTERING_MODEL = config.get('modeling', {}).get('clustering_method', 'kmeans')
+        PREDICTION_MODEL = config.get('modeling', {}).get('prediction_model', 'poisson')
+else:
+    CLUSTERING_MODEL = "kmeans"
+    PREDICTION_MODEL = "poisson"
 
-# Default best parameters
-# CLUSTERING_MODEL = "dbscan"
-# CLUSTERING_PARAMS = {'eps': 0.1, 'min_samples': 3}
+# CLUSTERING MODEL PARAMETERS
+if CLUSTERING_MODEL == "kmeans":
+    CLUSTERING_PARAMS = {'n_clusters': 3}
+else:  # dbscan
+    CLUSTERING_PARAMS = {'eps': 0.1, 'min_samples': 3}
 
 
 
@@ -459,35 +469,37 @@ elif page == "🔮 Prediction Results":
     else:
         df = st.session_state.df_geocoded.dropna(subset=['Latitude', 'Longitude']).copy()
         
-        st.info(f"Predicting future hotspots using Poisson Regression model on {len(df)} records")
+        model_display = PREDICTION_MODEL.replace('_', ' ').title()
+        st.info(f"Predicting future hotspots using {model_display} model on {len(df)} records")
         
         # Auto-run prediction
         if not st.session_state.prediction_done:
-            with st.spinner("Training Poisson Regression model and generating predictions..."):
+            with st.spinner(f"Training {model_display} model and generating predictions..."):
                 try:
                     predictor = SpatialPredictor()
                     
-                    # Train model
-                    metrics = predictor.train_poisson_regressor(df)
+                    # Train configured model
+                    metrics = predictor.train_configured_model(df, model_name=PREDICTION_MODEL)
                     
                     # Generate predictions for 2026
-                    predictions = predictor.predict_next_year_hotspots_poisson(
+                    predictions = predictor.predict_next_year_hotspots(
                         df,
-                        target_year=2026,
+                        next_year=2026,
                         top_n=10
                     )
                     
-                    # Get coefficients
-                    coefficients = predictor.get_poisson_coefficients()
+                    # Get feature importance
+                    feature_importance = predictor.get_feature_importance()
                     
                     st.session_state.prediction_results = {
                         'metrics': metrics,
                         'predictions': predictions,
-                        'coefficients': coefficients
+                        'feature_importance': feature_importance,
+                        'model_name': PREDICTION_MODEL
                     }
                     st.session_state.prediction_done = True
                     
-                    st.success("✅ Prediction complete! Model trained successfully")
+                    st.success(f"✅ Prediction complete! {model_display} model trained successfully")
                     
                 except Exception as e:
                     st.error(f"❌ Prediction failed: {str(e)}")
@@ -497,9 +509,10 @@ elif page == "🔮 Prediction Results":
         # Display results
         if st.session_state.prediction_done:
             results = st.session_state.prediction_results
+            model_display = results.get('model_name', PREDICTION_MODEL).replace('_', ' ').title()
             
             # Model performance metrics
-            st.subheader("📊 Model Performance")
+            st.subheader(f"📊 {model_display} Model Performance")
             
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -507,13 +520,13 @@ elif page == "🔮 Prediction Results":
             with col2:
                 st.metric("RMSE", f"{results['metrics']['test_rmse']:.3f}")
             with col3:
-                st.metric("AIC", f"{results['metrics']['aic']:.2f}")
+                st.metric("Overfit Gap", f"{results['metrics'].get('overfit_gap', 0):.3f}")
             
             with st.expander("ℹ️ About these metrics"):
                 st.markdown("""
                 - **R² Score**: Proportion of variance explained (higher is better, max 1.0)
                 - **RMSE**: Root Mean Square Error (lower is better)
-                - **AIC**: Akaike Information Criterion (lower indicates better model fit)
+                - **Overfit Gap**: Difference between train and test R² (lower is better)
                 """)
             
             st.markdown("---")
@@ -528,66 +541,41 @@ elif page == "🔮 Prediction Results":
             
             # Visualization of predicted hotspots
             st.markdown("---")
-            st.subheader("📈 Predicted Incident Intensity")
+            st.subheader("📈 Predicted Case Intensity")
+            
+            # Determine correct column name
+            pred_col = 'Predicted_Cases' if 'Predicted_Cases' in pred_df.columns else 'Predicted Incidents'
             
             fig = px.bar(
                 pred_df.head(10),
-                x='Predicted Incidents',
+                x=pred_col,
                 y='Barangay District',
                 orientation='h',
-                title="Top 10 Barangays by Predicted Incident Count",
-                color='Predicted Incidents',
+                title="Top 10 Barangays by Predicted Case Count",
+                color=pred_col,
                 color_continuous_scale='Reds'
             )
             fig.update_layout(yaxis={'categoryorder': 'total ascending'})
             st.plotly_chart(fig, use_container_width=True)
             
-            # Model coefficients (interpretability)
+            # Model feature importance (interpretability)
             st.markdown("---")
-            st.subheader("📉 Model Coefficients (Interpretable)")
+            st.subheader("🔍 Feature Importance")
             
-            coef_df = results['coefficients']
-            st.dataframe(coef_df, use_container_width=True)
-            
-            with st.expander("ℹ️ How to interpret coefficients"):
-                st.markdown("""
-                **Poisson Regression provides interpretable coefficients:**
+            if 'feature_importance' in results:
+                feat_df = results['feature_importance']
+                st.dataframe(feat_df, use_container_width=True, hide_index=True)
                 
-                - **Rate Ratio > 1**: This factor **increases** the incident rate
-                  - Example: Rate Ratio = 1.5 means 50% higher incident rate
+                with st.expander("ℹ️ How to interpret feature importance"):
+                    st.markdown(f"""
+                    **{model_display} Feature Importance:**
                 
-                - **Rate Ratio < 1**: This factor **decreases** the incident rate
-                  - Example: Rate Ratio = 0.8 means 20% lower incident rate
+                - **Higher values**: These features have stronger influence on predictions
+                - **Feature**: The input variable used by the model
+                - **Importance**: Relative contribution to prediction accuracy
                 
-                - **P-Value < 0.05**: The effect is **statistically significant**
-                  - We can be confident this factor truly matters
-                
-                - **Coefficient**: The raw log-scale effect (transformed to Rate Ratio for easy interpretation)
-                
-                Coefficients show the **multiplicative effect** each feature has on the predicted incident rate.
+                Features show which factors most strongly affect the predicted case counts.
                 """)
-            
-            # Feature importance visualization
-            st.markdown("---")
-            st.subheader("📊 Feature Importance (Rate Ratios)")
-            
-            # Sort by absolute distance from 1.0 (neutral effect)
-            coef_sorted = coef_df.copy()
-            coef_sorted['Importance'] = (coef_sorted['Rate Ratio'] - 1.0).abs()
-            coef_sorted = coef_sorted.sort_values('Importance', ascending=True).tail(10)
-            
-            fig = px.bar(
-                coef_sorted,
-                x='Rate Ratio',
-                y='Feature',
-                orientation='h',
-                title="Top 10 Most Influential Features",
-                color='Rate Ratio',
-                color_continuous_scale='RdYlGn',
-                color_continuous_midpoint=1.0
-            )
-            fig.add_vline(x=1.0, line_dash="dash", line_color="gray", annotation_text="Neutral")
-            st.plotly_chart(fig, use_container_width=True)
             
             # Download predictions
             st.markdown("---")
