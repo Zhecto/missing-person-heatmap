@@ -23,6 +23,16 @@ from core.analysis.clustering import ClusteringModel
 from core.analysis.predictor import SpatialPredictor, TrendAnalyzer
 from core.visualization.visualizer import HeatmapGenerator, ChartGenerator
 
+# CLUSTERING MODEL 
+CLUSTERING_MODEL = "kmeans"
+CLUSTERING_PARAMS = {'n_clusters': 3}
+
+# Default best parameters
+# CLUSTERING_MODEL = "dbscan"
+# CLUSTERING_PARAMS = {'eps': 0.1, 'min_samples': 3}
+
+
+
 
 # Page configuration
 st.set_page_config(
@@ -55,16 +65,20 @@ st.markdown("""
 # Initialize session state
 if 'data_loaded' not in st.session_state:
     st.session_state.data_loaded = False
-if 'data_cleaned' not in st.session_state:
-    st.session_state.data_cleaned = False
+if 'geocoding_done' not in st.session_state:
+    st.session_state.geocoding_done = False
 if 'clustering_done' not in st.session_state:
     st.session_state.clustering_done = False
+if 'prediction_done' not in st.session_state:
+    st.session_state.prediction_done = False
 if 'df_raw' not in st.session_state:
     st.session_state.df_raw = None
-if 'df_cleaned' not in st.session_state:
-    st.session_state.df_cleaned = None
+if 'df_geocoded' not in st.session_state:
+    st.session_state.df_geocoded = None
 if 'cluster_results' not in st.session_state:
     st.session_state.cluster_results = None
+if 'prediction_results' not in st.session_state:
+    st.session_state.prediction_results = None
 
 
 # Header
@@ -81,13 +95,15 @@ with st.sidebar:
     
     # Status indicators
     status_data_loaded = "✅" if st.session_state.data_loaded else "⏳"
-    status_data_cleaned = "✅" if st.session_state.data_cleaned else "⏳"
+    status_geocoding = "✅" if st.session_state.geocoding_done else "⏳"
     status_clustering = "✅" if st.session_state.clustering_done else "⏳"
+    status_prediction = "✅" if st.session_state.prediction_done else "⏳"
     
     st.markdown(f"""
     - {status_data_loaded} **Data Loaded**
-    - {status_data_cleaned} **Data Cleaned**
+    - {status_geocoding} **Geocoding Complete**
     - {status_clustering} **Clustering Complete**
+    - {status_prediction} **Prediction Complete**
     """)
     
     st.markdown("---")
@@ -96,8 +112,8 @@ with st.sidebar:
     st.header("🧭 Navigation")
     page = st.radio(
         "Select Module:",
-        ["📤 Data Upload", "🧹 Preprocessing", "📊 Clustering", 
-         "🔮 Prediction", "🗺️ Visualization"],
+        ["📤 Data Upload", "🗺️ Geocoding", "📊 Clustering Results", 
+         "🔮 Prediction Results", "📈 Visualizations"],
         label_visibility="collapsed"
     )
     
@@ -133,7 +149,7 @@ if page == "📤 Data Upload":
                     
                     # Load data
                     loader = DataLoader(str(temp_path))
-                    st.session_state.df_raw = loader.load()
+                    st.session_state.df_raw = loader.load_csv()
                     st.session_state.data_loaded = True
                     
                     st.success(f"✅ Data loaded successfully! {len(st.session_state.df_raw)} records")
@@ -148,7 +164,7 @@ if page == "📤 Data Upload":
             if demo_path.exists():
                 try:
                     loader = DataLoader(str(demo_path))
-                    st.session_state.df_raw = loader.load()
+                    st.session_state.df_raw = loader.load_csv()
                     st.session_state.data_loaded = True
                     st.success("✅ Demo data loaded!")
                 except Exception as e:
@@ -192,137 +208,174 @@ if page == "📤 Data Upload":
 
 
 # =============================================================================
-# PAGE 2: Preprocessing
+# PAGE 2: Geocoding
 # =============================================================================
-elif page == "🧹 Preprocessing":
-    st.header("🧹 Data Preprocessing")
+elif page == "🗺️ Geocoding":
+    st.header("🗺️ Geocoding Missing Coordinates")
     
     if not st.session_state.data_loaded:
         st.warning("⚠️ Please upload data first in the Data Upload page")
     else:
-        st.info("Clean and transform the raw data for analysis")
+        df = st.session_state.df_raw.copy()
         
-        if st.button("🚀 Run Data Cleaning", type="primary", use_container_width=True):
-            with st.spinner("Cleaning data..."):
-                try:
-                    cleaner = DataCleaner()
-                    st.session_state.df_cleaned = cleaner.clean(st.session_state.df_raw)
-                    st.session_state.data_cleaned = True
-                    
-                    st.success("✅ Data cleaned successfully!")
-                    
-                    # Show before/after comparison
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        st.metric("Records Before", len(st.session_state.df_raw))
-                    with col2:
-                        st.metric("Records After", len(st.session_state.df_cleaned))
-                    
-                except Exception as e:
-                    st.error(f"❌ Cleaning failed: {str(e)}")
+        # Check for missing coordinates
+        missing_lat = df['Latitude'].isnull().sum()
+        missing_lon = df['Longitude'].isnull().sum()
+        missing_both = df[df['Latitude'].isnull() | df['Longitude'].isnull()].shape[0]
         
-        if st.session_state.data_cleaned:
-            st.markdown("---")
-            st.subheader("📊 Cleaned Data Summary")
-            
-            df = st.session_state.df_cleaned
-            
-            # Summary statistics
+        st.info(f"Records with missing coordinates: **{missing_both}** out of {len(df)}")
+        
+        if missing_both == 0:
+            st.success("✅ All records have complete coordinates. No geocoding needed.")
+            st.session_state.df_geocoded = df
+            st.session_state.geocoding_done = True
+        else:
             col1, col2, col3 = st.columns(3)
-            
             with col1:
-                st.markdown("**Temporal Coverage**")
-                if 'Year' in df.columns:
-                    st.write(f"Years: {df['Year'].min()} - {df['Year'].max()}")
-                    st.write(f"Records per year: {len(df) / df['Year'].nunique():.1f}")
-            
+                st.metric("Missing Latitude", missing_lat)
             with col2:
-                st.markdown("**Geographic Coverage**")
-                if 'Barangay District' in df.columns:
-                    st.write(f"Locations: {df['Barangay District'].nunique()}")
-                    top_location = df['Barangay District'].value_counts().index[0]
-                    st.write(f"Top location: {top_location}")
-            
+                st.metric("Missing Longitude", missing_lon)
             with col3:
-                st.markdown("**Demographics**")
-                if 'Age' in df.columns:
-                    st.write(f"Avg Age: {df['Age'].mean():.1f} years")
-                if 'Gender' in df.columns:
-                    gender_dist = df['Gender'].value_counts()
-                    st.write(f"Gender: {gender_dist.index[0]} ({gender_dist.values[0]})")
+                st.metric("Total Missing", missing_both)
             
-            # Preview cleaned data
-            st.dataframe(df.head(10), use_container_width=True)
+            # Preview records with missing coordinates
+            st.markdown("### Records Requiring Geocoding")
+            missing_df = df[df['Latitude'].isnull() | df['Longitude'].isnull()]
+            st.dataframe(missing_df[['Barangay District', 'Latitude', 'Longitude']].head(10), use_container_width=True)
+            
+            st.markdown("---")
+            
+            if st.button("🌍 Apply Geocoding", type="primary", use_container_width=True):
+                with st.spinner("Geocoding missing coordinates using OpenStreetMap..."):
+                    try:
+                        from geopy.geocoders import Nominatim
+                        from geopy.exc import GeocoderTimedOut, GeocoderServiceError
+                        import time
+                        
+                        geolocator = Nominatim(user_agent="missing_person_heatmap")
+                        
+                        success_count = 0
+                        fail_count = 0
+                        
+                        progress_bar = st.progress(0)
+                        status_text = st.empty()
+                        
+                        for idx, row in df.iterrows():
+                            if pd.isnull(row['Latitude']) or pd.isnull(row['Longitude']):
+                                try:
+                                    # Add Metro Manila context to improve accuracy
+                                    location_query = f"{row['Barangay District']}, Metro Manila, Philippines"
+                                    location = geolocator.geocode(location_query, timeout=10)
+                                    
+                                    if location:
+                                        df.at[idx, 'Latitude'] = location.latitude
+                                        df.at[idx, 'Longitude'] = location.longitude
+                                        success_count += 1
+                                    else:
+                                        fail_count += 1
+                                    
+                                    time.sleep(1)  # Respect API rate limits
+                                    
+                                except (GeocoderTimedOut, GeocoderServiceError):
+                                    fail_count += 1
+                                
+                                # Update progress
+                                progress = (success_count + fail_count) / missing_both
+                                progress_bar.progress(progress)
+                                status_text.text(f"Geocoded: {success_count} | Failed: {fail_count}")
+                        
+                        st.session_state.df_geocoded = df
+                        st.session_state.geocoding_done = True
+                        
+                        st.success(f"✅ Geocoding complete! Successfully geocoded {success_count} out of {missing_both} records")
+                        
+                        if fail_count > 0:
+                            st.warning(f"⚠️ {fail_count} records could not be geocoded. They will be excluded from analysis.")
+                        
+                    except ImportError:
+                        st.error("❌ Geopy library not found. Please install it: `pip install geopy`")
+                    except Exception as e:
+                        st.error(f"❌ Geocoding failed: {str(e)}")
+        
+        # Show geocoded data if available
+        if st.session_state.geocoding_done:
+            st.markdown("---")
+            st.subheader("📊 Geocoded Data")
+            
+            final_df = st.session_state.df_geocoded
+            complete_coords = final_df.dropna(subset=['Latitude', 'Longitude'])
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric("Total Records", len(final_df))
+            with col2:
+                st.metric("Records with Valid Coordinates", len(complete_coords))
+            
+            # Preview
+            st.dataframe(complete_coords[['Barangay District', 'Latitude', 'Longitude']].head(10), use_container_width=True)
             
             # Download option
-            csv = df.to_csv(index=False).encode('utf-8')
+            csv = complete_coords.to_csv(index=False).encode('utf-8')
             st.download_button(
-                "💾 Download Cleaned Data",
+                "💾 Download Geocoded Data",
                 csv,
-                "cleaned_data.csv",
+                "geocoded_data.csv",
                 "text/csv",
                 use_container_width=True
             )
 
 
 # =============================================================================
-# PAGE 3: Clustering Analysis
+# PAGE 3: Clustering Results
 # =============================================================================
-elif page == "📊 Clustering":
+elif page == "📊 Clustering Results":
     st.header("📊 Spatial Clustering Analysis")
     
-    if not st.session_state.data_cleaned:
-        st.warning("⚠️ Please clean the data first in the Preprocessing page")
+    if not st.session_state.geocoding_done:
+        st.warning("⚠️ Please complete data upload and geocoding first")
     else:
-        st.info("Identify geographic concentrations of missing person incidents")
+        df = st.session_state.df_geocoded.dropna(subset=['Latitude', 'Longitude']).copy()
         
-        col1, col2 = st.columns([3, 1])
+        st.info(f"Analyzing {len(df)} records using {CLUSTERING_MODEL.upper()}: {CLUSTERING_PARAMS}")
         
-        with col1:
-            algorithm = st.selectbox(
-                "Clustering Algorithm",
-                ["K-Means", "DBSCAN"],
-                help="K-Means: partitions data into k clusters | DBSCAN: density-based clustering"
-            )
-        
-        with col2:
-            if algorithm == "K-Means":
-                n_clusters = st.slider("Number of Clusters (k)", 3, 10, 5)
-            else:
-                eps = st.slider("Epsilon (distance)", 0.005, 0.05, 0.01, 0.005)
-                min_samples = st.slider("Min Samples", 3, 10, 5)
-        
-        if st.button("🔍 Run Clustering", type="primary", use_container_width=True):
-            with st.spinner("Running clustering analysis..."):
+        # Auto-run clustering
+        if not st.session_state.clustering_done:
+            with st.spinner(f"Running {CLUSTERING_MODEL.upper()} clustering..."):
                 try:
                     cluster_model = ClusteringModel()
                     
-                    if algorithm == "K-Means":
-                        results = cluster_model.run_kmeans(
-                            st.session_state.df_cleaned,
-                            n_clusters=n_clusters
-                        )
-                    else:
-                        results = cluster_model.run_dbscan(
-                            st.session_state.df_cleaned,
-                            eps=eps,
-                            min_samples=min_samples
-                        )
+                    if CLUSTERING_MODEL == "kmeans":
+                        cluster_model.fit_kmeans(df, n_clusters=CLUSTERING_PARAMS['n_clusters'])
+                    elif CLUSTERING_MODEL == "dbscan":
+                        cluster_model.fit_dbscan(df, eps=CLUSTERING_PARAMS['eps'], 
+                                                min_samples=CLUSTERING_PARAMS['min_samples'])
+                    
+                    # Get results
+                    metrics = cluster_model.evaluate_clustering(df)
+                    results = {
+                        'model': cluster_model,
+                        'labels': cluster_model.labels_,
+                        'centers': cluster_model.cluster_centers_,
+                        'n_clusters': cluster_model.n_clusters,
+                        'silhouette_score': metrics.get('silhouette_score'),
+                        'davies_bouldin_score': metrics.get('davies_bouldin_score'),
+                        'inertia': metrics.get('inertia') if CLUSTERING_MODEL == "kmeans" else None
+                    }
                     
                     st.session_state.cluster_results = results
-                    st.session_state.df_cleaned['cluster'] = results['labels']
+                    df['cluster'] = results['labels']
+                    st.session_state.df_geocoded = df
                     st.session_state.clustering_done = True
                     
-                    st.success(f"✅ Clustering complete! Found {results['n_clusters']} clusters")
+                    st.success(f"✅ Clustering complete! Identified {results['n_clusters']} clusters")
                     
                 except Exception as e:
                     st.error(f"❌ Clustering failed: {str(e)}")
+                    st.exception(e)
+                    st.stop()
         
         # Display results
         if st.session_state.clustering_done:
-            st.markdown("---")
-            st.subheader("📈 Clustering Results")
-            
             results = st.session_state.cluster_results
             
             # Metrics
@@ -332,190 +385,233 @@ elif page == "📊 Clustering":
             with col2:
                 st.metric("Silhouette Score", f"{results['silhouette_score']:.3f}")
             with col3:
-                noise_points = (results['labels'] == -1).sum() if -1 in results['labels'] else 0
-                st.metric("Noise Points", noise_points)
+                st.metric("Total Records", len(df))
             
-            # Cluster distribution chart
-            cluster_counts = pd.Series(results['labels']).value_counts().sort_index()
+            st.markdown("---")
+            
+            # Cluster statistics
+            st.subheader("📊 Cluster Statistics")
+            
+            cluster_stats = df.groupby('cluster').agg({
+                'Latitude': 'count',
+                'Barangay District': lambda x: x.nunique()
+            }).rename(columns={'Latitude': 'Records', 'Barangay District': 'Barangays'})
+            
+            cluster_stats = cluster_stats.reset_index()
+            cluster_stats['Cluster'] = 'Cluster ' + cluster_stats['cluster'].astype(str)
+            cluster_stats = cluster_stats[['Cluster', 'Records', 'Barangays']]
+            
+            st.dataframe(cluster_stats, use_container_width=True)
+            
+            # Cluster size distribution chart
+            st.markdown("---")
+            st.subheader("📈 Cluster Size Distribution")
+            
             fig = px.bar(
-                x=cluster_counts.index,
-                y=cluster_counts.values,
-                labels={'x': 'Cluster ID', 'y': 'Number of Points'},
-                title="Cluster Size Distribution"
+                cluster_stats,
+                x='Cluster',
+                y='Records',
+                title="Number of Records per Cluster",
+                color='Records',
+                color_continuous_scale='Blues'
             )
             st.plotly_chart(fig, use_container_width=True)
             
-            # Scatter plot
-            df = st.session_state.df_cleaned
+            # Geographic cluster map
+            st.markdown("---")
+            st.subheader("🗺️ Geographic Cluster Distribution")
+            
             fig = px.scatter_mapbox(
                 df,
                 lat='Latitude',
                 lon='Longitude',
                 color='cluster',
                 hover_data=['Barangay District'],
-                title="Geographic Cluster Distribution",
+                title="Missing Person Incidents by Cluster",
                 mapbox_style="open-street-map",
-                zoom=10
+                zoom=10,
+                color_continuous_scale='Viridis'
             )
             st.plotly_chart(fig, use_container_width=True)
+            
+            # Top locations per cluster
+            st.markdown("---")
+            st.subheader("📍 Top Locations by Cluster")
+            
+            for cluster_id in sorted(df['cluster'].unique()):
+                with st.expander(f"Cluster {cluster_id}"):
+                    cluster_data = df[df['cluster'] == cluster_id]
+                    top_locations = cluster_data['Barangay District'].value_counts().head(5)
+                    st.write(f"**Total Records:** {len(cluster_data)}")
+                    st.write("**Top 5 Barangays:**")
+                    for location, count in top_locations.items():
+                        st.write(f"- {location}: {count} incidents")
 
 
 # =============================================================================
-# PAGE 4: Prediction
+# PAGE 4: Prediction Results
 # =============================================================================
-elif page == "🔮 Prediction":
-    st.header("🔮 Hotspot Prediction")
+elif page == "🔮 Prediction Results":
+    st.header("🔮 Hotspot Prediction for 2026")
     
-    if not st.session_state.data_cleaned:
-        st.warning("⚠️ Please clean the data first")
+    if not st.session_state.geocoding_done:
+        st.warning("⚠️ Please complete data upload and geocoding first")
     else:
-        st.info("Predict future missing person hotspots using machine learning")
+        df = st.session_state.df_geocoded.dropna(subset=['Latitude', 'Longitude']).copy()
         
-        # Model selection
-        col1, col2, col3 = st.columns(3)
+        st.info(f"Predicting future hotspots using Poisson Regression model on {len(df)} records")
         
-        with col1:
-            model_type = st.selectbox(
-                "Prediction Model",
-                ["Gradient Boosting", "Poisson Regression", "Compare Both"],
-                help="Gradient Boosting: High accuracy | Poisson: Interpretable coefficients"
-            )
-        
-        with col2:
-            target_year = st.number_input(
-                "Target Year",
-                min_value=2026,
-                max_value=2030,
-                value=2026
-            )
-        
-        with col3:
-            top_n = st.slider("Top N Hotspots", 5, 20, 10)
-        
-        if st.button("🚀 Run Prediction", type="primary", use_container_width=True):
-            with st.spinner("Training model and generating predictions..."):
+        # Auto-run prediction
+        if not st.session_state.prediction_done:
+            with st.spinner("Training Poisson Regression model and generating predictions..."):
                 try:
                     predictor = SpatialPredictor()
                     
-                    if model_type == "Compare Both":
-                        # Train and compare both models
-                        st.subheader("📊 Model Comparison")
-                        comparison = predictor.compare_models(st.session_state.df_cleaned)
-                        st.dataframe(comparison, use_container_width=True)
-                        
-                        # Get predictions from both
-                        st.markdown("---")
-                        col1, col2 = st.columns(2)
-                        
-                        with col1:
-                            st.subheader("🌲 Gradient Boosting Predictions")
-                            pred_gb = predictor.predict_next_year_hotspots(
-                                st.session_state.df_cleaned,
-                                target_year,
-                                top_n
-                            )
-                            st.dataframe(pred_gb, use_container_width=True)
-                        
-                        with col2:
-                            st.subheader("📈 Poisson Regression Predictions")
-                            pred_poisson = predictor.predict_next_year_hotspots_poisson(
-                                st.session_state.df_cleaned,
-                                target_year,
-                                top_n
-                            )
-                            st.dataframe(pred_poisson, use_container_width=True)
-                        
-                        # Poisson coefficients
-                        st.markdown("---")
-                        st.subheader("📉 Poisson Regression Coefficients")
-                        coefficients = predictor.get_poisson_coefficients()
-                        st.dataframe(coefficients, use_container_width=True)
-                        
-                    elif model_type == "Poisson Regression":
-                        # Train Poisson model
-                        metrics = predictor.train_poisson_regressor(st.session_state.df_cleaned)
-                        predictions = predictor.predict_next_year_hotspots_poisson(
-                            st.session_state.df_cleaned,
-                            target_year,
-                            top_n
-                        )
-                        
-                        # Display metrics
-                        col1, col2, col3 = st.columns(3)
-                        with col1:
-                            st.metric("R² Score", f"{metrics['test_r2']:.3f}")
-                        with col2:
-                            st.metric("RMSE", f"{metrics['test_rmse']:.3f}")
-                        with col3:
-                            st.metric("AIC", f"{metrics['aic']:.2f}")
-                        
-                        # Predictions
-                        st.subheader(f"🎯 Top {top_n} Predicted Hotspots for {target_year}")
-                        st.dataframe(predictions, use_container_width=True)
-                        
-                        # Coefficients
-                        st.markdown("---")
-                        st.subheader("📊 Model Coefficients (Interpretable)")
-                        coefficients = predictor.get_poisson_coefficients()
-                        st.dataframe(coefficients, use_container_width=True)
-                        
-                        with st.expander("ℹ️ How to interpret coefficients"):
-                            st.markdown("""
-                            - **Rate Ratio > 1**: Factor increases incident rate
-                            - **Rate Ratio < 1**: Factor decreases incident rate
-                            - **P-Value < 0.05**: Statistically significant effect
-                            - Coefficients show multiplicative effect on incident rate
-                            """)
+                    # Train model
+                    metrics = predictor.train_poisson_regressor(df)
                     
-                    else:  # Gradient Boosting
-                        # Train GB model
-                        metrics = predictor.train_hotspot_intensity_predictor(st.session_state.df_cleaned)
-                        predictions = predictor.predict_next_year_hotspots(
-                            st.session_state.df_cleaned,
-                            target_year,
-                            top_n
-                        )
-                        
-                        # Display metrics
-                        col1, col2 = st.columns(2)
-                        with col1:
-                            st.metric("R² Score", f"{metrics['test_r2']:.3f}")
-                        with col2:
-                            st.metric("RMSE", f"{metrics['test_rmse']:.3f}")
-                        
-                        # Predictions
-                        st.subheader(f"🎯 Top {top_n} Predicted Hotspots for {target_year}")
-                        st.dataframe(predictions, use_container_width=True)
-                        
-                        # Feature importance
-                        st.markdown("---")
-                        st.subheader("📊 Feature Importance")
-                        importance = predictor.get_feature_importance()
-                        fig = px.bar(
-                            importance,
-                            x='Importance',
-                            y='Feature',
-                            orientation='h',
-                            title="Which features matter most?"
-                        )
-                        st.plotly_chart(fig, use_container_width=True)
+                    # Generate predictions for 2026
+                    predictions = predictor.predict_next_year_hotspots_poisson(
+                        df,
+                        target_year=2026,
+                        top_n=10
+                    )
                     
-                    st.success("✅ Prediction complete!")
+                    # Get coefficients
+                    coefficients = predictor.get_poisson_coefficients()
+                    
+                    st.session_state.prediction_results = {
+                        'metrics': metrics,
+                        'predictions': predictions,
+                        'coefficients': coefficients
+                    }
+                    st.session_state.prediction_done = True
+                    
+                    st.success("✅ Prediction complete! Model trained successfully")
                     
                 except Exception as e:
                     st.error(f"❌ Prediction failed: {str(e)}")
                     st.exception(e)
+                    st.stop()
+        
+        # Display results
+        if st.session_state.prediction_done:
+            results = st.session_state.prediction_results
+            
+            # Model performance metrics
+            st.subheader("📊 Model Performance")
+            
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("R² Score", f"{results['metrics']['test_r2']:.3f}")
+            with col2:
+                st.metric("RMSE", f"{results['metrics']['test_rmse']:.3f}")
+            with col3:
+                st.metric("AIC", f"{results['metrics']['aic']:.2f}")
+            
+            with st.expander("ℹ️ About these metrics"):
+                st.markdown("""
+                - **R² Score**: Proportion of variance explained (higher is better, max 1.0)
+                - **RMSE**: Root Mean Square Error (lower is better)
+                - **AIC**: Akaike Information Criterion (lower indicates better model fit)
+                """)
+            
+            st.markdown("---")
+            
+            # Top predicted hotspots
+            st.subheader("🎯 Top 10 Predicted Hotspots for 2026")
+            
+            pred_df = results['predictions'].copy()
+            pred_df.index = range(1, len(pred_df) + 1)  # Start ranking from 1
+            
+            st.dataframe(pred_df, use_container_width=True)
+            
+            # Visualization of predicted hotspots
+            st.markdown("---")
+            st.subheader("📈 Predicted Incident Intensity")
+            
+            fig = px.bar(
+                pred_df.head(10),
+                x='Predicted Incidents',
+                y='Barangay District',
+                orientation='h',
+                title="Top 10 Barangays by Predicted Incident Count",
+                color='Predicted Incidents',
+                color_continuous_scale='Reds'
+            )
+            fig.update_layout(yaxis={'categoryorder': 'total ascending'})
+            st.plotly_chart(fig, use_container_width=True)
+            
+            # Model coefficients (interpretability)
+            st.markdown("---")
+            st.subheader("📉 Model Coefficients (Interpretable)")
+            
+            coef_df = results['coefficients']
+            st.dataframe(coef_df, use_container_width=True)
+            
+            with st.expander("ℹ️ How to interpret coefficients"):
+                st.markdown("""
+                **Poisson Regression provides interpretable coefficients:**
+                
+                - **Rate Ratio > 1**: This factor **increases** the incident rate
+                  - Example: Rate Ratio = 1.5 means 50% higher incident rate
+                
+                - **Rate Ratio < 1**: This factor **decreases** the incident rate
+                  - Example: Rate Ratio = 0.8 means 20% lower incident rate
+                
+                - **P-Value < 0.05**: The effect is **statistically significant**
+                  - We can be confident this factor truly matters
+                
+                - **Coefficient**: The raw log-scale effect (transformed to Rate Ratio for easy interpretation)
+                
+                Coefficients show the **multiplicative effect** each feature has on the predicted incident rate.
+                """)
+            
+            # Feature importance visualization
+            st.markdown("---")
+            st.subheader("📊 Feature Importance (Rate Ratios)")
+            
+            # Sort by absolute distance from 1.0 (neutral effect)
+            coef_sorted = coef_df.copy()
+            coef_sorted['Importance'] = (coef_sorted['Rate Ratio'] - 1.0).abs()
+            coef_sorted = coef_sorted.sort_values('Importance', ascending=True).tail(10)
+            
+            fig = px.bar(
+                coef_sorted,
+                x='Rate Ratio',
+                y='Feature',
+                orientation='h',
+                title="Top 10 Most Influential Features",
+                color='Rate Ratio',
+                color_continuous_scale='RdYlGn',
+                color_continuous_midpoint=1.0
+            )
+            fig.add_vline(x=1.0, line_dash="dash", line_color="gray", annotation_text="Neutral")
+            st.plotly_chart(fig, use_container_width=True)
+            
+            # Download predictions
+            st.markdown("---")
+            csv = pred_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                "💾 Download Predictions",
+                csv,
+                "hotspot_predictions_2026.csv",
+                "text/csv",
+                use_container_width=True
+            )
 
 
 # =============================================================================
-# PAGE 5: Visualization
+# PAGE 5: Visualizations
 # =============================================================================
-elif page == "🗺️ Visualization":
-    st.header("🗺️ Interactive Visualizations")
+elif page == "📈 Visualizations":
+    st.header("📈 Interactive Visualizations")
     
-    if not st.session_state.data_cleaned:
-        st.warning("⚠️ Please clean the data first")
+    if not st.session_state.geocoding_done:
+        st.warning("⚠️ Please complete data upload and geocoding first")
     else:
+        df = st.session_state.df_geocoded.dropna(subset=['Latitude', 'Longitude']).copy()
+        
         tab1, tab2 = st.tabs(["🗺️ Heatmap", "📊 Charts"])
         
         with tab1:
@@ -531,7 +627,7 @@ elif page == "🗺️ Visualization":
                     try:
                         heatmap_gen = HeatmapGenerator()
                         output_path = heatmap_gen.create_heatmap(
-                            st.session_state.df_cleaned,
+                            df,
                             include_clusters=include_clusters and st.session_state.clustering_done
                         )
                         
@@ -553,7 +649,7 @@ elif page == "🗺️ Visualization":
                 with st.spinner("Generating charts..."):
                     try:
                         chart_gen = ChartGenerator()
-                        output_dir = chart_gen.generate_all_charts(st.session_state.df_cleaned)
+                        output_dir = chart_gen.generate_all_charts(df)
                         
                         st.success(f"✅ Charts saved to: {output_dir}")
                         
