@@ -46,9 +46,6 @@ You can explore the system functionality without actual data using the demo scri
 ```powershell
 # Using pip
 pip install -r requirements.txt
-
-# Or using Poetry
-poetry install
 ```
 
 ### 2. Run Demo (Optional but Recommended)
@@ -157,7 +154,6 @@ missing-person-heatmap/
 ├── demo.py                             # Demo script
 ├── start-server.ps1                    # Server startup script
 ├── requirements.txt                    # Python dependencies
-├── pyproject.toml                      # Poetry configuration
 ├── TESTING.md                          # Complete testing guide
 └── README.md                           # This file
 ```

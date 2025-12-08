@@ -5,29 +5,16 @@ This guide helps you get started with the system before you have actual data.
 ## ✅ Prerequisites
 
 - Python 3.10 or higher
-- pip or Poetry package manager
+- pip (bundled with modern Python)
 - Text editor or IDE (VS Code recommended)
 
 ## 🚀 Installation
 
-### Option 1: Using pip (Recommended for Quick Start)
+### Install Dependencies with pip (Recommended)
 
 ```powershell
 # Install dependencies
 pip install -r requirements.txt
-```
-
-### Option 2: Using Poetry
-
-```powershell
-# Install Poetry (if not already installed)
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
-
-# Install dependencies
-poetry install
-
-# Activate virtual environment
-poetry shell
 ```
 
 ## 🎯 Running the Demo (No Dataset Required)

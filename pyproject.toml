@@ -1,37 +1,3 @@
-[tool.poetry]
-name = "missing-person-heatmap"
-version = "0.1.0"
-description = "Analysis and visualization of missing person cases in the Philippines."
-authors = ["Benny <benny@example.com>"]
-readme = "README.md"
-packages = [
-	{ include = "core", from = "src" },
-	{ include = "backend", from = "src" },
-	{ include = "frontend", from = "src" },
-]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-pandas = "^2.1.0"
-numpy = "^1.26.0"
-scikit-learn = "^1.4.0"
-geopandas = "^0.14.0"
-folium = "^0.15.0"
-shapely = "^2.0.0"
-plotly = "^5.18.0"
-matplotlib = "^3.8.0"
-seaborn = "^0.13.0"
-fastapi = "^0.109.0"
-uvicorn = {extras = ["standard"], version = "^0.27.0"}
-python-multipart = "^0.0.6"
-pydantic = "^2.5.0"
-python-dateutil = "^2.8.2"
-openpyxl = "^3.1.0"
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.3"
-isort = "^5.12.0"
-
 [tool.black]
 line-length = 88
 target-version = ["py310"]
@@ -41,7 +7,3 @@ include = "src/"
 profile = "black"
 line_length = 88
 src_paths = ["src"]
-
-[build-system]
-requires = ["poetry-core>=1.6.0"]
-build-backend = "poetry.core.masonry.api"
