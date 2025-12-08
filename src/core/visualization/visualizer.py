@@ -5,7 +5,7 @@ Uses Folium for interactive maps and Plotly for charts.
 
 import pandas as pd
 import numpy as np
-from typing import Optional, Dict, List, Tuple
+from typing import Optional, Dict, List, Tuple, Union
 import folium
 from folium.plugins import HeatMap, MarkerCluster
 import plotly.express as px
@@ -208,6 +208,46 @@ class HeatmapGenerator:
         
         self.map.save(str(output_path))
         print(f"✓ Map saved to {output_path}")
+
+    def create_heatmap(
+        self,
+        df: pd.DataFrame,
+        lat_col: str = 'Latitude',
+        lon_col: str = 'Longitude',
+        include_clusters: bool = False,
+        cluster_col: str = 'Cluster',
+        include_markers: bool = False,
+        output_path: Optional[Union[Path, str]] = None,
+        zoom_start: int = 12,
+        tiles: str = 'OpenStreetMap'
+    ) -> Path:
+        """
+        Convenience helper that builds and saves a heatmap in one call.
+        """
+        if df.empty:
+            raise ValueError("Input dataframe is empty")
+
+        for col in (lat_col, lon_col):
+            if col not in df.columns:
+                raise ValueError(f"Missing required column: {col}")
+
+        clean_df = df.dropna(subset=[lat_col, lon_col])
+        if clean_df.empty:
+            raise ValueError("No valid latitude/longitude pairs available")
+
+        self.create_base_map(zoom_start=zoom_start, tiles=tiles)
+        self.add_heatmap_layer(clean_df, lat_col=lat_col, lon_col=lon_col)
+
+        if include_clusters and cluster_col in clean_df.columns:
+            self.add_cluster_markers(clean_df, cluster_col=cluster_col, lat_col=lat_col, lon_col=lon_col)
+
+        if include_markers:
+            self.add_marker_cluster(clean_df, lat_col=lat_col, lon_col=lon_col)
+
+        path = Path(output_path) if output_path is not None else Path("data/outputs/heatmap.html")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self.save_map(path)
+        return path
 
 
 class ChartGenerator:
@@ -428,6 +468,48 @@ class ChartGenerator:
         print("✓ Created location heatmap chart")
         
         return fig
+
+    def generate_all_charts(
+        self,
+        df: pd.DataFrame,
+        output_dir: Optional[Union[Path, str]] = None,
+        include_cluster_chart: bool = True,
+        cluster_col: str = 'Cluster'
+    ) -> Path:
+        """
+        Build all standard charts and persist them to disk.
+        """
+        if df.empty:
+            raise ValueError("Input dataframe is empty")
+
+        self.figures.clear()
+
+        self.create_gender_distribution(df)
+        self.create_age_breakdown(df)
+        self.create_yearly_trend(df)
+
+        if 'Month' in df.columns or 'Date Reported Missing' in df.columns:
+            if 'Month' not in df.columns:
+                temp_df = df.copy()
+                temp_df['Month'] = pd.to_datetime(temp_df['Date Reported Missing']).dt.month
+                self.create_monthly_pattern(temp_df)
+            else:
+                self.create_monthly_pattern(df)
+        
+        if 'Barangay District' in df.columns:
+            self.create_location_heatmap_chart(df)
+
+        if include_cluster_chart and cluster_col in df.columns:
+            cluster_counts = df[cluster_col].value_counts().sort_index()
+            cluster_stats = pd.DataFrame({
+                'Cluster': cluster_counts.index,
+                'Size': cluster_counts.values
+            })
+            self.create_cluster_size_chart(cluster_stats)
+        
+        output_path = Path(output_dir) if output_dir is not None else Path("data/outputs/charts")
+        self.save_all_charts(output_path)
+        return output_path
     
     def save_all_charts(self, output_dir: Path) -> None:
         """
