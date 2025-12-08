@@ -142,12 +142,212 @@ class SpatialPredictor:
         X_pred = self.scaler.transform(locations[self.feature_columns])
         locations['Predicted_Cases'] = self.model.predict(X_pred)
         
+        # Store all predictions for heatmap generation
+        self.all_predictions = locations.copy()
+        
         top = locations.nlargest(top_n, 'Predicted_Cases')[
             ['Barangay District', 'Latitude', 'Longitude', 'Predicted_Cases', 'Prev_Year_Count']
         ]
         
         print(f"✓ Predicted top {top_n} hotspots for {next_year}")
         return top
+    
+    def get_all_predictions(self) -> pd.DataFrame:
+        """Get predictions for all locations (for heatmap generation)."""
+        if not hasattr(self, 'all_predictions'):
+            raise ValueError("Run predict_next_year_hotspots first!")
+        return self.all_predictions
+    
+    def generate_prediction_heatmap(self, next_year: int, output_path: str = None) -> str:
+        """
+        Generate interactive heatmap showing predicted hotspot intensity.
+        
+        Args:
+            next_year: Year being predicted
+            output_path: Where to save the HTML file
+            
+        Returns:
+            Path to generated HTML file
+        """
+        import folium
+        from folium.plugins import HeatMap
+        
+        if not hasattr(self, 'all_predictions'):
+            raise ValueError("Run predict_next_year_hotspots first!")
+        
+        predictions = self.all_predictions
+        
+        # Create base map centered on mean location
+        center_lat = predictions['Latitude'].mean()
+        center_lon = predictions['Longitude'].mean()
+        
+        m = folium.Map(
+            location=[center_lat, center_lon],
+            zoom_start=11,
+            tiles='cartodbpositron'
+        )
+        
+        # Prepare heatmap data (weighted by predicted cases)
+        heat_data = []
+        for _, row in predictions.iterrows():
+            # Each prediction gets weight based on predicted cases
+            weight = max(row['Predicted_Cases'], 0.1)  # Minimum weight 0.1
+            heat_data.append([row['Latitude'], row['Longitude'], weight])
+        
+        # Add heatmap layer
+        HeatMap(
+            heat_data,
+            min_opacity=0.3,
+            max_opacity=0.8,
+            radius=15,
+            blur=20,
+            gradient={
+                0.0: 'blue',
+                0.3: 'lime',
+                0.5: 'yellow',
+                0.7: 'orange',
+                1.0: 'red'
+            }
+        ).add_to(m)
+        
+        # Add markers for top hotspots
+        top_locations = predictions.nlargest(10, 'Predicted_Cases')
+        for idx, row in top_locations.iterrows():
+            folium.CircleMarker(
+                location=[row['Latitude'], row['Longitude']],
+                radius=8,
+                popup=f"""
+                    <b>{row['Barangay District']}</b><br>
+                    Predicted Cases: {row['Predicted_Cases']:.2f}<br>
+                    Previous Year: {row['Prev_Year_Count']:.0f}
+                """,
+                color='darkred',
+                fill=True,
+                fillColor='red',
+                fillOpacity=0.7,
+                weight=2
+            ).add_to(m)
+        
+        # Add title
+        title_html = f'''
+        <div style="position: fixed; 
+                    top: 10px; left: 50px; width: 400px; height: 60px; 
+                    background-color: white; border:2px solid grey; z-index:9999; 
+                    font-size:16px; padding: 10px">
+            <b>Predicted Hotspots for {next_year}</b><br>
+            <span style="font-size:12px">Model: {self.model_type.replace('_', ' ').title()}</span>
+        </div>
+        '''
+        m.get_root().html.add_child(folium.Element(title_html))
+        
+        # Save map
+        if output_path is None:
+            output_path = f"data/outputs/prediction_heatmap_{next_year}.html"
+        
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        m.save(output_path)
+        
+        print(f"✓ Prediction heatmap saved to {output_path}")
+        return output_path
+    
+    def generate_actual_heatmap(self, df: pd.DataFrame, year: int, output_path: str = None) -> str:
+        """
+        Generate heatmap showing actual incident density for a specific year.
+        
+        Args:
+            df: DataFrame with actual data (must have Year, Latitude, Longitude, Barangay District)
+            year: Year to visualize
+            output_path: Where to save the HTML file
+            
+        Returns:
+            Path to generated HTML file
+        """
+        import folium
+        from folium.plugins import HeatMap
+        
+        # Filter to specific year
+        df_year = df[df['Year'] == year].copy()
+        
+        if len(df_year) == 0:
+            raise ValueError(f"No data available for year {year}")
+        
+        # Aggregate by location to get actual case counts
+        location_counts = df_year.groupby('Barangay District').agg({
+            'Latitude': 'mean',
+            'Longitude': 'mean'
+        }).reset_index()
+        location_counts['Actual_Cases'] = df_year.groupby('Barangay District').size().values
+        
+        # Create base map centered on mean location
+        center_lat = location_counts['Latitude'].mean()
+        center_lon = location_counts['Longitude'].mean()
+        
+        m = folium.Map(
+            location=[center_lat, center_lon],
+            zoom_start=11,
+            tiles='cartodbpositron'
+        )
+        
+        # Prepare heatmap data (weighted by actual cases)
+        heat_data = []
+        for _, row in location_counts.iterrows():
+            weight = max(row['Actual_Cases'], 0.1)
+            heat_data.append([row['Latitude'], row['Longitude'], weight])
+        
+        # Add heatmap layer with same style as predictions
+        HeatMap(
+            heat_data,
+            min_opacity=0.3,
+            max_opacity=0.8,
+            radius=15,
+            blur=20,
+            gradient={
+                0.0: 'blue',
+                0.3: 'lime',
+                0.5: 'yellow',
+                0.7: 'orange',
+                1.0: 'red'
+            }
+        ).add_to(m)
+        
+        # Add markers for top 10 actual hotspots
+        top_locations = location_counts.nlargest(10, 'Actual_Cases')
+        for idx, row in top_locations.iterrows():
+            folium.CircleMarker(
+                location=[row['Latitude'], row['Longitude']],
+                radius=8,
+                popup=f"""
+                    <b>{row['Barangay District']}</b><br>
+                    Actual Cases: {row['Actual_Cases']:.0f}
+                """,
+                color='darkred',
+                fill=True,
+                fillColor='red',
+                fillOpacity=0.7,
+                weight=2
+            ).add_to(m)
+        
+        # Add title
+        title_html = f'''
+        <div style="position: fixed; 
+                    top: 10px; left: 50px; width: 400px; height: 60px; 
+                    background-color: white; border:2px solid grey; z-index:9999; 
+                    font-size:16px; padding: 10px">
+            <b>Actual Data for {year}</b><br>
+            <span style="font-size:12px">Total Records: {len(df_year)}</span>
+        </div>
+        '''
+        m.get_root().html.add_child(folium.Element(title_html))
+        
+        # Save map
+        if output_path is None:
+            output_path = f"data/outputs/actual_{year}_heatmap.html"
+        
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        m.save(output_path)
+        
+        print(f"✓ Actual data heatmap saved to {output_path}")
+        return output_path
     
     def get_feature_importance(self) -> pd.DataFrame:
         """Get feature importance."""

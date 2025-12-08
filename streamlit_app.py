@@ -501,6 +501,7 @@ elif page == "🔮 Prediction Results":
                         'feature_importance': feature_importance,
                         'model_name': PREDICTION_MODEL
                     }
+                    st.session_state.predictor = predictor  # Store predictor for heatmap generation
                     st.session_state.prediction_done = True
                     
                     st.success(f"✅ Prediction complete! {model_display} model trained successfully")
@@ -581,7 +582,50 @@ elif page == "🔮 Prediction Results":
                 Features show which factors most strongly affect the predicted case counts.
                 """)
             
-            # Download predictions
+            # Generate prediction heatmap
+            st.markdown("---")
+            st.subheader("🗺️ Prediction vs Actual Comparison")
+            
+            if st.button("🗺️ Generate Comparison Heatmaps", use_container_width=True, type="primary"):
+                with st.spinner("Generating prediction and actual data heatmaps..."):
+                    try:
+                        # Use the already trained predictor from session state
+                        predictor = st.session_state.predictor
+                        
+                        # Ensure Year column exists in df
+                        df_copy = df.copy()
+                        if 'Year' not in df_copy.columns and 'Date Reported Missing' in df_copy.columns:
+                            df_copy['Date Reported Missing'] = pd.to_datetime(df_copy['Date Reported Missing'], errors='coerce')
+                            df_copy['Year'] = df_copy['Date Reported Missing'].dt.year
+                        
+                        # Generate prediction heatmap
+                        prediction_path = predictor.generate_prediction_heatmap(2025)
+                        
+                        # Generate actual data heatmap
+                        actual_path = predictor.generate_actual_heatmap(df_copy, 2025)
+                        
+                        st.success(f"✅ Both heatmaps generated successfully!")
+                        
+                        # Display both heatmaps side by side
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown("**Predicted Hotspots for 2025**")
+                            with open(prediction_path, 'r', encoding='utf-8') as f:
+                                html_content = f.read()
+                            st.components.v1.html(html_content, height=600, scrolling=True)
+                        
+                        with col2:
+                            st.markdown("**Actual 2025 Data**")
+                            with open(actual_path, 'r', encoding='utf-8') as f:
+                                html_content = f.read()
+                            st.components.v1.html(html_content, height=600, scrolling=True)
+                        
+                    except Exception as e:
+                        st.error(f"❌ Failed to generate heatmaps: {str(e)}")
+                        st.exception(e)
+            
+            # Download predictions button below
             st.markdown("---")
             csv = pred_df.to_csv(index=False).encode('utf-8')
             st.download_button(

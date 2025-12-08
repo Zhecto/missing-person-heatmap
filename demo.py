@@ -296,6 +296,10 @@ def demo_pipeline():
     print("\nTop 10 Predicted Hotspots:")
     print(predictions[['Barangay District', 'Predicted_Cases', 'Prev_Year_Count']])
     
+    # Generate prediction heatmap
+    print(f"\nGenerating prediction heatmap for {next_year}...")
+    heatmap_path = predictor.generate_prediction_heatmap(next_year)
+    
     # Feature importance
     feature_importance = predictor.get_feature_importance()
     print("\nFeature Importance:")
