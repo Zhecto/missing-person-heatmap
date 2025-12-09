@@ -29,3 +29,6 @@ openpyxl>=3.1.0
 
 # Streamlit (alternative interface)
 streamlit>=1.29.0
+
+# Synthetic data generation
+sdv>=1.10.0
