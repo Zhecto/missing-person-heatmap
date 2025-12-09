@@ -544,24 +544,32 @@ elif page == "🔮 Prediction Results":
             
             st.dataframe(pred_df, use_container_width=True)
             
-            # Visualization of predicted hotspots
+            # Full predictions table for all barangays
             st.markdown("---")
-            st.subheader("📈 Predicted Case Intensity")
+            st.subheader("📋 Complete Predictions for All Barangays (2025)")
             
-            # Determine correct column name
-            pred_col = 'Predicted_Cases' if 'Predicted_Cases' in pred_df.columns else 'Predicted Incidents'
+            # Get all predictions from the predictor
+            predictor = st.session_state.predictor
+            all_predictions = predictor.get_all_predictions()
             
-            fig = px.bar(
-                pred_df.head(10),
-                x=pred_col,
-                y='Barangay District',
-                orientation='h',
-                title="Top 10 Barangays by Predicted Case Count",
-                color=pred_col,
-                color_continuous_scale='Reds'
-            )
-            fig.update_layout(yaxis={'categoryorder': 'total ascending'})
-            st.plotly_chart(fig, use_container_width=True)
+            # Sort by predicted cases (descending)
+            all_predictions_sorted = all_predictions.sort_values('Predicted_Cases', ascending=False).copy()
+            
+            # Add ranking
+            all_predictions_sorted.insert(0, 'Rank', range(1, len(all_predictions_sorted) + 1))
+            
+            # Select relevant columns for display
+            display_cols = ['Rank', 'Barangay District', 'Predicted_Cases', 'Prev_Year_Count', 'Latitude', 'Longitude']
+            all_predictions_display = all_predictions_sorted[display_cols].copy()
+            
+            # Round predicted cases to 2 decimals
+            all_predictions_display['Predicted_Cases'] = all_predictions_display['Predicted_Cases'].round(2)
+            all_predictions_display['Latitude'] = all_predictions_display['Latitude'].round(6)
+            all_predictions_display['Longitude'] = all_predictions_display['Longitude'].round(6)
+            
+            st.dataframe(all_predictions_display, use_container_width=True, hide_index=True)
+            
+            st.info(f"📊 Total Barangays Analyzed: {len(all_predictions_display)}")
             
             # Model feature importance (interpretability)
             st.markdown("---")
