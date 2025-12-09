@@ -438,7 +438,7 @@ elif page == "📊 Clustering Results":
                 color='cluster',
                 hover_data=['Barangay District'],
                 title="Missing Person Incidents by Cluster",
-                mapbox_style="open-street-map",
+                mapbox_style="carto-positron",
                 zoom=10,
                 color_continuous_scale='Viridis'
             )
