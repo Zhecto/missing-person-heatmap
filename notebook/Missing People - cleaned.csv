@@ -1,0 +1,59 @@
+Person_ID,Person ID,AGE,GENDER,Date Reported Missing,Time Reported Missing,Date Last Seen,Location Last Seen,Post URL,Time_Obj,Age_Group,City_Cleaned,Barangay_Cleaned,District_Cleaned,Latitude,Longitude,Location_Match_Level,Location_Match_Score,Year,Hour_Missing
+MP-0001,,59,Male,2020-01-14,12:48 PM,2019-12-14,"Malate, Manila",https://www.facebook.com/share/p/1Fp5H7uddW/,2025-12-11 12:48:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,2020.0,12.0
+MP-0002,,41,Male,2020-01-24,5:12 PM,2021-01-16,"Sampaloc, Manila",https://www.facebook.com/share/p/1CwZW3pbpf/,2025-12-11 17:12:00,Adult,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2020.0,17.0
+MP-0003,,43,Male,2020-02-09,7:03 PM,,"Tondo, Manila",https://www.facebook.com/share/p/1CoiXoTEjb/,2025-12-11 19:03:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2020.0,19.0
+MP-0004,,14,Male,2020-02-15,12:19 PM,,"Binondo, Manila",https://www.facebook.com/share/p/17Umn23xj9/,2025-12-11 12:19:00,Young Teen,Manila City,,Binondo,14.6006,120.9754,district,1.0,2020.0,12.0
+MP-0005,,16,Male,2020-03-23,12:25,2025-03-11,"Paco,. Manila",https://www.facebook.com/share/p/1BhMzYvEJN/,2025-12-11 12:25:00,Teen,Manila City,,Paco,14.5833,120.9961,district,1.0,2020.0,12.0
+MP-0006,,29,Male,2020-11-30,5:16 PM,,"Tondo, Manila",https://www.facebook.com/share/p/162jFGmwqA/,2025-12-11 17:16:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2020.0,17.0
+MP-0007,,55,Male,2020-12-26,7:34 PM,2020-12-16,"Tondo, Manila",https://www.facebook.com/share/p/1EjVdH5BYz/,2025-12-11 19:34:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2020.0,19.0
+MP-0008,,25,Male,2021-02-06,5:31 PM,,"Ermita, Manila",https://www.facebook.com/share/p/17hJLX9nYt/,2025-12-11 17:31:00,Adult,Manila City,,Ermita,14.5826,120.9843,district,1.0,2021.0,17.0
+MP-0009,,54,Male,2021-02-15,2:32 PM,,"Sampaloc, Manila",https://www.facebook.com/share/p/1Fu2urU9iu/,2025-12-11 14:32:00,Adult,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2021.0,14.0
+MP-0010,,40,Male,,9:43 AM,,"Malate, Manila",https://www.facebook.com/share/p/15VT7vG2yY8/,2025-12-11 09:43:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,,9.0
+MP-0011,,41,Female,,5:00 PM,,"Malate (in front of placement agency, Quirino Ave., Malate)",https://www.gmanetwork.com/news/serbisyopubliko/missingpersons/777104/missing-persons-haj-muslimen-mantawil-saban-and-bai-monerah-rajamuda-pandalat-saban/story/,2025-12-11 17:00:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,,17.0
+MP-0012,,51,Male,,5:00 PM,,"Malate (in front of placement agency, Quirino Ave., Malate)",https://www.gmanetwork.com/news/serbisyopubliko/missingpersons/777104/missing-persons-haj-muslimen-mantawil-saban-and-bai-monerah-rajamuda-pandalat-saban/story/,2025-12-11 17:00:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,,17.0
+MP-0013,,31,Male,2021-03-06,9:30 PM,,"Tondo, Manila",https://www.facebook.com/share/p/1HDXQA1qvD/,2025-12-11 21:30:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2021.0,21.0
+MP-0014,,13,Male,2020-03-11,1:02 PM,2019-12-15,"Tondo Church, Manila",https://www.facebook.com/groups/190060074445181/permalink/2726094260841737/,2025-12-11 13:02:00,Young Teen,Manila City,,Tondo,14.6186,120.9681,district,1.0,2020.0,13.0
+MP-0015,,34,Male,2021-04-29,2:19 PM,,"Sampaloc, Manila",https://www.facebook.com/share/1GvCaRHway/,2025-12-11 14:19:00,Adult,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2021.0,14.0
+MP-0016,,65,Female,2021-05-17,12:32 PM,,"Avenida, manila",https://www.facebook.com/share/p/1BQFFu1ejN/,2025-12-11 12:32:00,Old,Manila City,,Pandacan,14.5885,121.0069,district,0.759,2021.0,12.0
+MP-0017,,27,Male,2021-05-18,9:13 PM,,"Tondo, Manila",https://www.facebook.com/share/p/14RZFayikr5/,2025-12-11 21:13:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2021.0,21.0
+MP-0018,,75,Male,2021-09-21,4:10 PM,,"Binondo, Manila",https://www.facebook.com/share/p/17fwddGJbF/,2025-12-11 16:10:00,Old,Manila City,,Binondo,14.6006,120.9754,district,1.0,2021.0,16.0
+MP-0019,,42,Male,2021-09-28,5:54 PM,,"Binondo, Manila",https://www.facebook.com/share/p/1BCqyq9hW9/,2025-12-11 17:54:00,Adult,Manila City,,Binondo,14.6006,120.9754,district,1.0,2021.0,17.0
+MP-0020,,60,Male,2021-10-08,2:08 PM,,"Sampaloc, Manila",https://www.facebook.com/share/p/17Z61Yg4sZ/,2025-12-11 14:08:00,Old,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2021.0,14.0
+MP-0021,,16,Female,2021-10-09,7:13 PM,,"Tondo, Manila",https://www.facebook.com/share/p/17Sp1FCPjo/,2025-12-11 19:13:00,Teen,Manila City,,Tondo,14.6186,120.9681,district,1.0,2021.0,19.0
+MP-0022,,13,Male,2021-11-08,8:04 PM,,"Quiapo, Manila",https://www.facebook.com/share/p/1HjPeadtXJ/,2025-12-11 20:04:00,Young Teen,Manila City,,Quiapo,14.5998,120.9844,district,1.0,2021.0,20.0
+MP-0023,,82,Male,,11:23 PM,,"Sampaloc, Manila",https://www.facebook.com/share/p/1AHbgqgS9k/,2025-12-11 23:23:00,Old,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,,23.0
+MP-0024,,21,Female,2021-11-11,7:38 PM,,"Tondo, Manila",https://www.facebook.com/share/p/1AL4VEqnBX/,2025-12-11 19:38:00,Young Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2021.0,19.0
+MP-0025,,20,Female,2021-12-04,7:26 PM,,"Quiapo, Manila",https://www.facebook.com/share/p/17X6qaoEp2/,2025-12-11 19:26:00,Young Adult,Manila City,,Quiapo,14.5998,120.9844,district,1.0,2021.0,19.0
+MP-0026,,16,Male,2021-12-11,5:52 PM,,"Ermita, Manila",https://www.facebook.com/groups/964888686883029/posts/4732989473406246/,2025-12-11 17:52:00,Teen,Manila City,,Ermita,14.5826,120.9843,district,1.0,2021.0,17.0
+MP-0027,,17,Female,,19:20,2022-05-01,Mabini direction / Quiapo area (Manila).,https://www.gmanetwork.com/news/serbisyopubliko/missingpersons/831912/missing-person-reglyn-beronas/story/,2025-12-11 19:20:00,Teen,Manila City,,Quiapo,14.5998,120.9844,district,1.0,,19.0
+MP-0028,,20,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/photo.php?fbid=103624085556166&set=a.103624235556151&type=3,2025-12-11 00:13:00,Young Adult,Manila City,,Malate,14.562222,120.993889,barangay,1.0,,0.0
+MP-0029,,22,Female,2022-02-13,8:19 PM,2022-02-09,Tondo Manila,https://www.facebook.com/share/p/1AReokkcnK/,2025-12-11 20:19:00,Young Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2022.0,20.0
+MP-0030,,24,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/share/1Bh6rzz2Ki/,2025-12-11 00:13:00,Young Adult,Manila City,,Malate,14.562222,120.993889,barangay,1.0,,0.0
+MP-0031,,27,Male,2023-09-26,7:03 PM,2023-09-03,Malate Manila,https://www.facebook.com/share/p/1FS2wyC7Dx/,2025-12-11 19:03:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,2023.0,19.0
+MP-0032,,31,Male,2023-11-23,7:00 AM,2023-11-19,SM Manila,https://www.facebook.com/groups/190060074445181/permalink/6812371262213996/,2025-12-11 07:00:00,Adult,Manila City,Barangay 287,Binondo,14.6006,120.9754,barangay,0.737,2023.0,7.0
+MP-0033,,32,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/share/17XCoxv1s3/,2025-12-11 00:13:00,Adult,Manila City,,Malate,14.562222,120.993889,barangay,1.0,,0.0
+MP-0034,,34,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/photo.php?fbid=103624072222834&set=a.103624235556151&type=3,2025-12-11 00:13:00,Adult,Manila City,,Malate,14.562222,120.993889,barangay,1.0,,0.0
+MP-0035,,34,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/share/174qL4wEEN/,2025-12-11 00:13:00,Adult,Manila City,,Malate,14.562222,120.993889,barangay,1.0,,0.0
+MP-0036,,40,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/share/1AFLGNAeWJ/,2025-12-11 00:13:00,Adult,Manila City,,Malate,14.562222,120.993889,barangay,1.0,,0.0
+MP-0037,,42,Male,2023-07-04,9:37 PM,2023-06-26,Tondo Manila,https://www.facebook.com/share/p/14THDnkxYRY/,2025-12-11 21:37:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2023.0,21.0
+MP-0038,,52,Female,2022-06-06,2:00,,Malate Manila,https://www.facebook.com/share/p/1AFC9M3xjH/,2025-12-11 02:00:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,2022.0,2.0
+MP-0039,,72,Male,2023-11-28,,2023-11-24,Sampaloc Manila,https://www.facebook.com/share/p/1DQNWqogc7/,,Old,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2023.0,
+MP-0040,,6,Male,2024-04-27,1:02,2024-04-26,"Sampaloc, Manila",https://www.facebook.com/share/p/17PG1RwWqm/,2025-12-11 01:02:00,Child,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2024.0,1.0
+MP-0041,,17,Female,2024-11-22,22:30,2024-11-19,NU Nazareth Sampaloc Manila,https://www.facebook.com/share/p/1CfuoHWRnb/,2025-12-11 22:30:00,Teen,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2024.0,22.0
+MP-0042,,29,Female,2024-05-11,9:14,2024-05-02,"Intramuros, Manila City",https://www.facebook.com/share/p/1CKgPzoKWQ/,2025-12-11 09:14:00,Adult,Manila City,,Intramuros,14.5904,120.977,district,1.0,2024.0,9.0
+MP-0043,,35,Male,2024-06-20,22:25,2024-03-06,"Leon Guinto St., Malate, Manila",https://www.facebook.com/share/1BRRNgh2U1/,2025-12-11 22:25:00,Adult,Manila City,,Malate,14.5714,120.9904,district,1.0,2024.0,22.0
+MP-0044,,39,Male,2024-06-13,14:03,,New Antipolo tondo manila,https://www.facebook.com/share/p/1ATzhZkC93/,2025-12-11 14:03:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2024.0,14.0
+MP-0045,,48,Female,2024-05-11,9:14,,"Intramuros, Manila",https://www.facebook.com/share/p/1CyQFKrfky/,2025-12-11 09:14:00,Adult,Manila City,,Intramuros,14.5904,120.977,district,1.0,2024.0,9.0
+MP-0046,,65,Male,2024-12-27,23:42,,"Tondo, Manila",https://www.facebook.com/share/p/14TVwXQhj5R/,2025-12-11 23:42:00,Old,Manila City,,Tondo,14.6186,120.9681,district,1.0,2024.0,23.0
+MP-0047,,77,Male,2024-09-01,9:30,,"Old Santa Mesa, Manila",https://www.facebook.com/share/p/17ntrz7DkU/,2025-12-11 09:30:00,Old,Manila City,,Santa Mesa,14.603,121.018,district,1.0,2024.0,9.0
+MP-0048,,adult,Female,2025-02-04,12:28,2025-01-27,QUIAPO MANILA,https://www.facebook.com/share/p/1Ab2vdD3U6/,2025-12-11 12:28:00,Adult,Manila City,,Quiapo,14.5998,120.9844,district,1.0,2025.0,12.0
+MP-0049,,8,Female,2025-05-02,17:40,2025-04-25,"Port Area, Manila",https://www.facebook.com/groups/190060074445181/permalink/9679359338848493/,2025-12-11 17:40:00,Child,Manila City,,Port Area,14.588,120.963,district,1.0,2025.0,17.0
+MP-0050,,7,Male,2025-05-20,15:56,2025-04-29,San Andres Bukid Manila,https://www.facebook.com/share/p/1H3MYcpYaC/,2025-12-11 15:56:00,Child,Manila City,,San Andres,14.5746,121.0039,district,1.0,2025.0,15.0
+MP-0051,,teen,Male,2025-07-17,14:51,,"Intramuros, Manila",https://www.facebook.com/share/p/16j1sWc55E/,2025-12-11 14:51:00,Teen,Manila City,,Intramuros,14.5904,120.977,district,1.0,2025.0,14.0
+MP-0052,,senior,Female,2025-07-28,19:32,2025-07-16,"Balut, Tondo, Manila",https://www.facebook.com/share/p/17XEKFR5sF/,2025-12-11 19:32:00,Old,Manila City,,Tondo,14.6186,120.9681,district,1.0,2025.0,19.0
+MP-0053,,68,Female,2025-09-24,5:35,,"Paco, Manila",https://www.facebook.com/share/p/17NgRrwi6G/,2025-12-11 05:35:00,Old,Manila City,,Paco,14.5833,120.9961,district,1.0,2025.0,5.0
+MP-0054,,43,Female,2025-10-01,17:24,,"Tondo, Manila",https://www.facebook.com/share/p/17Zk7cuyxh/,2025-12-11 17:24:00,Adult,Manila City,,Tondo,14.6186,120.9681,district,1.0,2025.0,17.0
+MP-0055,,4,Male,2025-10-08,12:53,,"Dakma Street, Santa Mesa, Manila.",https://www.facebook.com/groups/190060074445181/permalink/24769137526110761/,2025-12-11 12:53:00,Child,Manila City,,Santa Mesa,14.603,121.018,district,1.0,2025.0,12.0
+MP-0056,,adult older,Male,2025-10-09,10:00,,"J. Abad Santos Avenue, Hermosa Street, Tondo, Manila,",https://www.facebook.com/share/p/17jJqcUEcG/,2025-12-11 10:00:00,Old,Manila City,,Tondo,14.6186,120.9681,district,1.0,2025.0,10.0
+MP-0057,,68,Female,2025-11-30,,,Tuazon  street sampaloc  manila,https://www.facebook.com/share/p/19i4czDg3h/,,Old,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2025.0,
+MP-0058,,74,Male,2025-12-04,0:30,,Sampaloc Manila,https://www.facebook.com/share/p/1GLeNqhWaL/,2025-12-11 00:30:00,Old,Manila City,,Sampaloc,14.6133,121.0003,district,1.0,2025.0,0.0
