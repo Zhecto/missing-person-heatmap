@@ -107,6 +107,42 @@ try:
     # Show data preview
     with st.expander("View Data"):
         st.dataframe(df_map[['Person_ID', 'AGE', 'GENDER', 'District_Cleaned', 'Date Reported Missing', 'Latitude', 'Longitude']])
+    
+    # Show analysis outputs
+    st.subheader("📊 Analysis Outputs")
+    outputs_path = Path(__file__).parent / "notebook" / "outputs"
+    
+    # Display PNG images
+    png_files = [
+        ("Age Group Distribution", "age_group_distribution.png"),
+        ("Hourly Missing Pattern", "hourly_pattern.png"),
+        ("Location Completeness", "location_completeness_pie.png"),
+        ("Metro Manila City Counts", "metro_manila_city_counts.png"),
+        ("Missing Values Overview", "missing_values_bar.png"),
+        ("Monthly Timeline", "monthly_timeline.png"),
+        ("Seasonality Pattern", "seasonality_polar_plot.png"),
+        ("Top Districts", "top_districts_bar.png"),
+        ("DBSCAN Clusters Scatter", "dbscan_clusters_scatter.png")
+    ]
+    
+    for title, filename in png_files:
+        filepath = outputs_path / filename
+        if filepath.exists():
+            with st.expander(title):
+                st.image(str(filepath), use_container_width=True)
+    
+    # Display HTML maps
+    html_files = [
+        ("DBSCAN Clusters Map", "dbscan_clusters_map.html")
+    ]
+    
+    for title, filename in html_files:
+        filepath = outputs_path / filename
+        if filepath.exists():
+            with st.expander(title):
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    html_content = f.read()
+                st.components.v1.html(html_content, height=600, scrolling=True)
 
 except Exception as e:
     st.error(f"Error loading data: {e}")
