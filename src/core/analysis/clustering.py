@@ -206,6 +206,15 @@ class ClusteringModel:
             if 'Barangay District' in cluster_data.columns:
                 top_location = cluster_data['Barangay District'].value_counts().index[0]
                 stats['Top_Location'] = top_location
+            elif 'District' in cluster_data.columns:
+                district_counts = cluster_data['District'].value_counts()
+                if not district_counts.empty:
+                    stats['Top_Location'] = district_counts.index[0]
+
+            if 'Barangay' in cluster_data.columns:
+                barangay_counts = cluster_data['Barangay'].dropna().value_counts()
+                if not barangay_counts.empty:
+                    stats['Top_Barangay'] = barangay_counts.index[0]
             
             stats_list.append(stats)
         
