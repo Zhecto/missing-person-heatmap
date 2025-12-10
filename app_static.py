@@ -26,6 +26,17 @@ try:
     # Filter valid coordinates
     df_map = df.dropna(subset=['Latitude', 'Longitude']).copy()
     
+    # Year filter
+    years = sorted(df_map['Year'].dropna().unique())
+    year_options = ['All'] + [int(y) for y in years]
+    selected_year = st.selectbox("Filter by Year", year_options, index=0)
+    
+    if selected_year != 'All':
+        df_map = df_map[df_map['Year'] == selected_year]
+    
+    # Toggle for district labels
+    show_labels = st.toggle("Show District Labels", value=False)
+    
     # Display metrics
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -61,6 +72,32 @@ try:
         blur=35,
         gradient={0.4: 'blue', 0.5: 'lime', 0.65: 'yellow', 0.8: 'orange', 1.0: 'red'}
     ).add_to(m)
+    
+    # Add district labels if toggle is on
+    if show_labels:
+        district_centers = df_map.groupby('District_Cleaned').agg({
+            'Latitude': 'mean',
+            'Longitude': 'mean',
+            'Person_ID': 'count'
+        }).reset_index()
+        district_centers.columns = ['District', 'Latitude', 'Longitude', 'Case_Count']
+        
+        for idx, row in district_centers.iterrows():
+            folium.Marker(
+                location=[row['Latitude'], row['Longitude']],
+                icon=folium.DivIcon(html=f"""
+                    <div style="
+                        font-size: 11px;
+                        font-weight: bold;
+                        color: white;
+                        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+                        white-space: nowrap;
+                    ">
+                        {row['District']}<br>
+                        <span style="font-size: 10px;">({row['Case_Count']} cases)</span>
+                    </div>
+                """)
+            ).add_to(m)
     
     # Display map
     st.components.v1.html(m._repr_html_(), height=600)
