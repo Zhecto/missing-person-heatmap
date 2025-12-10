@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_72b251df621ff91069137594ec9bdfbf {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_72b251df621ff91069137594ec9bdfbf" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_72b251df621ff91069137594ec9bdfbf = L.map(
+                "map_72b251df621ff91069137594ec9bdfbf",
+                {
+                    center: [14.59735917241379, 120.98554196551723],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_22ab6e7074a39dce61e794a0c00c7c53 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_22ab6e7074a39dce61e794a0c00c7c53.addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+            var circle_marker_d6d002c036e037ea3346d58f908c9358 = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_6de86c9cbb9a317163faaeb72809c288 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_c643892da19a903ab75fdc14e226401b = $(`<div id="html_c643892da19a903ab75fdc14e226401b" style="width: 100.0%; height: 100.0%;">ID: MP-0001<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_6de86c9cbb9a317163faaeb72809c288.setContent(html_c643892da19a903ab75fdc14e226401b);
+            
+        
+
+        circle_marker_d6d002c036e037ea3346d58f908c9358.bindPopup(popup_6de86c9cbb9a317163faaeb72809c288)
+        ;
+
+        
+    
+    
+            var circle_marker_31008ea2af10b4eaf359f0ccc0b32f36 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_cddb9e98b717b2b7f7b5238b3ca7c27f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_c4fb28036fa06b7336678c88d20500cc = $(`<div id="html_c4fb28036fa06b7336678c88d20500cc" style="width: 100.0%; height: 100.0%;">ID: MP-0002<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_cddb9e98b717b2b7f7b5238b3ca7c27f.setContent(html_c4fb28036fa06b7336678c88d20500cc);
+            
+        
+
+        circle_marker_31008ea2af10b4eaf359f0ccc0b32f36.bindPopup(popup_cddb9e98b717b2b7f7b5238b3ca7c27f)
+        ;
+
+        
+    
+    
+            var circle_marker_d3b1d1d62b3c4018fa8184efc0f8102c = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_903a1fc8d88f035dccdc6cd1a5f97b0a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_005149bb10316febf83972da0aca22f1 = $(`<div id="html_005149bb10316febf83972da0aca22f1" style="width: 100.0%; height: 100.0%;">ID: MP-0003<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_903a1fc8d88f035dccdc6cd1a5f97b0a.setContent(html_005149bb10316febf83972da0aca22f1);
+            
+        
+
+        circle_marker_d3b1d1d62b3c4018fa8184efc0f8102c.bindPopup(popup_903a1fc8d88f035dccdc6cd1a5f97b0a)
+        ;
+
+        
+    
+    
+            var circle_marker_1b4ed240059ec221bbb77d84045656c2 = L.circleMarker(
+                [14.6006, 120.9754],
+                {"bubblingMouseEvents": true, "color": "#d62728", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_71c31916b2379c005edee56610418f89 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_58e8b81f6ca8411b336e6ac1cdc1b266 = $(`<div id="html_58e8b81f6ca8411b336e6ac1cdc1b266" style="width: 100.0%; height: 100.0%;">ID: MP-0004<br>Barangay: District Fallback<br>District: Binondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 3</div>`)[0];
+                popup_71c31916b2379c005edee56610418f89.setContent(html_58e8b81f6ca8411b336e6ac1cdc1b266);
+            
+        
+
+        circle_marker_1b4ed240059ec221bbb77d84045656c2.bindPopup(popup_71c31916b2379c005edee56610418f89)
+        ;
+
+        
+    
+    
+            var circle_marker_5fd96817b862b83fcebfc158b64c2942 = L.circleMarker(
+                [14.5833, 120.9961],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_92c7e129ee26b4cbacfaefce97738abe = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_5c8e321441a46ec1d18ee21a88d65238 = $(`<div id="html_5c8e321441a46ec1d18ee21a88d65238" style="width: 100.0%; height: 100.0%;">ID: MP-0005<br>Barangay: District Fallback<br>District: Paco<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_92c7e129ee26b4cbacfaefce97738abe.setContent(html_5c8e321441a46ec1d18ee21a88d65238);
+            
+        
+
+        circle_marker_5fd96817b862b83fcebfc158b64c2942.bindPopup(popup_92c7e129ee26b4cbacfaefce97738abe)
+        ;
+
+        
+    
+    
+            var circle_marker_ff7ca18d9edca04d3303b06fad0cf7db = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_4ad5ed6ee8ab24c7b1ae39620617254a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ecf4994b5eebeb619501fbf249d4616b = $(`<div id="html_ecf4994b5eebeb619501fbf249d4616b" style="width: 100.0%; height: 100.0%;">ID: MP-0006<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_4ad5ed6ee8ab24c7b1ae39620617254a.setContent(html_ecf4994b5eebeb619501fbf249d4616b);
+            
+        
+
+        circle_marker_ff7ca18d9edca04d3303b06fad0cf7db.bindPopup(popup_4ad5ed6ee8ab24c7b1ae39620617254a)
+        ;
+
+        
+    
+    
+            var circle_marker_9498cc256a89e9223b0bf7287c388d0c = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_7b03c8379b4056c91804a809be7ffa5a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_c13f5a2a43fd6646ceb185dd263a34ad = $(`<div id="html_c13f5a2a43fd6646ceb185dd263a34ad" style="width: 100.0%; height: 100.0%;">ID: MP-0007<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_7b03c8379b4056c91804a809be7ffa5a.setContent(html_c13f5a2a43fd6646ceb185dd263a34ad);
+            
+        
+
+        circle_marker_9498cc256a89e9223b0bf7287c388d0c.bindPopup(popup_7b03c8379b4056c91804a809be7ffa5a)
+        ;
+
+        
+    
+    
+            var circle_marker_7ec556e58aa9bad5cb7f58a6ebfd0b29 = L.circleMarker(
+                [14.5826, 120.9843],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_949dc4b56fe04509d7fb6e3d4492286c = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d1c4d3f1199333ffd8f7e3a569556d8b = $(`<div id="html_d1c4d3f1199333ffd8f7e3a569556d8b" style="width: 100.0%; height: 100.0%;">ID: MP-0008<br>Barangay: District Fallback<br>District: Ermita<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_949dc4b56fe04509d7fb6e3d4492286c.setContent(html_d1c4d3f1199333ffd8f7e3a569556d8b);
+            
+        
+
+        circle_marker_7ec556e58aa9bad5cb7f58a6ebfd0b29.bindPopup(popup_949dc4b56fe04509d7fb6e3d4492286c)
+        ;
+
+        
+    
+    
+            var circle_marker_e631f4e8dd66bff421e4110b5a2bd19e = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_e8c6265f6088480cf19da800acb49928 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_3715e11662d2893f178bef7a08b20cc8 = $(`<div id="html_3715e11662d2893f178bef7a08b20cc8" style="width: 100.0%; height: 100.0%;">ID: MP-0009<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_e8c6265f6088480cf19da800acb49928.setContent(html_3715e11662d2893f178bef7a08b20cc8);
+            
+        
+
+        circle_marker_e631f4e8dd66bff421e4110b5a2bd19e.bindPopup(popup_e8c6265f6088480cf19da800acb49928)
+        ;
+
+        
+    
+    
+            var circle_marker_c8271b1477714a26f83171c94504b2f8 = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_2de4aa43515a829ad7596f88d418e267 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_3cfd84861f23ff701107f81d84638e08 = $(`<div id="html_3cfd84861f23ff701107f81d84638e08" style="width: 100.0%; height: 100.0%;">ID: MP-0010<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_2de4aa43515a829ad7596f88d418e267.setContent(html_3cfd84861f23ff701107f81d84638e08);
+            
+        
+
+        circle_marker_c8271b1477714a26f83171c94504b2f8.bindPopup(popup_2de4aa43515a829ad7596f88d418e267)
+        ;
+
+        
+    
+    
+            var circle_marker_2a1555951a2d6827a45a1974f5f68705 = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_73898cd24ab72c2fd85bea2f75de0a3d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f9531977ac0fb5e468f3d82ceeb56cb5 = $(`<div id="html_f9531977ac0fb5e468f3d82ceeb56cb5" style="width: 100.0%; height: 100.0%;">ID: MP-0011<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_73898cd24ab72c2fd85bea2f75de0a3d.setContent(html_f9531977ac0fb5e468f3d82ceeb56cb5);
+            
+        
+
+        circle_marker_2a1555951a2d6827a45a1974f5f68705.bindPopup(popup_73898cd24ab72c2fd85bea2f75de0a3d)
+        ;
+
+        
+    
+    
+            var circle_marker_4bb8f45f1004e9a028464071095a2f7c = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_0d511b13b4de4876b4d5c9b04b79600d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_49ddded047752fda980171b28b4c179a = $(`<div id="html_49ddded047752fda980171b28b4c179a" style="width: 100.0%; height: 100.0%;">ID: MP-0012<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_0d511b13b4de4876b4d5c9b04b79600d.setContent(html_49ddded047752fda980171b28b4c179a);
+            
+        
+
+        circle_marker_4bb8f45f1004e9a028464071095a2f7c.bindPopup(popup_0d511b13b4de4876b4d5c9b04b79600d)
+        ;
+
+        
+    
+    
+            var circle_marker_789fcc88f60fc1a91c184e0d683085f5 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_a953f0c1fde564543a5d898b6bd50ff7 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_af4dae15050cfcff3b48cd048b572d7e = $(`<div id="html_af4dae15050cfcff3b48cd048b572d7e" style="width: 100.0%; height: 100.0%;">ID: MP-0013<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_a953f0c1fde564543a5d898b6bd50ff7.setContent(html_af4dae15050cfcff3b48cd048b572d7e);
+            
+        
+
+        circle_marker_789fcc88f60fc1a91c184e0d683085f5.bindPopup(popup_a953f0c1fde564543a5d898b6bd50ff7)
+        ;
+
+        
+    
+    
+            var circle_marker_ba2f438861b65dec264cd4f7fd2ea10b = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_f5a0eccc435840d0e5847e3ae3f8b9dc = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_aaaacc3629e5c6508f3504dfc958bb01 = $(`<div id="html_aaaacc3629e5c6508f3504dfc958bb01" style="width: 100.0%; height: 100.0%;">ID: MP-0014<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_f5a0eccc435840d0e5847e3ae3f8b9dc.setContent(html_aaaacc3629e5c6508f3504dfc958bb01);
+            
+        
+
+        circle_marker_ba2f438861b65dec264cd4f7fd2ea10b.bindPopup(popup_f5a0eccc435840d0e5847e3ae3f8b9dc)
+        ;
+
+        
+    
+    
+            var circle_marker_0d995e9c6d28945a4bd3dbf86eba7d32 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_468b529e5c7543b236e5f6177d9ecea1 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_daebab9b7913ed4d55a3a1c2578f5ed8 = $(`<div id="html_daebab9b7913ed4d55a3a1c2578f5ed8" style="width: 100.0%; height: 100.0%;">ID: MP-0015<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_468b529e5c7543b236e5f6177d9ecea1.setContent(html_daebab9b7913ed4d55a3a1c2578f5ed8);
+            
+        
+
+        circle_marker_0d995e9c6d28945a4bd3dbf86eba7d32.bindPopup(popup_468b529e5c7543b236e5f6177d9ecea1)
+        ;
+
+        
+    
+    
+            var circle_marker_dcc7c1fc03d2049c9b8b55f79295844b = L.circleMarker(
+                [14.5885, 121.0069],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_9fb19f445d5961b4e9994dcc78cd369a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_dc023bf4324ba711534fb658b4ccc07d = $(`<div id="html_dc023bf4324ba711534fb658b4ccc07d" style="width: 100.0%; height: 100.0%;">ID: MP-0016<br>Barangay: District Fallback<br>District: Pandacan<br>Match Level: District<br>Match Score: 0.76<br>Cluster: Noise</div>`)[0];
+                popup_9fb19f445d5961b4e9994dcc78cd369a.setContent(html_dc023bf4324ba711534fb658b4ccc07d);
+            
+        
+
+        circle_marker_dcc7c1fc03d2049c9b8b55f79295844b.bindPopup(popup_9fb19f445d5961b4e9994dcc78cd369a)
+        ;
+
+        
+    
+    
+            var circle_marker_95b4e33327d93a00ad60497c23ac9a98 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_d5af075674bcf46d4f41a81a2e22dff8 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_79928b7c4f1bf61c9913f37302d1eaf4 = $(`<div id="html_79928b7c4f1bf61c9913f37302d1eaf4" style="width: 100.0%; height: 100.0%;">ID: MP-0017<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_d5af075674bcf46d4f41a81a2e22dff8.setContent(html_79928b7c4f1bf61c9913f37302d1eaf4);
+            
+        
+
+        circle_marker_95b4e33327d93a00ad60497c23ac9a98.bindPopup(popup_d5af075674bcf46d4f41a81a2e22dff8)
+        ;
+
+        
+    
+    
+            var circle_marker_4ed282f1ef18b15e8d19f420dafa1f82 = L.circleMarker(
+                [14.6006, 120.9754],
+                {"bubblingMouseEvents": true, "color": "#d62728", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_881b439121e5f0446ebb3cfdcc667f65 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_c5e4594def76e07c56380779fa7ba936 = $(`<div id="html_c5e4594def76e07c56380779fa7ba936" style="width: 100.0%; height: 100.0%;">ID: MP-0018<br>Barangay: District Fallback<br>District: Binondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 3</div>`)[0];
+                popup_881b439121e5f0446ebb3cfdcc667f65.setContent(html_c5e4594def76e07c56380779fa7ba936);
+            
+        
+
+        circle_marker_4ed282f1ef18b15e8d19f420dafa1f82.bindPopup(popup_881b439121e5f0446ebb3cfdcc667f65)
+        ;
+
+        
+    
+    
+            var circle_marker_38a3f81951dbfe5fa27c35cc5b02afe5 = L.circleMarker(
+                [14.6006, 120.9754],
+                {"bubblingMouseEvents": true, "color": "#d62728", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_9971c266b3eecc4e4ef8c21c74f7b07e = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e2d4843b81adfadc0421f4365fef2287 = $(`<div id="html_e2d4843b81adfadc0421f4365fef2287" style="width: 100.0%; height: 100.0%;">ID: MP-0019<br>Barangay: District Fallback<br>District: Binondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 3</div>`)[0];
+                popup_9971c266b3eecc4e4ef8c21c74f7b07e.setContent(html_e2d4843b81adfadc0421f4365fef2287);
+            
+        
+
+        circle_marker_38a3f81951dbfe5fa27c35cc5b02afe5.bindPopup(popup_9971c266b3eecc4e4ef8c21c74f7b07e)
+        ;
+
+        
+    
+    
+            var circle_marker_33457daadcff14332763c911911ca794 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_4fc3fc4de0e26e0af892613628d8816a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_74efccb810d689e36a79eee5aee8d9e2 = $(`<div id="html_74efccb810d689e36a79eee5aee8d9e2" style="width: 100.0%; height: 100.0%;">ID: MP-0020<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_4fc3fc4de0e26e0af892613628d8816a.setContent(html_74efccb810d689e36a79eee5aee8d9e2);
+            
+        
+
+        circle_marker_33457daadcff14332763c911911ca794.bindPopup(popup_4fc3fc4de0e26e0af892613628d8816a)
+        ;
+
+        
+    
+    
+            var circle_marker_b20a0dbfde48a849c7e7d9bfaad0f9b1 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_b000073b61ed33e80538b59f6d48a09d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_c85900e68752ae49c2990c8c18c65647 = $(`<div id="html_c85900e68752ae49c2990c8c18c65647" style="width: 100.0%; height: 100.0%;">ID: MP-0021<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_b000073b61ed33e80538b59f6d48a09d.setContent(html_c85900e68752ae49c2990c8c18c65647);
+            
+        
+
+        circle_marker_b20a0dbfde48a849c7e7d9bfaad0f9b1.bindPopup(popup_b000073b61ed33e80538b59f6d48a09d)
+        ;
+
+        
+    
+    
+            var circle_marker_6f89f67592299adad392536eac714256 = L.circleMarker(
+                [14.5998, 120.9844],
+                {"bubblingMouseEvents": true, "color": "#9467bd", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_7eb863f09584fc79b949f07889cf91c9 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_27405b850fb1edafbdefcc368cdf46e2 = $(`<div id="html_27405b850fb1edafbdefcc368cdf46e2" style="width: 100.0%; height: 100.0%;">ID: MP-0022<br>Barangay: District Fallback<br>District: Quiapo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 4</div>`)[0];
+                popup_7eb863f09584fc79b949f07889cf91c9.setContent(html_27405b850fb1edafbdefcc368cdf46e2);
+            
+        
+
+        circle_marker_6f89f67592299adad392536eac714256.bindPopup(popup_7eb863f09584fc79b949f07889cf91c9)
+        ;
+
+        
+    
+    
+            var circle_marker_b1fced98c215f47f8139ec6dcc15f138 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_ab1d95cd79bdb1333fc4fe0db3ae268d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e64e50bdb3ae876b199b08b7fcede207 = $(`<div id="html_e64e50bdb3ae876b199b08b7fcede207" style="width: 100.0%; height: 100.0%;">ID: MP-0023<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_ab1d95cd79bdb1333fc4fe0db3ae268d.setContent(html_e64e50bdb3ae876b199b08b7fcede207);
+            
+        
+
+        circle_marker_b1fced98c215f47f8139ec6dcc15f138.bindPopup(popup_ab1d95cd79bdb1333fc4fe0db3ae268d)
+        ;
+
+        
+    
+    
+            var circle_marker_6c82dba54db75091a4077a8770a16e1d = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_10f9052c005ec0f7398e769712adcc7a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a541861a09ec509f1bc7d7b866006d78 = $(`<div id="html_a541861a09ec509f1bc7d7b866006d78" style="width: 100.0%; height: 100.0%;">ID: MP-0024<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_10f9052c005ec0f7398e769712adcc7a.setContent(html_a541861a09ec509f1bc7d7b866006d78);
+            
+        
+
+        circle_marker_6c82dba54db75091a4077a8770a16e1d.bindPopup(popup_10f9052c005ec0f7398e769712adcc7a)
+        ;
+
+        
+    
+    
+            var circle_marker_ded36d3e563ef89b3c3cd685ad42fecb = L.circleMarker(
+                [14.5998, 120.9844],
+                {"bubblingMouseEvents": true, "color": "#9467bd", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_0ad67344df43b5d2fa7ccc246f8ce0e9 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_7333710ca046b4cfd073234a1b820ff8 = $(`<div id="html_7333710ca046b4cfd073234a1b820ff8" style="width: 100.0%; height: 100.0%;">ID: MP-0025<br>Barangay: District Fallback<br>District: Quiapo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 4</div>`)[0];
+                popup_0ad67344df43b5d2fa7ccc246f8ce0e9.setContent(html_7333710ca046b4cfd073234a1b820ff8);
+            
+        
+
+        circle_marker_ded36d3e563ef89b3c3cd685ad42fecb.bindPopup(popup_0ad67344df43b5d2fa7ccc246f8ce0e9)
+        ;
+
+        
+    
+    
+            var circle_marker_b7757e35a8d07f86deba3752b1ec2b43 = L.circleMarker(
+                [14.5826, 120.9843],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_51ed06f6b879055298b61a31b148edd2 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_5e259ade63f9560d3c0702137cd50045 = $(`<div id="html_5e259ade63f9560d3c0702137cd50045" style="width: 100.0%; height: 100.0%;">ID: MP-0026<br>Barangay: District Fallback<br>District: Ermita<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_51ed06f6b879055298b61a31b148edd2.setContent(html_5e259ade63f9560d3c0702137cd50045);
+            
+        
+
+        circle_marker_b7757e35a8d07f86deba3752b1ec2b43.bindPopup(popup_51ed06f6b879055298b61a31b148edd2)
+        ;
+
+        
+    
+    
+            var circle_marker_b0b71117a6e7d8abf77fb0b13bd6ea54 = L.circleMarker(
+                [14.5998, 120.9844],
+                {"bubblingMouseEvents": true, "color": "#9467bd", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_7e7e7820438210fc35c1a0141506ac57 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_77db6f38a8a191196a22e4df3ccc1761 = $(`<div id="html_77db6f38a8a191196a22e4df3ccc1761" style="width: 100.0%; height: 100.0%;">ID: MP-0027<br>Barangay: District Fallback<br>District: Quiapo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 4</div>`)[0];
+                popup_7e7e7820438210fc35c1a0141506ac57.setContent(html_77db6f38a8a191196a22e4df3ccc1761);
+            
+        
+
+        circle_marker_b0b71117a6e7d8abf77fb0b13bd6ea54.bindPopup(popup_7e7e7820438210fc35c1a0141506ac57)
+        ;
+
+        
+    
+    
+            var circle_marker_7764c99a6da05587db2ba61804fe21bc = L.circleMarker(
+                [14.562222, 120.993889],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_51bfd4bc302a823ec4859241acfe9b54 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_dbe4fe87ccac876ed00c4ceda6b5fba2 = $(`<div id="html_dbe4fe87ccac876ed00c4ceda6b5fba2" style="width: 100.0%; height: 100.0%;">ID: MP-0028<br>Barangay: District Fallback<br>District: Malate<br>Match Level: Barangay<br>Match Score: 1.00<br>Cluster: 5</div>`)[0];
+                popup_51bfd4bc302a823ec4859241acfe9b54.setContent(html_dbe4fe87ccac876ed00c4ceda6b5fba2);
+            
+        
+
+        circle_marker_7764c99a6da05587db2ba61804fe21bc.bindPopup(popup_51bfd4bc302a823ec4859241acfe9b54)
+        ;
+
+        
+    
+    
+            var circle_marker_d705a2d209555c627c6979be6dff0b65 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_ce73d7bf9e3ce721bf46336bbf75c12f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d0708d97a8518e8a8e5680bf412c5e91 = $(`<div id="html_d0708d97a8518e8a8e5680bf412c5e91" style="width: 100.0%; height: 100.0%;">ID: MP-0029<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_ce73d7bf9e3ce721bf46336bbf75c12f.setContent(html_d0708d97a8518e8a8e5680bf412c5e91);
+            
+        
+
+        circle_marker_d705a2d209555c627c6979be6dff0b65.bindPopup(popup_ce73d7bf9e3ce721bf46336bbf75c12f)
+        ;
+
+        
+    
+    
+            var circle_marker_825e00ffed76b7eb7e799b59d94bc6b6 = L.circleMarker(
+                [14.562222, 120.993889],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_2b14894abcc237f73610fb70a0bbf13f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ed024835f3dfde851395a9b523817dec = $(`<div id="html_ed024835f3dfde851395a9b523817dec" style="width: 100.0%; height: 100.0%;">ID: MP-0030<br>Barangay: District Fallback<br>District: Malate<br>Match Level: Barangay<br>Match Score: 1.00<br>Cluster: 5</div>`)[0];
+                popup_2b14894abcc237f73610fb70a0bbf13f.setContent(html_ed024835f3dfde851395a9b523817dec);
+            
+        
+
+        circle_marker_825e00ffed76b7eb7e799b59d94bc6b6.bindPopup(popup_2b14894abcc237f73610fb70a0bbf13f)
+        ;
+
+        
+    
+    
+            var circle_marker_2e8a95585f3bf6cd8705a96d62d656d3 = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_54159f7739f7db77cc066a2cccd0cbae = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_06319a7c1cf2a5ced78577ed61a4525b = $(`<div id="html_06319a7c1cf2a5ced78577ed61a4525b" style="width: 100.0%; height: 100.0%;">ID: MP-0031<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_54159f7739f7db77cc066a2cccd0cbae.setContent(html_06319a7c1cf2a5ced78577ed61a4525b);
+            
+        
+
+        circle_marker_2e8a95585f3bf6cd8705a96d62d656d3.bindPopup(popup_54159f7739f7db77cc066a2cccd0cbae)
+        ;
+
+        
+    
+    
+            var circle_marker_acd1bd7884084be30bda0b4171b43354 = L.circleMarker(
+                [14.6006, 120.9754],
+                {"bubblingMouseEvents": true, "color": "#d62728", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_6413511a464e53358757d0a3beec1dfd = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_9b92cfb2b5419bbe7ab01127c9ca767d = $(`<div id="html_9b92cfb2b5419bbe7ab01127c9ca767d" style="width: 100.0%; height: 100.0%;">ID: MP-0032<br>Barangay: Barangay 287<br>District: Binondo<br>Match Level: Barangay<br>Match Score: 0.74<br>Cluster: 3</div>`)[0];
+                popup_6413511a464e53358757d0a3beec1dfd.setContent(html_9b92cfb2b5419bbe7ab01127c9ca767d);
+            
+        
+
+        circle_marker_acd1bd7884084be30bda0b4171b43354.bindPopup(popup_6413511a464e53358757d0a3beec1dfd)
+        ;
+
+        
+    
+    
+            var circle_marker_48446fe719128d08a69427d7d4a71b7e = L.circleMarker(
+                [14.562222, 120.993889],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_3d63d8b360dbcdeb79965afae070d0fc = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_5fe99de003b8dc9117e270108f0aebf4 = $(`<div id="html_5fe99de003b8dc9117e270108f0aebf4" style="width: 100.0%; height: 100.0%;">ID: MP-0033<br>Barangay: District Fallback<br>District: Malate<br>Match Level: Barangay<br>Match Score: 1.00<br>Cluster: 5</div>`)[0];
+                popup_3d63d8b360dbcdeb79965afae070d0fc.setContent(html_5fe99de003b8dc9117e270108f0aebf4);
+            
+        
+
+        circle_marker_48446fe719128d08a69427d7d4a71b7e.bindPopup(popup_3d63d8b360dbcdeb79965afae070d0fc)
+        ;
+
+        
+    
+    
+            var circle_marker_4980fc312e8e05aed1c77c501aa55e95 = L.circleMarker(
+                [14.562222, 120.993889],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_623cf8ff1e23f319411103407ad7e7e0 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_6b21177c7393cc2950eaa2c4f023aac7 = $(`<div id="html_6b21177c7393cc2950eaa2c4f023aac7" style="width: 100.0%; height: 100.0%;">ID: MP-0034<br>Barangay: District Fallback<br>District: Malate<br>Match Level: Barangay<br>Match Score: 1.00<br>Cluster: 5</div>`)[0];
+                popup_623cf8ff1e23f319411103407ad7e7e0.setContent(html_6b21177c7393cc2950eaa2c4f023aac7);
+            
+        
+
+        circle_marker_4980fc312e8e05aed1c77c501aa55e95.bindPopup(popup_623cf8ff1e23f319411103407ad7e7e0)
+        ;
+
+        
+    
+    
+            var circle_marker_867ab26dc4a4dd53ed7d442112174421 = L.circleMarker(
+                [14.562222, 120.993889],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_6904884ee9b27759734909460bb1ee20 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e12b607f00481bc400f8134c12805e4c = $(`<div id="html_e12b607f00481bc400f8134c12805e4c" style="width: 100.0%; height: 100.0%;">ID: MP-0035<br>Barangay: District Fallback<br>District: Malate<br>Match Level: Barangay<br>Match Score: 1.00<br>Cluster: 5</div>`)[0];
+                popup_6904884ee9b27759734909460bb1ee20.setContent(html_e12b607f00481bc400f8134c12805e4c);
+            
+        
+
+        circle_marker_867ab26dc4a4dd53ed7d442112174421.bindPopup(popup_6904884ee9b27759734909460bb1ee20)
+        ;
+
+        
+    
+    
+            var circle_marker_f50c34f41c3f6829d8ebee5bc82e2667 = L.circleMarker(
+                [14.562222, 120.993889],
+                {"bubblingMouseEvents": true, "color": "#8c564b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c564b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_5df4249a1911b64d04f41035a6565c13 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_63f18adff2f38c28bb73585734a651ae = $(`<div id="html_63f18adff2f38c28bb73585734a651ae" style="width: 100.0%; height: 100.0%;">ID: MP-0036<br>Barangay: District Fallback<br>District: Malate<br>Match Level: Barangay<br>Match Score: 1.00<br>Cluster: 5</div>`)[0];
+                popup_5df4249a1911b64d04f41035a6565c13.setContent(html_63f18adff2f38c28bb73585734a651ae);
+            
+        
+
+        circle_marker_f50c34f41c3f6829d8ebee5bc82e2667.bindPopup(popup_5df4249a1911b64d04f41035a6565c13)
+        ;
+
+        
+    
+    
+            var circle_marker_b5cd4dcac51d45b0188c69bb7a501278 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_a98ad225c8bc9110f950154e1826b910 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_7eb96ccc1e5c0c4f5b0fea7f5dd75892 = $(`<div id="html_7eb96ccc1e5c0c4f5b0fea7f5dd75892" style="width: 100.0%; height: 100.0%;">ID: MP-0037<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_a98ad225c8bc9110f950154e1826b910.setContent(html_7eb96ccc1e5c0c4f5b0fea7f5dd75892);
+            
+        
+
+        circle_marker_b5cd4dcac51d45b0188c69bb7a501278.bindPopup(popup_a98ad225c8bc9110f950154e1826b910)
+        ;
+
+        
+    
+    
+            var circle_marker_6a2f84c8de18047954da453eade2e012 = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_35bbd22e9ee7e2f879773b8cc22a0693 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_6e511a8be8f54ba0e496dfc39410cbe5 = $(`<div id="html_6e511a8be8f54ba0e496dfc39410cbe5" style="width: 100.0%; height: 100.0%;">ID: MP-0038<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_35bbd22e9ee7e2f879773b8cc22a0693.setContent(html_6e511a8be8f54ba0e496dfc39410cbe5);
+            
+        
+
+        circle_marker_6a2f84c8de18047954da453eade2e012.bindPopup(popup_35bbd22e9ee7e2f879773b8cc22a0693)
+        ;
+
+        
+    
+    
+            var circle_marker_a37a4f8fba518e484cc47e8501a402ac = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_1b6bb281c6bcdd1e386f8ef064c81b67 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_8cb0efe50fab90c76690478101ca8921 = $(`<div id="html_8cb0efe50fab90c76690478101ca8921" style="width: 100.0%; height: 100.0%;">ID: MP-0039<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_1b6bb281c6bcdd1e386f8ef064c81b67.setContent(html_8cb0efe50fab90c76690478101ca8921);
+            
+        
+
+        circle_marker_a37a4f8fba518e484cc47e8501a402ac.bindPopup(popup_1b6bb281c6bcdd1e386f8ef064c81b67)
+        ;
+
+        
+    
+    
+            var circle_marker_a2d949dab8f6d9268999d6cd03bdc413 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_dfc49b19c21d42de82ad069f5c026cf1 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_afe75350b9c092cba19a42d31d571c02 = $(`<div id="html_afe75350b9c092cba19a42d31d571c02" style="width: 100.0%; height: 100.0%;">ID: MP-0040<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_dfc49b19c21d42de82ad069f5c026cf1.setContent(html_afe75350b9c092cba19a42d31d571c02);
+            
+        
+
+        circle_marker_a2d949dab8f6d9268999d6cd03bdc413.bindPopup(popup_dfc49b19c21d42de82ad069f5c026cf1)
+        ;
+
+        
+    
+    
+            var circle_marker_bae00ff68fddc9ef08a710dda659af31 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_4d6c10d7270ce77f8cd53fa38cadfca6 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_0f3c5714cc776e0be4d735bab87e3540 = $(`<div id="html_0f3c5714cc776e0be4d735bab87e3540" style="width: 100.0%; height: 100.0%;">ID: MP-0041<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_4d6c10d7270ce77f8cd53fa38cadfca6.setContent(html_0f3c5714cc776e0be4d735bab87e3540);
+            
+        
+
+        circle_marker_bae00ff68fddc9ef08a710dda659af31.bindPopup(popup_4d6c10d7270ce77f8cd53fa38cadfca6)
+        ;
+
+        
+    
+    
+            var circle_marker_80fe7e90f22003420b3d69ef5a6e3115 = L.circleMarker(
+                [14.5904, 120.977],
+                {"bubblingMouseEvents": true, "color": "#e377c2", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e377c2", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_19eea0bbb73400688193ff9e7f4feaff = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_fe233723cbcae70104336b2859b5ec1a = $(`<div id="html_fe233723cbcae70104336b2859b5ec1a" style="width: 100.0%; height: 100.0%;">ID: MP-0042<br>Barangay: District Fallback<br>District: Intramuros<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 6</div>`)[0];
+                popup_19eea0bbb73400688193ff9e7f4feaff.setContent(html_fe233723cbcae70104336b2859b5ec1a);
+            
+        
+
+        circle_marker_80fe7e90f22003420b3d69ef5a6e3115.bindPopup(popup_19eea0bbb73400688193ff9e7f4feaff)
+        ;
+
+        
+    
+    
+            var circle_marker_99bfaac5f7a7122e1455497ab0304c94 = L.circleMarker(
+                [14.5714, 120.9904],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_747e5d3108ed12afd698bdb3e0c237da = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_27c373507081ef6a57e265b5ff08242a = $(`<div id="html_27c373507081ef6a57e265b5ff08242a" style="width: 100.0%; height: 100.0%;">ID: MP-0043<br>Barangay: District Fallback<br>District: Malate<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 0</div>`)[0];
+                popup_747e5d3108ed12afd698bdb3e0c237da.setContent(html_27c373507081ef6a57e265b5ff08242a);
+            
+        
+
+        circle_marker_99bfaac5f7a7122e1455497ab0304c94.bindPopup(popup_747e5d3108ed12afd698bdb3e0c237da)
+        ;
+
+        
+    
+    
+            var circle_marker_854c2a65d297bca7350ef53a68c88bc2 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_b79d9837995e24d527645cec09a00c0a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_4343284eff7a2a3f7e67ec9833dea775 = $(`<div id="html_4343284eff7a2a3f7e67ec9833dea775" style="width: 100.0%; height: 100.0%;">ID: MP-0044<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_b79d9837995e24d527645cec09a00c0a.setContent(html_4343284eff7a2a3f7e67ec9833dea775);
+            
+        
+
+        circle_marker_854c2a65d297bca7350ef53a68c88bc2.bindPopup(popup_b79d9837995e24d527645cec09a00c0a)
+        ;
+
+        
+    
+    
+            var circle_marker_e3d97169496644da7ecc10c805fc7cba = L.circleMarker(
+                [14.5904, 120.977],
+                {"bubblingMouseEvents": true, "color": "#e377c2", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e377c2", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_d4837bb6c08c2529af12ac051ce264b9 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_130694cdfe206e007e8b06fbe7d4e068 = $(`<div id="html_130694cdfe206e007e8b06fbe7d4e068" style="width: 100.0%; height: 100.0%;">ID: MP-0045<br>Barangay: District Fallback<br>District: Intramuros<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 6</div>`)[0];
+                popup_d4837bb6c08c2529af12ac051ce264b9.setContent(html_130694cdfe206e007e8b06fbe7d4e068);
+            
+        
+
+        circle_marker_e3d97169496644da7ecc10c805fc7cba.bindPopup(popup_d4837bb6c08c2529af12ac051ce264b9)
+        ;
+
+        
+    
+    
+            var circle_marker_41fdca3b51e1ab9b95172daef3694be7 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_b46c4f393031fde8526ab0771764367d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d2d11a601ff9b237bea9102dd96811e0 = $(`<div id="html_d2d11a601ff9b237bea9102dd96811e0" style="width: 100.0%; height: 100.0%;">ID: MP-0046<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_b46c4f393031fde8526ab0771764367d.setContent(html_d2d11a601ff9b237bea9102dd96811e0);
+            
+        
+
+        circle_marker_41fdca3b51e1ab9b95172daef3694be7.bindPopup(popup_b46c4f393031fde8526ab0771764367d)
+        ;
+
+        
+    
+    
+            var circle_marker_cc6bb194f82e9636782e3e829472a9e8 = L.circleMarker(
+                [14.603, 121.018],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_a3873f2b8325575b9719a8de623f0959 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_8eae2095aa4f07e0e337e717d63c34a9 = $(`<div id="html_8eae2095aa4f07e0e337e717d63c34a9" style="width: 100.0%; height: 100.0%;">ID: MP-0047<br>Barangay: District Fallback<br>District: Santa Mesa<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_a3873f2b8325575b9719a8de623f0959.setContent(html_8eae2095aa4f07e0e337e717d63c34a9);
+            
+        
+
+        circle_marker_cc6bb194f82e9636782e3e829472a9e8.bindPopup(popup_a3873f2b8325575b9719a8de623f0959)
+        ;
+
+        
+    
+    
+            var circle_marker_f83aa50c7e933b21c2cd8af1550bdd4e = L.circleMarker(
+                [14.5998, 120.9844],
+                {"bubblingMouseEvents": true, "color": "#9467bd", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_133986d695820b3035d85a33799bf788 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a7c7f3d65cf8e741be19a8241ff5ebb7 = $(`<div id="html_a7c7f3d65cf8e741be19a8241ff5ebb7" style="width: 100.0%; height: 100.0%;">ID: MP-0048<br>Barangay: District Fallback<br>District: Quiapo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 4</div>`)[0];
+                popup_133986d695820b3035d85a33799bf788.setContent(html_a7c7f3d65cf8e741be19a8241ff5ebb7);
+            
+        
+
+        circle_marker_f83aa50c7e933b21c2cd8af1550bdd4e.bindPopup(popup_133986d695820b3035d85a33799bf788)
+        ;
+
+        
+    
+    
+            var circle_marker_558668865db0c8f4d7429d15875390bb = L.circleMarker(
+                [14.588, 120.963],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_09ef39f08bb10bab016a0ec12538e158 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_7306e824cfc07eb1186309c0d3c9f9c5 = $(`<div id="html_7306e824cfc07eb1186309c0d3c9f9c5" style="width: 100.0%; height: 100.0%;">ID: MP-0049<br>Barangay: District Fallback<br>District: Port Area<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_09ef39f08bb10bab016a0ec12538e158.setContent(html_7306e824cfc07eb1186309c0d3c9f9c5);
+            
+        
+
+        circle_marker_558668865db0c8f4d7429d15875390bb.bindPopup(popup_09ef39f08bb10bab016a0ec12538e158)
+        ;
+
+        
+    
+    
+            var circle_marker_51704b1bf8e611ced4c74b487d26cdc5 = L.circleMarker(
+                [14.5746, 121.0039],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_51d29353bffc8c1d52fa9fec7ede9438 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_1e9e3c48a4718ebd8f644a1af57f3cbe = $(`<div id="html_1e9e3c48a4718ebd8f644a1af57f3cbe" style="width: 100.0%; height: 100.0%;">ID: MP-0050<br>Barangay: District Fallback<br>District: San Andres<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_51d29353bffc8c1d52fa9fec7ede9438.setContent(html_1e9e3c48a4718ebd8f644a1af57f3cbe);
+            
+        
+
+        circle_marker_51704b1bf8e611ced4c74b487d26cdc5.bindPopup(popup_51d29353bffc8c1d52fa9fec7ede9438)
+        ;
+
+        
+    
+    
+            var circle_marker_0ec09f13f8d4d5dda54ac648daa9c9b3 = L.circleMarker(
+                [14.5904, 120.977],
+                {"bubblingMouseEvents": true, "color": "#e377c2", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e377c2", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_239cbb5958276e5d846a1ba52112db01 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_c637d1e715c8fc492abc26b9cd9cf9c2 = $(`<div id="html_c637d1e715c8fc492abc26b9cd9cf9c2" style="width: 100.0%; height: 100.0%;">ID: MP-0051<br>Barangay: District Fallback<br>District: Intramuros<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 6</div>`)[0];
+                popup_239cbb5958276e5d846a1ba52112db01.setContent(html_c637d1e715c8fc492abc26b9cd9cf9c2);
+            
+        
+
+        circle_marker_0ec09f13f8d4d5dda54ac648daa9c9b3.bindPopup(popup_239cbb5958276e5d846a1ba52112db01)
+        ;
+
+        
+    
+    
+            var circle_marker_0b69b8d3d3d4904136d0fa4441cb74a4 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_d7b0ce17e083dafe83451031d7874376 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_8a35a0ed9ce49a303bd7badbb1e90549 = $(`<div id="html_8a35a0ed9ce49a303bd7badbb1e90549" style="width: 100.0%; height: 100.0%;">ID: MP-0052<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_d7b0ce17e083dafe83451031d7874376.setContent(html_8a35a0ed9ce49a303bd7badbb1e90549);
+            
+        
+
+        circle_marker_0b69b8d3d3d4904136d0fa4441cb74a4.bindPopup(popup_d7b0ce17e083dafe83451031d7874376)
+        ;
+
+        
+    
+    
+            var circle_marker_b8826745ee86181e5e5080a67e5f3719 = L.circleMarker(
+                [14.5833, 120.9961],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_63854d38393eb1618b020151507f12d9 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_0c70cb1807f6138803400d659c7949cb = $(`<div id="html_0c70cb1807f6138803400d659c7949cb" style="width: 100.0%; height: 100.0%;">ID: MP-0053<br>Barangay: District Fallback<br>District: Paco<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_63854d38393eb1618b020151507f12d9.setContent(html_0c70cb1807f6138803400d659c7949cb);
+            
+        
+
+        circle_marker_b8826745ee86181e5e5080a67e5f3719.bindPopup(popup_63854d38393eb1618b020151507f12d9)
+        ;
+
+        
+    
+    
+            var circle_marker_a29504adfe76e1946c4a7dc7f09ea51f = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_191d9e62d238726e98e1fd12c16f8506 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_b54d5c80c13f97ba6f7988ce8945c82e = $(`<div id="html_b54d5c80c13f97ba6f7988ce8945c82e" style="width: 100.0%; height: 100.0%;">ID: MP-0054<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_191d9e62d238726e98e1fd12c16f8506.setContent(html_b54d5c80c13f97ba6f7988ce8945c82e);
+            
+        
+
+        circle_marker_a29504adfe76e1946c4a7dc7f09ea51f.bindPopup(popup_191d9e62d238726e98e1fd12c16f8506)
+        ;
+
+        
+    
+    
+            var circle_marker_29084d6d4142a49138304b0e49901f90 = L.circleMarker(
+                [14.603, 121.018],
+                {"bubblingMouseEvents": true, "color": "#9e9e9e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9e9e9e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_08b1e7487a24a22a6b983d90014729e7 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a988d3f51578ac0d9c622c91793d4727 = $(`<div id="html_a988d3f51578ac0d9c622c91793d4727" style="width: 100.0%; height: 100.0%;">ID: MP-0055<br>Barangay: District Fallback<br>District: Santa Mesa<br>Match Level: District<br>Match Score: 1.00<br>Cluster: Noise</div>`)[0];
+                popup_08b1e7487a24a22a6b983d90014729e7.setContent(html_a988d3f51578ac0d9c622c91793d4727);
+            
+        
+
+        circle_marker_29084d6d4142a49138304b0e49901f90.bindPopup(popup_08b1e7487a24a22a6b983d90014729e7)
+        ;
+
+        
+    
+    
+            var circle_marker_f8a3269a0910f36c716cc604fc2ecd68 = L.circleMarker(
+                [14.6186, 120.9681],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_c4e2e4e4ce55c3ef3e6a3ff1bc8c6486 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ac97fccc552433fda69ff7fc89b99509 = $(`<div id="html_ac97fccc552433fda69ff7fc89b99509" style="width: 100.0%; height: 100.0%;">ID: MP-0056<br>Barangay: District Fallback<br>District: Tondo<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 2</div>`)[0];
+                popup_c4e2e4e4ce55c3ef3e6a3ff1bc8c6486.setContent(html_ac97fccc552433fda69ff7fc89b99509);
+            
+        
+
+        circle_marker_f8a3269a0910f36c716cc604fc2ecd68.bindPopup(popup_c4e2e4e4ce55c3ef3e6a3ff1bc8c6486)
+        ;
+
+        
+    
+    
+            var circle_marker_30fb813ae215887227819d3eb685376e = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_2d15683d19c981dd993175eb04133a75 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a162dd0fd57632647c9c61d3388a239a = $(`<div id="html_a162dd0fd57632647c9c61d3388a239a" style="width: 100.0%; height: 100.0%;">ID: MP-0057<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_2d15683d19c981dd993175eb04133a75.setContent(html_a162dd0fd57632647c9c61d3388a239a);
+            
+        
+
+        circle_marker_30fb813ae215887227819d3eb685376e.bindPopup(popup_2d15683d19c981dd993175eb04133a75)
+        ;
+
+        
+    
+    
+            var circle_marker_c53df2a945f67bf1c30d76049a905d68 = L.circleMarker(
+                [14.6133, 121.0003],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_72b251df621ff91069137594ec9bdfbf);
+        
+    
+        var popup_d6bdad0536581fa30d84623803993929 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f1b05ecf114753f3dfbe17abc5292d71 = $(`<div id="html_f1b05ecf114753f3dfbe17abc5292d71" style="width: 100.0%; height: 100.0%;">ID: MP-0058<br>Barangay: District Fallback<br>District: Sampaloc<br>Match Level: District<br>Match Score: 1.00<br>Cluster: 1</div>`)[0];
+                popup_d6bdad0536581fa30d84623803993929.setContent(html_f1b05ecf114753f3dfbe17abc5292d71);
+            
+        
+
+        circle_marker_c53df2a945f67bf1c30d76049a905d68.bindPopup(popup_d6bdad0536581fa30d84623803993929)
+        ;
+
+        
+    
+</script>
+</html>
