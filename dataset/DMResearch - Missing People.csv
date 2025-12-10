@@ -1,179 +1,77 @@
 Person ID,AGE,GENDER,Date Reported Missing,Time Reported Missing,Date Last Seen,Location Last Seen,Post URL,Time_Obj,Age_Group,City_Cleaned,Year,Hour_Missing
 ,41,Male,2020-01-24,5:12 PM,2021-01-16,"Sampaloc, Manila",https://www.facebook.com/share/p/1CwZW3pbpf/,2025-12-10 17:12:00,Adult,Manila,2020.0,17.0
 ,14,Male,2020-02-15,12:19 PM,,"Binondo, Manila",https://www.facebook.com/share/p/17Umn23xj9/,2025-12-10 12:19:00,Young Teen,Manila,2020.0,12.0
-,23,Male,2020-08-11,11:03 PM,,Pasig City,https://www.facebook.com/share/p/1GXZbwDo5X/,2025-12-10 23:03:00,Young Adult,Pasig,2020.0,23.0
-,78,Male,2020-09-10,11:01 PM,,Pasay City,https://www.facebook.com/share/17jCD4k7YL/,2025-12-10 23:01:00,Old,Pasay,2020.0,23.0
-,21,Male,2020-10-11,7:55 AM,,Quezon City,https://www.facebook.com/share/p/1Bcegb6eYd/,2025-12-10 07:55:00,Young Adult,Quezon,2020.0,7.0
-,21,Male,2020-10-16,12:33 AM,2020-10-14,Pasay City,https://www.facebook.com/share/p/19sZwWuHfc/,2025-12-10 00:33:00,Young Adult,Pasay,2020.0,0.0
 ,29,Male,2020-11-30,5:16 PM,,"Tondo, Manila",https://www.facebook.com/share/p/162jFGmwqA/,2025-12-10 17:16:00,Adult,Manila,2020.0,17.0
-,39,Male,2020-11-30,11:32 AM,2020-11-21,Quezon City,https://www.facebook.com/share/p/1DNHuGkWBQ/,2025-12-10 11:32:00,Adult,Quezon,2020.0,11.0
-,26,Female,2020-12-11,2:29 PM,,Quezon City,https://www.facebook.com/share/p/1Co1T8kZuf/,2025-12-10 14:29:00,Adult,Quezon,2020.0,14.0
 ,16,Female,2020-12-12,2:42 PM,,"Santa Mesa, Manila",https://www.facebook.com/share/p/1Bj942nmT6/,2025-12-10 14:42:00,Teen,Manila,2020.0,14.0
-,17,Male,2020-12-15,11:03 PM,2020-12-06,Quezon City,https://www.facebook.com/share/p/1A4HB3GtDG/,2025-12-10 23:03:00,Teen,Quezon,2020.0,23.0
 ,55,Male,2020-12-26,7:34 PM,2020-12-16,"Tondo, Manila",https://www.facebook.com/share/p/1EjVdH5BYz/,2025-12-10 19:34:00,Adult,Manila,2020.0,19.0
 ,25,Male,2021-02-06,5:31 PM,,"Ermita, Manila",https://www.facebook.com/share/p/17hJLX9nYt/,2025-12-10 17:31:00,Adult,Manila,2021.0,17.0
 ,54,Male,2021-02-15,2:32 PM,,"Sampaloc, Manila",https://www.facebook.com/share/p/1Fu2urU9iu/,2025-12-10 14:32:00,Adult,Manila,2021.0,14.0
-,30,Male,2021-02-22,5:35 AM,2021-02-19,Marikina City,https://www.facebook.com/share/p/1ALA5n7Fxr/,2025-12-10 05:35:00,Adult,Marikina,2021.0,5.0
-,41,Male,2021-03-01,5:14 PM,2020-01-27,Parañaque,https://www.facebook.com/share/p/17iHKSVqo9/,2025-12-10 17:14:00,Adult,Parañaque,2021.0,17.0
-,27,Male,2021-03-01,5:14 PM,2020-01-27,Parañaque,https://www.facebook.com/share/p/17iHKSVqo9/,2025-12-10 17:14:00,Adult,Parañaque,2021.0,17.0
-,33,Male,2021-03-01,5:14 PM,2020-01-27,Parañaque,https://www.facebook.com/share/p/17iHKSVqo9/,2025-12-10 17:14:00,Adult,Parañaque,2021.0,17.0
 ,31,Male,2021-03-06,9:30 PM,,"Tondo, Manila",https://www.facebook.com/share/p/1HDXQA1qvD/,2025-12-10 21:30:00,Adult,Manila,2021.0,21.0
-,63,Male,2021-03-12,11:25 AM,,Caloocan CIty,https://www.facebook.com/share/p/18RVgrcaGP/,2025-12-10 11:25:00,Old,Caloocan,2021.0,11.0
 ,34,Male,2021-04-29,2:19 PM,,"Sampaloc, Manila",https://www.facebook.com/share/1GvCaRHway/,2025-12-10 14:19:00,Adult,Manila,2021.0,14.0
 ,65,Female,2021-05-17,12:32 PM,,"Avenida, manila",https://www.facebook.com/share/p/1BQFFu1ejN/,2025-12-10 12:32:00,Old,Manila,2021.0,12.0
 ,27,Male,2021-05-18,9:13 PM,,"Tondo, Manila",https://www.facebook.com/share/p/14RZFayikr5/,2025-12-10 21:13:00,Adult,Manila,2021.0,21.0
-,27,Male,2021-07-25,3:37 AM,,Quezon City,https://www.facebook.com/share/p/1AFve4HV8r/,2025-12-10 03:37:00,Adult,Quezon,2021.0,3.0
-,32,Male,2021-08-14,3:53 PM,,Caloocan CIty,https://www.facebook.com/share/p/1Csjd217so/,2025-12-10 15:53:00,Adult,Caloocan,2021.0,15.0
-,25,Female,2021-09-14,11:54 AM,,Parañaque,https://www.facebook.com/share/p/1AVmQsddMn/,2025-12-10 11:54:00,Adult,Parañaque,2021.0,11.0
-,28,Female,2021-09-20,11:27 AM,,Taguig,https://www.facebook.com/share/p/17uJVvjVBP/,2025-12-10 11:27:00,Adult,Taguig,2021.0,11.0
 ,75,Male,2021-09-21,4:10 PM,,"Binondo, Manila",https://www.facebook.com/share/p/17fwddGJbF/,2025-12-10 16:10:00,Old,Manila,2021.0,16.0
 ,42,Male,2021-09-28,5:54 PM,,"Binondo, Manila",https://www.facebook.com/share/p/1BCqyq9hW9/,2025-12-10 17:54:00,Adult,Manila,2021.0,17.0
-,55,Male,2021-09-28,2:28 AM,2021-09-25,Caloocan CIty,https://www.facebook.com/share/v/1DNzSu8bsA/,2025-12-10 02:28:00,Adult,Caloocan,2021.0,2.0
-,13,Female,2021-09-29,5:53 PM,2021-09-21,Quezon City,https://www.facebook.com/share/p/1MwUiACeLX/,2025-12-10 17:53:00,Young Teen,Quezon,2021.0,17.0
-,14,Male,2021-10-01,5:46 AM,,Quezon City,https://www.facebook.com/share/p/1BvKz4PK7C/,2025-12-10 05:46:00,Young Teen,Quezon,2021.0,5.0
 ,56,Female,2021-10-06,3:07 PM,2021-10-03,"Santa Ana, Manila",https://www.facebook.com/share/p/1Fj5Wk5F8g/,2025-12-10 15:07:00,Adult,Manila,2021.0,15.0
 ,16,Female,2021-10-09,7:13 PM,,"Tondo, Manila",https://www.facebook.com/share/p/17Sp1FCPjo/,2025-12-10 19:13:00,Teen,Manila,2021.0,19.0
-,17,Male,2021-10-15,9:05 PM,,Parañaque,https://www.facebook.com/share/p/17cGun9VE1/,2025-12-10 21:05:00,Teen,Parañaque,2021.0,21.0
 ,13,Male,2021-11-08,8:04 PM,,"Quiapo, Manila",https://www.facebook.com/share/p/1HjPeadtXJ/,2025-12-10 20:04:00,Young Teen,Manila,2021.0,20.0
-,73,Male,2021-12-03,1:18 AM,,Pasay City,https://www.facebook.com/share/p/17UPG6dKPZ/,2025-12-10 01:18:00,Old,Pasay,2021.0,1.0
 ,20,Female,2021-12-04,7:26 PM,,"Quiapo, Manila",https://www.facebook.com/share/p/17X6qaoEp2/,2025-12-10 19:26:00,Young Adult,Manila,2021.0,19.0
 ,16,Male,2021-12-11,5:52 PM,,"Ermita, Manila",https://www.facebook.com/groups/964888686883029/posts/4732989473406246/,2025-12-10 17:52:00,Teen,Manila,2021.0,17.0
-,11,Male,2021-12-13,5:55 PM,,Quezon City,https://www.facebook.com/share/p/17rkSMzHLm/,2025-12-10 17:55:00,Child,Quezon,2021.0,17.0
 ,24,Male,2021-12-24,2:43 PM,2021-12-23,Manila,https://www.facebook.com/share/p/1KJzHtaYn4/,2025-12-10 14:43:00,Young Adult,Manila,2021.0,14.0
-,24,Male,2021-12-24,2:43 PM,2021-12-23,Navotas City,https://www.facebook.com/share/p/1HhBEjhbsZ/,2025-12-10 14:43:00,Young Adult,Navotas,2021.0,14.0
-,35,Male,2022-01-01,,2022-08-03,"Binangonan, Antipolo",https://www.facebook.com/share/p/1GQx6nWcDF/,,Adult,Antipolo,2022.0,
 ,22,Female,2022-02-13,8:19 PM,2022-02-09,Tondo Manila,https://www.facebook.com/share/p/1AReokkcnK/,2025-12-10 20:19:00,Young Adult,Manila,2022.0,20.0
-,74,Female,2022-02-14,8:22 AM,2022-03-17,Pasig City,https://www.facebook.com/share/p/1ACrPzVhXJ/,2025-12-10 08:22:00,Old,Pasig,2022.0,8.0
-,59,Male,2022-02-24,4 :27 PM,2022-02-27,Caloocan City,https://www.facebook.com/share/p/1N1Lb3QzE3/,,Adult,Caloocan,2022.0,
-,53,Female,2022-02-25,,2022-01-14,Pasay Villaruel,https://www.facebook.com/share/p/1FjD2jw2Zh/,,Adult,Pasay,2022.0,
-,74,Male,2022-03-08,8:50 PM,2022-03-04,Pasic City,https://www.facebook.com/share/p/16VsNYAhkX/,2025-12-10 20:50:00,Old,Other/Unknown,2022.0,20.0
-,65,Male,2022-03-09,7:12 AM,2022-03-02,Navotas,https://www.facebook.com/share/p/19tq8YpFPd/,2025-12-10 07:12:00,Old,Navotas,2022.0,7.0
-,14,Male,2022-04-08,1:20 AM,2022-04-04,Caloocan City,https://www.facebook.com/share/p/1HRTwMwy2K/,2025-12-10 01:20:00,Young Teen,Caloocan,2022.0,1.0
-,43,Male,2022-04-10,1:05 PM,2022-10-01,na,https://www.facebook.com/share/p/1DFggcnh9g/,2025-12-10 13:05:00,Adult,Unknown,2022.0,13.0
-,53,Male,2022-04-16,3:00 AM,2022-04-10,"Tambo, Paranaque City",https://www.facebook.com/share/p/1AXorixSwM/,2025-12-10 03:00:00,Adult,Parañaque,2022.0,3.0
-,44,Male,2022-05-17,6:17 PM,2022-05-15,Caloocan City,https://www.facebook.com/share/p/17bSDkqpyQ/,2025-12-10 18:17:00,Adult,Caloocan,2022.0,18.0
-,28,Male,2022-05-20,9:50 PM,,Domingo Pasay City,https://www.facebook.com/share/p/1A6mdVQcvk/,2025-12-10 21:50:00,Adult,Pasay,2022.0,21.0
-,37,Male,2022-05-30,10:55 AM,2022-05-15,Caloocan City,https://www.facebook.com/share/p/1N1Lb3QzE3/,2025-12-10 10:55:00,Adult,Caloocan,2022.0,10.0
-,16,Female,2022-06-16,5:33 PM,2022-06-12,"Monumento, Caloocan City",https://www.facebook.com/share/p/17nvWFftgP/,2025-12-10 17:33:00,Teen,Caloocan,2022.0,17.0
-,42,Male,2022-06-18,2:00 PM,2022-07-08,"Shaw Blvd Tiosejo St., Mandaluyong",https://www.facebook.com/share/p/1C61N2Abk1/,2025-12-10 14:00:00,Adult,Mandaluyong,2022.0,14.0
 ,29,Male,2022-07-03,2:55 PM,2022-06-27,2495 araullo st sta ana manila,https://www.facebook.com/share/p/1AFEXggeK8/,2025-12-10 14:55:00,Adult,Manila,2022.0,14.0
-,74,Male,2022-08-01,9:39 AM,,"Novaliches, Quezon City",https://www.facebook.com/groups/190060074445181/search?q=San%20Juan%20City&filters=eyJycF9jcmVhdGlvbl90aW1lOjAiOiJ7XCJuYW1lXCI6XCJjcmVhdGlvbl90aW1lXCIsXCJhcmdzXCI6XCJ7XFxcInN0YXJ0X3llYXJcXFwiOlxcXCIyMDIyXFxcIixcXFwic3RhcnRfbW9udGhcXFwiOlxcXCIyMDIyLTFcXFwiLFxcXCJlbmRfeWVhclxcXCI6XFxcIjIwMjJcXFwiLFxcXCJlbmRfbW9udGhcXFwiOlxcXCIyMDIyLTEyXFxcIixcXFwic3RhcnRfZGF5XFxcIjpcXFwiMjAyMi0xLTFcXFwiLFxcXCJlbmRfZGF5XFxcIjpcXFwiMjAyMi0xMi0zMVxcXCJ9XCJ9In0%3D,2025-12-10 09:39:00,Old,Quezon,2022.0,9.0
-,74,Male,2023-03-27,6:40 PM,,na,https://www.facebook.com/share/p/1CZW6NpWmd/,2025-12-10 18:40:00,Old,Unknown,2023.0,18.0
-,28,Female,2023-03-28,1:29 PM,2023-03-04,Pasay Villaruel,https://www.facebook.com/share/p/1Da5HH82ht/,2025-12-10 13:29:00,Adult,Pasay,2023.0,13.0
-,21,Male,2023-05-26,10:14 PM,2023-05-17, Village Square Starbucks across Wilcon in Las Piñas City,https://www.facebook.com/share/p/1DhhygETwp/,2025-12-10 22:14:00,Young Adult,Las Piñas,2023.0,22.0
-,12,Male,2023-06-03,6:00 PM,2023-06-03,Kamantigue Pasa,https://www.facebook.com/share/p/17SKZVpLsx/,2025-12-10 18:00:00,Child,Other/Unknown,2023.0,18.0
 ,42,Male,2023-07-04,,2023-06-26,"Cavite St., Tondo Manila",https://www.facebook.com/share/p/1Mfhy5wfF9/,,Adult,Manila,2023.0,
 ,42,Male,2023-07-04,9:37 PM,2023-06-26,Tondo Manila,https://www.facebook.com/share/p/14THDnkxYRY/,2025-12-10 21:37:00,Adult,Manila,2023.0,21.0
-,63,Male,2023-07-15,11:24 AM,2022-11-01,Malabon City,https://www.facebook.com/share/p/1D9w58fQyD/,2025-12-10 11:24:00,Old,Malabon,2023.0,11.0
-,41,Male,2023-07-23,14:10,2023-07-21,Puregold Nangka Marikina,https://www.facebook.com/share/p/1AfT942ZV8/,2025-12-10 14:10:00,Adult,Marikina,2023.0,14.0
-,3,Female,2023-07-24,2:34 AM,2023-07-04,"Linear Tower 2 Makati City. / 81 New port boulevard , Pasay City",https://www.facebook.com/share/p/1Cos8ZzyZq/,2025-12-10 02:34:00,Child,Makati,2023.0,2.0
-,26,Female,2023-07-24,2:34 AM,2023-07-04,"Linear Tower 2 Makati City. / 81 New port boulevard , Pasay City",https://www.facebook.com/share/p/1Cos8ZzyZq/,2025-12-10 02:34:00,Adult,Makati,2023.0,2.0
-,67,Male,2023-08-20,,2023-08-19,Mac Adams Mayamot Antipolo,https://www.facebook.com/share/p/1HCVotd4Nh/,,Old,Antipolo,2023.0,
 ,27,Male,2023-09-26,7:03 PM,2023-09-03,Malate Manila,https://www.facebook.com/share/p/1FS2wyC7Dx/,2025-12-10 19:03:00,Adult,Manila,2023.0,19.0
-,51,Male,2023-10-28,7:30 PM,2023-10-24,Malabon City,https://www.facebook.com/share/p/1FWBADbQ4W/,2025-12-10 19:30:00,Adult,Malabon,2023.0,19.0
 ,31,Male,2023-11-23,7:00 AM,2023-11-19,SM Manila,https://www.facebook.com/groups/190060074445181/permalink/6812371262213996/,2025-12-10 07:00:00,Adult,Manila,2023.0,7.0
 ,72,Male,2023-11-28,,2023-11-24,Sampaloc Manila,https://www.facebook.com/share/p/1DQNWqogc7/,,Old,Manila,2023.0,
-,27,Male,2023-12-04,11:49 AM,2023-12-02,Mariatigue Comp. Alabang Muntinlupa City,https://www.facebook.com/share/p/17UsiSoHnV/,2025-12-10 11:49:00,Adult,Muntinlupa,2023.0,11.0
 ,adult,Male,2024-01-20,18:29,,"Andrés, A. Bonifacio Ave, Santa Cruz, Manila, 1014 Metro Manila",https://www.facebook.com/share/p/1GAaiNSNN8/,2025-12-10 18:29:00,Adult,Manila,2024.0,18.0
 ,senior,Female,2024-01-22,14:00,,"fabie estate, Sta ana Manila",https://www.facebook.com/share/p/1BpHwZoKav/,2025-12-10 14:00:00,Old,Manila,2024.0,14.0
-,18,Female,2024-01-31,9:57,,"Hinshell House, Barangay 12, Caloocan City, Metro Manila",https://www.facebook.com/share/p/1CfUEzBe9A/,2025-12-10 09:57:00,Young Adult,Manila,2024.0,9.0
-,55,Male,2024-02-16,21:30,,"P7A PHG10, Bagong Silang (Barangay 176 Area), Caloocan City, Metro Manila.",https://www.facebook.com/share/p/1CoBC8cP7Z/,2025-12-10 21:30:00,Adult,Manila,2024.0,21.0
-,72,Male,2024-02-22,15:26,,"356 Banana St., Napico, Manggahan, Pasig City, Metro Manila",https://www.facebook.com/share/p/1a9Pe4moNy/,2025-12-10 15:26:00,Old,Manila,2024.0,15.0
-,14,Male,2024-02-26,18:40,,"Block 1 Lot 2 Rose St., Doña Marian Subdivision, Ugong, Valenzuela City, Metro Manila.",https://www.facebook.com/share/p/1FB8oJyr9B/,2025-12-10 18:40:00,Young Teen,Manila,2024.0,18.0
 ,5,Female,2024-03-01,5:01,,Brgy 182 zone 16 Gagalangin Tondo Manila,https://www.facebook.com/share/p/17avRaMcCD/,2025-12-10 05:01:00,Child,Manila,2024.0,5.0
-,25,Male,2024-03-01,20:23,2024-01-15,"phase 5, Bagong silang, North Caloocan",https://www.facebook.com/share/p/1CtaHanffE/,2025-12-10 20:23:00,Adult,Caloocan,2024.0,20.0
-,77,Male,2024-03-30,23:12,2024-03-29,"Southville, Poblacion, Muntinlupa City, Metro Manila.",https://www.facebook.com/share/p/1H2AcW9oP5/,2025-12-10 23:12:00,Old,Manila,2024.0,23.0
-,senior,Male,2024-04-02,7:02,2024-03-22,"San Bartolome Parish Church, Tanong, Malabon, Metro Manila ",https://www.facebook.com/share/p/1Cz6qNjKtK/,2025-12-10 07:02:00,Old,Manila,2024.0,7.0
-,60,Male,2024-04-08,22:16,2024-02-28,"Buenas Market/Karangalan Gate 5, Pasig City, Metro Manila",https://www.facebook.com/share/p/1FdGpxQkMt/,2025-12-10 22:16:00,Old,Manila,2024.0,22.0
 ,adult,Male,2024-04-29,0:50,,"1817 España Blvd, Sampaloc, Manila, 1008 Metro Manila",https://www.facebook.com/share/p/1HAJu1uar9/,2025-12-10 00:50:00,Adult,Manila,2024.0,0.0
 ,48,Female,2024-05-11,9:14,,"Intramuros, Manila",https://www.facebook.com/share/p/1CyQFKrfky/,2025-12-10 09:14:00,Adult,Manila,2024.0,9.0
-,35,Male,2024-05-19,23:32,2024-05-17,"2015b Reciever 6 CAA, Las Piñas City",https://www.facebook.com/share/p/1G23ZZWFgo/,2025-12-10 23:32:00,Adult,Las Piñas,2024.0,23.0
 ,39,Male,2024-06-13,14:03,,New Antipolo tondo manila,https://www.facebook.com/share/p/1ATzhZkC93/,2025-12-10 14:03:00,Adult,Manila,2024.0,14.0
-,65,Female,2024-06-14,22:22,2024-06-14,"Nueve de Pebrero Street, Mandaluyong City, Metro Manila.",https://www.facebook.com/share/p/17tpsBShrh/,2025-12-10 22:22:00,Old,Manila,2024.0,22.0
 ,64,Male,2024-06-17,1:12,2024-06-16,"Barangay 334, Zone 33, Alvarez St, Santa Cruz, Manila, 1003 Metro Manila",https://www.facebook.com/share/p/17Xn3KYERx/,2025-12-10 01:12:00,Old,Manila,2024.0,1.0
 ,35,Male,2024-06-20,22:25,2024-03-06,"Leon Guinto St., Malate, Manila",https://www.facebook.com/share/1BRRNgh2U1/,2025-12-10 22:25:00,Adult,Manila,2024.0,22.0
 ,70,Male,2024-07-05,18:30,2024-03-07,"Tejeron St., Sta. Ana, Manila",https://www.facebook.com/share/p/17jtWVYxZB/,2025-12-10 18:30:00,Old,Manila,2024.0,18.0
-,35,Male,2024-07-06,20:24,2024-07-03,"Theresa Heights, Brgy. San Jose, Rodriguez (Montalban), Rizal 1860",https://www.facebook.com/share/p/1PyMAib8an/,2025-12-10 20:24:00,Adult,Other/Unknown,2024.0,20.0
 ,young adult,Female,2024-07-23,1:07,,"1182 Meding St., Malate, manila",https://www.facebook.com/share/19jvJCjHK9/,2025-12-10 01:07:00,Young Adult,Manila,2024.0,1.0
 ,16,Female,2024-08-02,10:46,2024-07-29,"Araullo High School, United Nations Ave, Ermita, Manila, 1000 Metro Manila",https://www.facebook.com/share/p/1Bkk63padd/,2025-12-10 10:46:00,Teen,Manila,2024.0,10.0
 ,16,Male,2024-08-10,9:56,2024-05-08,"Brgy. 172, Gagalangin, Tondo, Manila",https://www.facebook.com/share/1ExE1Mz86Z/,2025-12-10 09:56:00,Teen,Manila,2024.0,9.0
 ,77,Male,2024-09-01,9:30,,"Old Santa Mesa, Manila",https://www.facebook.com/share/p/17ntrz7DkU/,2025-12-10 09:30:00,Old,Manila,2024.0,9.0
 ,adult,Female,2024-09-02,9:24,2024-08-27,"Bambang LRT Station, Santa Cruz, Manila, Metro Manila",https://www.facebook.com/share/p/1Gfu7BphkT/,2025-12-10 09:24:00,Adult,Manila,2024.0,9.0
 ,54,Female,2024-09-15,10:17,2024-08-29,"Brgy. 593, Zone 58, District VI, Sta.Mesa, Manila",https://www.facebook.com/share/p/1DTFXVvJZx/,2025-12-10 10:17:00,Adult,Manila,2024.0,10.0
-,35,Male,2024-10-05,17:20,,113 Alley 3 General Tinio Barangay 132 Bagong Barrio Caloocan City,https://www.facebook.com/share/p/1PpTzoBdEL/,2025-12-10 17:20:00,Adult,Caloocan,2024.0,17.0
 ,28,Male,2024-10-12,22:24,,"Quirino Ave, San Andres Bukid, Santa Ana, Manila",https://www.facebook.com/share/p/1A8ik5TSjE/,2025-12-10 22:24:00,Adult,Manila,2024.0,22.0
 ,adult,Female,2024-11-04,11:22,2024-11-03,"Santa Cruz, Manila, Metro Manila",https://www.facebook.com/share/p/1W8ZX81vAU/,2025-12-10 11:22:00,Adult,Manila,2024.0,11.0
 ,47,Female,2024-11-22,13:40,2025-11-01,"Andrés, A. Bonifacio Ave, Santa Cruz, Manila, 1014 Metro Manila",https://www.facebook.com/share/p/1C9S1pNovz/,2025-12-10 13:40:00,Adult,Manila,2024.0,13.0
 ,17,Female,2024-11-22,22:30,2024-11-19,NU Nazareth Sampaloc Manila,https://www.facebook.com/share/p/1CfuoHWRnb/,2025-12-10 22:30:00,Teen,Manila,2024.0,22.0
 ,14,Female,2024-11-27,14:24,,"1002 Muralla St, Intramuros, Manila, 1002 Metro Manila",https://www.facebook.com/share/p/1Bg24S7Wds/,2025-12-10 14:24:00,Young Teen,Manila,2024.0,14.0
-,5,Male,2024-12-01,23:01,,"23 Bonanza Phase, Barangay 1, Fortune, Marikina City, Metro Manila.",https://www.facebook.com/share/p/1GbRaps7wQ/,2025-12-10 23:01:00,Child,Manila,2024.0,23.0
 ,49,Male,2024-12-19,8:38,2024-12-16,"1641 Diamante St., Brgy. 797, Zone 87. Manila",https://www.facebook.com/share/p/17UxG62rvh/,2025-12-10 08:38:00,Adult,Manila,2024.0,8.0
 ,26,Female,2025-01-06,,,"Laguna St., Gagalangin, Tondo, Manila",https://www.facebook.com/share/p/1BKhBfa82r/,,Adult,Manila,2025.0,
-,65,Male,2025-01-11,14:07,2025-01-06,"Cauliflower Alley, Bagong Barrio, Caloocan City, Metro Manila.",https://www.facebook.com/share/p/1DPLFEo9pf/,2025-12-10 14:07:00,Old,Manila,2025.0,14.0
 ,adult,Female,2025-02-04,12:28,2025-01-27,QUIAPO MANILA,https://www.facebook.com/share/p/1Ab2vdD3U6/,2025-12-10 12:28:00,Adult,Manila,2025.0,12.0
 ,9,Female,2025-02-11,5:03,2025-10-02,MAHARLIKA ST. TONDO MANILA,https://www.facebook.com/share/p/1AFjEbbpi4/,2025-12-10 05:03:00,Child,Manila,2025.0,5.0
-,73,Male,2025-02-16,,2022-10-26,Andrews AVE. Pasay city.,https://www.facebook.com/share/p/1EfN3hL9Tt/,,Old,Pasay,2025.0,
-,59,Male,2025-02-19,21:30,2025-02-17,"684 Purok 4, Sucat, Muntinlupa City, Metro Manila.",https://www.facebook.com/share/p/1AVrMhDzvD/,2025-12-10 21:30:00,Adult,Manila,2025.0,21.0
-,45,Male,2025-02-20,23:18,2024-09-02,"Barangay Kaingin, Malabon City, Metro Manila.",https://www.facebook.com/share/p/1NEu3MvB5h/,2025-12-10 23:18:00,Adult,Manila,2025.0,23.0
-,30,Male,2025-03-07,23:08,,"P. Herrera St., Barangay Poblacion, Pateros, Metro Manila",https://www.facebook.com/share/p/1DrK1fjLn3/,2025-12-10 23:08:00,Adult,Manila,2025.0,23.0
-,79,Female,2025-03-13,16:07,,"Virginia Dormitory, Virginia St. Corner M. Dela Cruz Street, Pasay City, Metro Manila.",https://www.facebook.com/share/p/1AYtHWkz1w/,2025-12-10 16:07:00,Old,Manila,2025.0,16.0
 ,23,Female,2025-03-22,9:35,2025-03-21,"Laguna St., Brgy. 153, Tondo Manila",https://www.facebook.com/share/p/1BUttWTFgS/,2025-12-10 09:35:00,Young Adult,Manila,2025.0,9.0
-,38,Male,2025-03-27,10:48,,"Mandaluyong City, Metro Manila",https://www.facebook.com/share/p/1DREPj1EUu/,2025-12-10 10:48:00,Adult,Manila,2025.0,10.0
-,45,Female,2025-04-03,10:01,,"Pasay City, Metro Manila",https://www.facebook.com/share/p/1CDURtS8je/,2025-12-10 10:01:00,Adult,Manila,2025.0,10.0
 ,17,Male,2025-05-01,19:51,,"832 Luzon St., Tondo, Manila",https://www.facebook.com/share/p/1GCq8sKiB2/,2025-12-10 19:51:00,Teen,Manila,2025.0,19.0
 ,5,Male,2025-05-01,19:51,,"832 Luzon St., Tondo, Manila",https://www.facebook.com/share/p/1GCq8sKiB2/,2025-12-10 19:51:00,Child,Manila,2025.0,19.0
 ,20,Female,2025-05-03,10:37,2025-04-30,"1335 Vicente Cruz St., Brgy.486, Sampaloc, Manila",https://www.facebook.com/share/p/1GN6F2tfeT/,2025-12-10 10:37:00,Young Adult,Manila,2025.0,10.0
-,29,Male,2025-05-15,2:16,2024-09-20,"Liwayway St., Malabon City, Metro Manila",https://www.facebook.com/share/p/17m4zSNN1j/,2025-12-10 02:16:00,Adult,Manila,2025.0,2.0
 ,85,Female,2025-05-23,23:26,2025-05-16,"Tondo, Manila heading north to monumento",https://www.facebook.com/share/p/1MEWAZztpM/,2025-12-10 23:26:00,Old,Manila,2025.0,23.0
 ,13,Male,2025-06-08,19:00,,"1823 Pres Quirino Avenua, Pandacan, Manila",https://www.facebook.com/share/p/1KjSpvmfwt/,2025-12-10 19:00:00,Young Teen,Manila,2025.0,19.0
-,7,Male,2025-06-21,4:00,,"#05 Bambang ni Peles, Sta. Ana, Taguig",https://www.facebook.com/share/p/1SP7yBp6kK/,2025-12-10 04:00:00,Child,Taguig,2025.0,4.0
-,10,Female,2025-06-21,4:00,,"#05 Bambang ni Peles, Sta. Ana, Taguig",https://www.facebook.com/share/p/1SP7yBp6kK/,2025-12-10 04:00:00,Child,Taguig,2025.0,4.0
-,55,Male,2025-06-24,15:28,,"Kalandang St. Brgy 127, Zone 11, District 2, Caloocan City",https://www.facebook.com/share/p/1Bo8PRBUQp/,2025-12-10 15:28:00,Adult,Caloocan,2025.0,15.0
 ,10,Female,2025-06-24,2:00,,Brgy Damayang Lagi New Manila Quezon City,https://www.facebook.com/share/p/1Bhw8A5rLG/,2025-12-10 02:00:00,Child,Manila,2025.0,2.0
-,11,Female,2025-07-07,14:28,2025-07-06,"Brgy. Tabacalera, Pateros, Metro Manila",https://www.facebook.com/share/p/17SWSSmDme/,2025-12-10 14:28:00,Child,Manila,2025.0,14.0
 ,senior,Female,2025-07-08,20:00,,2350 chromium st. San andres bukid metro manila,https://www.facebook.com/share/p/17jWFJxWnT/,2025-12-10 20:00:00,Old,Manila,2025.0,20.0
-,27,Female,2025-07-08,17:47,2025-02-23,"Quezon City, Metro Manila",https://www.facebook.com/share/p/17k9drL8q7/,2025-12-10 17:47:00,Adult,Manila,2025.0,17.0
-,13,Male,2025-07-10,19:30,,"Josefina St., Corner 3rd Avenue, Grace Park West, Caloocan City, Metro Manila.",https://www.facebook.com/share/p/1CkG67EXFL/,2025-12-10 19:30:00,Young Teen,Manila,2025.0,19.0
 ,teen,Male,2025-07-17,14:51,,"Intramuros, Manila",https://www.facebook.com/share/p/16j1sWc55E/,2025-12-10 14:51:00,Teen,Manila,2025.0,14.0
 ,18,Male,2025-07-24,15:09,,"773 Sevilla St., Binondo, Manila",https://www.facebook.com/share/p/17qybtzyVy/,2025-12-10 15:09:00,Young Adult,Manila,2025.0,15.0
-,29,Female,2025-07-24,12:51,,"NP Sub-Station 9, Villamor, Brgy 183, Pasay City",https://www.facebook.com/share/p/1FTUotnPpZ/,2025-12-10 12:51:00,Adult,Pasay,2025.0,12.0
-,23,Male,2025-07-25,19:29,2025-05-25,"No.48 Donato St. Sta. Quiteria, Brgy. 162, Caloocan City, Metro Manila",https://www.facebook.com/share/p/16YXLBZYsx/,2025-12-10 19:29:00,Young Adult,Manila,2025.0,19.0
 ,senior,Female,2025-07-28,19:32,2025-07-16,"Balut, Tondo, Manila",https://www.facebook.com/share/p/17XEKFR5sF/,2025-12-10 19:32:00,Old,Manila,2025.0,19.0
 ,26,Male,2025-07-31,18:55,2024-07-30,"Tiger Gasoline Station, 1748, 1008 Maceda St, Sampaloc, Manila, Metro Manila",https://www.facebook.com/share/p/1RtJy4JA6f/,2025-12-10 18:55:00,Adult,Manila,2025.0,18.0
 ,13,Female,2025-08-02,6:00,2025-07-29,"Fernando Maria Guererro Elementary School, 1804 Pedro Gil Street, Barangay 812, Paco, Manila",https://www.facebook.com/share/p/17VqDT8o7M/,2025-12-10 06:00:00,Young Teen,Manila,2025.0,6.0
 ,31,Male,2025-08-14,18:30,2025-08-08,"Dorotero Street, Oroquieta Road, Santa Cruz, Manila",https://www.facebook.com/share/p/1BkKk2JBx2/,2025-12-10 18:30:00,Adult,Manila,2025.0,18.0
-,16,Female,2025-08-16,18:00,,"Taguig City, Metro Manila",https://www.facebook.com/share/p/1AEFp7pR4G/,2025-12-10 18:00:00,Teen,Manila,2025.0,18.0
 ,adult,Male,2025-08-17,14:02,2025-08-12,"Santa Cruz, Manila, Metro Manila",https://www.facebook.com/groups/190060074445181/permalink/24303539799337205/,2025-12-10 14:02:00,Adult,Manila,2025.0,14.0
-,39,Male,2025-09-04,13:01,2025-08-29,"Rizal Ave. Extension, Brgy. 91, Caloocan City",https://www.facebook.com/share/p/1CraSHqhAj/,2025-12-10 13:01:00,Adult,Caloocan,2025.0,13.0
 ,72,Male,2025-09-10,7:54,,"1208 E. Quiricada St., Sta. Cruz, Manila.",https://www.facebook.com/groups/1295139581345256/permalink/1840148356844373/,2025-12-10 07:54:00,Old,Manila,2025.0,7.0
 ,14,Female,2025-09-16,,,"Brgy 704 Zone 77, Malate, Manila",https://www.facebook.com/share/p/1A1147Qidw/,,Young Teen,Manila,2025.0,
-,30,Male,2025-09-16,20:57,,"Sampaguita St., Barangay Holy Spirit, Quezon City, Metro Manila.",https://www.facebook.com/share/p/1RjvGX8pZE/,2025-12-10 20:57:00,Adult,Manila,2025.0,20.0
-,46,Male,2025-09-22,21:41,2025-07-28,"Barangay Batasan Hills, Quezon City, Metro Manila.",https://www.facebook.com/share/p/1BWdjnH6i6/,2025-12-10 21:41:00,Adult,Manila,2025.0,21.0
 ,26,Male,2025-09-27,,,"Road 15, Fabie Estate, Sta. Ana, Manila",https://www.facebook.com/share/p/17fAFPCpev/,,Adult,Manila,2025.0,
 ,adult older,Male,2025-10-09,10:00,,"J. Abad Santos Avenue, Hermosa Street, Tondo, Manila,",https://www.facebook.com/share/p/17jJqcUEcG/,2025-12-10 10:00:00,Old,Manila,2025.0,10.0
-,16,Male,2025-10-15,23:54,2025-10-02,"Fili St., Brgy. 6, Sangandaan, Caloocan City, Metro Manila",https://www.facebook.com/share/p/1GGGEBwNAz/,2025-12-10 23:54:00,Teen,Manila,2025.0,23.0
 ,38,Male,2025-10-24,7:52,,"258-E Teresa St Brgy. 591, District VI, Zone 58, Sta.Mesa, Manila",https://www.facebook.com/share/p/1AtNwcCtbK/,2025-12-10 07:52:00,Adult,Manila,2025.0,7.0
-,teen,Male,2025-10-25,14:27,2025-10-09,"Mandaluyong City, 1550, Metro Manila",https://www.facebook.com/share/p/16gcJk2n1R/,2025-12-10 14:27:00,Teen,Manila,2025.0,14.0
-,36,Female,2025-10-25,21:50,2025-09-25,"66 A. Mabini Street, Caloocan City, Metro Manila",https://www.facebook.com/share/p/17S8kZrtXZ/,2025-12-10 21:50:00,Adult,Manila,2025.0,21.0
-,65,Female,2025-10-27,20:35,,"Barangay Pineda, Pasig City.",https://www.facebook.com/share/p/1A5RifQmUk/,2025-12-10 20:35:00,Old,Pasig,2025.0,20.0
-,35,Male,2025-10-29,22:31,2025-09-03,"Tatlong Hari St., Sta. Monica, Novaliches, Quezon City",https://www.facebook.com/share/p/1Ab2dZWYEY/,2025-12-10 22:31:00,Adult,Quezon,2025.0,22.0
-,31,Female,2025-11-01,20:47,," No. 110 Road 7 corner Road 8, GSIS Hill, Barangay 164, Caloocan City.",https://www.facebook.com/share/p/1BfGSjj2mJ/,2025-12-10 20:47:00,Adult,Caloocan,2025.0,20.0
 ,young teen,Male,2025-11-06,,,"Jones Bridge, Barangay 654, Manila,",https://www.facebook.com/share/p/17w6LjD3Gv/,,Young Teen,Manila,2025.0,
-,51,Female,2025-11-06,17:13,2025-11-05,"bayan, Malabon City, Metro Manila",https://www.facebook.com/share/p/1BxpEHqaW2/,2025-12-10 17:13:00,Adult,Manila,2025.0,17.0
-,6,Male,2025-11-10,19:47,,"4th State Street, Parañaque City, Metro Manila.",https://www.facebook.com/share/p/17oT9nMp9n/,2025-12-10 19:47:00,Child,Manila,2025.0,19.0
-,27,Female,2025-11-14,22:30,,"372 Sen. Gil Puyat Avenue, Makati City, 1229 Metro Manila",https://www.facebook.com/share/p/17LD9Trrja/,2025-12-10 22:30:00,Adult,Manila,2025.0,22.0
-,18,Male,2025-11-23,18:11,2025-10-03,"Silver st., Rivera  Compound Rockville 1 subdivision, San Juan, bartolome, Novaliches, Quezon City",https://www.facebook.com/share/p/1AUuGu1yWW/,2025-12-10 18:11:00,Young Adult,Quezon,2025.0,18.0
-,23,Male,2025-11-23,3:24,2025-11-17,"12 Epifanio de los Santos Ave. (EDSA), Brgy. 143, Zone 15, Pasay City, 1100 Metro Manila, Philippines.",https://www.facebook.com/share/p/1A6FtoaJsM/,2025-12-10 03:24:00,Young Adult,Manila,2025.0,3.0
-,26,Male,2025-11-25,2:29,,"Longos, Malabon City, Metro Manila",https://www.facebook.com/share/p/1FPuf7WN5i/,2025-12-10 02:29:00,Adult,Manila,2025.0,2.0
 ,68,Female,2025-11-30,,,Tuazon  street sampaloc  manila,https://www.facebook.com/share/p/19i4czDg3h/,,Old,Manila,2025.0,
-,17,Male,2025-11-30,20:34,,"Pasig City, Metro Manila",https://www.facebook.com/share/p/1ASNGpk2ii/,2025-12-10 20:34:00,Teen,Manila,2025.0,20.0
-,23,Female,2025-12-01,11:32,2025-11-30,"Phase 7A, Bagong Silang (or Brgy. 176-A to 176-F Area), Caloocan City, Metro Manila",https://www.facebook.com/share/p/1Dk7xNAZYn/,2025-12-10 11:32:00,Young Adult,Manila,2025.0,11.0
-,17,Female,2025-12-01,9:34,2025-11-30,"Bagong Silang (Barangay 176) Complex, Phase 4, Caloocan City, Metro Manila.",https://www.facebook.com/share/p/1RfRJAqvtT/,2025-12-10 09:34:00,Teen,Manila,2025.0,9.0
-,11,Male,2025-12-03,18:30,,"BLK5 LOT 21 AREA D, CAMARIN II BRGY. 178 DISTRICT 1, CALOOCAN CITY.",https://www.facebook.com/share/p/1D9jk7Tsek/,2025-12-10 18:30:00,Child,Caloocan,2025.0,18.0
-,8,Male,2025-12-03,17:07,2025-12-02,"172-178 Quirino Avenue, Baclaran, Parañaque City, Metro Manila",https://www.facebook.com/share/p/1ARmyn8fz8/,2025-12-10 17:07:00,Child,Manila,2025.0,17.0
 ,74,Male,2025-12-04,0:30,,Sampaloc Manila,https://www.facebook.com/share/p/1GLeNqhWaL/,2025-12-10 00:30:00,Old,Manila,2025.0,0.0
-,10,Male,2025-12-07,6:30,,"19 F. Roman Street, Balong Bato, San Juan City, 1500 Metro Manila.",https://www.facebook.com/share/p/1FkVWXi4W6/,2025-12-10 06:30:00,Child,Manila,2025.0,6.0
-,45,Female,2025-12-08,6:30,2025-12-04,"Caloocan City, Metro Manila",https://www.facebook.com/share/p/1AYhfdkCUL/,2025-12-10 06:30:00,Adult,Manila,2025.0,6.0
 ,40,Male,,9:43 AM,,"Malate, Manila",https://www.facebook.com/share/p/15VT7vG2yY8/,2025-12-10 09:43:00,Adult,Manila,,9.0
 ,82,Male,,11:23 PM,,"Sampaloc, Manila",https://www.facebook.com/share/p/1AHbgqgS9k/,2025-12-10 23:23:00,Old,Manila,,23.0
 ,34,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/photo.php?fbid=103624072222834&set=a.103624235556151&type=3,2025-12-10 00:13:00,Adult,Manila,,0.0
@@ -182,7 +80,4 @@ Person ID,AGE,GENDER,Date Reported Missing,Time Reported Missing,Date Last Seen,
 ,20,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/photo.php?fbid=103624085556166&set=a.103624235556151&type=3,2025-12-10 00:13:00,Young Adult,Manila,,0.0
 ,34,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/share/174qL4wEEN/,2025-12-10 00:13:00,Adult,Manila,,0.0
 ,32,Male,,12:13 AM,,Manila Arena,https://www.facebook.com/share/17XCoxv1s3/,2025-12-10 00:13:00,Adult,Manila,,0.0
-,65,Female,,,2022-02-12,Molina Concepcion Marikina City,https://www.facebook.com/share/p/1Crrqb2cpG/,,Old,Marikina,,
 ,27,Male,,14:11,2023-03-09,Brgy #709 Malate Manila,https://www.facebook.com/share/p/1BrcksQkvx/,2025-12-10 14:11:00,Adult,Manila,,14.0
-,59,Female,,,,"Brgy Fortune, Marikina City",https://www.facebook.com/share/17qG6xJcG5/,,Adult,Marikina,,
-,30,Male,,8:12 PM,,442 Zone 44# 659 A Prudencio St.,https://www.facebook.com/share/15RP72Pef7P/,2025-12-10 20:12:00,Adult,Other/Unknown,,20.0
