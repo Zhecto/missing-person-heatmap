@@ -31,39 +31,38 @@ def main():
     print("=" * 80)
     
     # Load data
-    print("\n📥 Loading data...")
+    print("\nLoading data...")
     loader = DataLoader()
     
     # Try to load uploaded data first, fall back to sample data
     try:
         df = loader.load_csv('data/uploaded_data.csv')
-        print("✓ Loaded uploaded_data.csv")
+        print("Loaded uploaded_data.csv")
     except:
         try:
             df = loader.load_csv('data/sample_data.csv')
-            print("✓ Loaded sample_data.csv")
+            print("Loaded sample_data.csv")
         except Exception as e:
-            print(f"❌ Error loading data: {e}")
+            print(f"Error loading data: {e}")
             return
     
     print(f"   - Records: {len(df)}")
     print(f"   - Columns: {list(df.columns)}")
     
     # Preprocess data
-    print("\n🧹 Preprocessing data...")
+    print("\nPreprocessing data...")
     cleaner = DataCleaner()
     df_clean = cleaner.preprocess_pipeline(df)
     
     # Remove any rows with missing coordinates
     df_clean = df_clean.dropna(subset=['Latitude', 'Longitude'])
-    print(f"✓ Clean records with coordinates: {len(df_clean)}")
+    print(f"Clean records with coordinates: {len(df_clean)}")
     
     # Define features for clustering
     features = ['Latitude', 'Longitude']
     
-    # =============================================================================
-    # PART 1: Find Optimal K for K-Means
-    # =============================================================================
+
+    # Find Optimal K for K-Means
     print("\n" + "=" * 80)
     print("PART 1: K-MEANS OPTIMAL CLUSTER EVALUATION")
     print("=" * 80)
@@ -77,15 +76,13 @@ def main():
     
     # Save K-Means evaluation results
     k_results.to_csv('data/outputs/kmeans_evaluation.csv', index=False)
-    print("✓ K-Means evaluation saved to data/outputs/kmeans_evaluation.csv")
+    print("K-Means evaluation saved to data/outputs/kmeans_evaluation.csv")
     
     # Get recommended k
     optimal_k = int(k_results.loc[k_results['silhouette_score'].idxmax(), 'k'])
-    print(f"\n✅ Selected optimal k: {optimal_k}")
+    print(f"\nSelected optimal k: {optimal_k}")
     
-    # =============================================================================
-    # PART 2: Find Optimal Parameters for DBSCAN
-    # =============================================================================
+    # Find Optimal Parameters for DBSCAN
     print("\n" + "=" * 80)
     print("PART 2: DBSCAN OPTIMAL PARAMETER EVALUATION")
     print("=" * 80)
@@ -112,7 +109,7 @@ def main():
         best_dbscan = valid_dbscan.sort_values('silhouette_score', ascending=False).iloc[0]
         optimal_eps = best_dbscan['eps']
         optimal_min_samples = int(best_dbscan['min_samples'])
-        print(f"\n✅ Selected DBSCAN parameters: eps={optimal_eps}, min_samples={optimal_min_samples}")
+        print(f"\nSelected DBSCAN parameters: eps={optimal_eps}, min_samples={optimal_min_samples}")
     else:
         # Try to find any configuration with clusters, even with higher noise
         any_clusters = dbscan_results[
@@ -123,16 +120,14 @@ def main():
             best_dbscan = any_clusters.sort_values('n_clusters', ascending=False).iloc[0]
             optimal_eps = best_dbscan['eps']
             optimal_min_samples = int(best_dbscan['min_samples'])
-            print(f"\n⚠️ DBSCAN found clusters but with high noise: eps={optimal_eps}, min_samples={optimal_min_samples}")
+            print(f"\nDBSCAN found clusters but with high noise: eps={optimal_eps}, min_samples={optimal_min_samples}")
             print(f"   (Noise: {best_dbscan['noise_percentage']:.1f}%, Clusters: {best_dbscan['n_clusters']})")
         else:
             optimal_eps = 0.05
             optimal_min_samples = 3
-            print(f"\n⚠️ No valid DBSCAN configuration found. Using fallback: eps={optimal_eps}, min_samples={optimal_min_samples}")
+            print(f"\nNo valid DBSCAN configuration found. Using fallback: eps={optimal_eps}, min_samples={optimal_min_samples}")
     
-    # =============================================================================
-    # PART 3: Compare Methods with Optimal Parameters
-    # =============================================================================
+    # Compare Methods with Optimal Parameters
     print("\n" + "=" * 80)
     print("PART 3: CLUSTERING METHODS COMPARISON")
     print("=" * 80)
@@ -149,9 +144,8 @@ def main():
     comparison.to_csv('data/outputs/clustering_comparison.csv', index=False)
     print("✓ Comparison saved to data/outputs/clustering_comparison.csv")
     
-    # =============================================================================
-    # PART 4: Detailed Evaluation of Best Model
-    # =============================================================================
+
+    # Detailed Evaluation of Best Model
     print("\n" + "=" * 80)
     print("PART 4: DETAILED EVALUATION OF BEST MODEL")
     print("=" * 80)
@@ -186,30 +180,26 @@ def main():
     
     print("\n✓ Detailed evaluations saved to data/outputs/")
     
-    # =============================================================================
-    # PART 5: Get Cluster Statistics
-    # =============================================================================
+    # Get Cluster Statistics
     print("\n" + "=" * 80)
     print("PART 5: CLUSTER STATISTICS")
     print("=" * 80)
     
     # K-Means statistics
-    print("\n📊 K-Means Cluster Statistics:")
+    print("\n K-Means Cluster Statistics:")
     df_kmeans = kmeans_result['model'].add_cluster_labels(df_clean)
     kmeans_stats = kmeans_result['model'].get_cluster_statistics(df_kmeans)
     print(kmeans_stats.to_string(index=False))
     kmeans_stats.to_csv('data/outputs/kmeans_cluster_stats.csv', index=False)
     
     # DBSCAN statistics
-    print("\n📊 DBSCAN Cluster Statistics:")
+    print("\n DBSCAN Cluster Statistics:")
     df_dbscan = dbscan_result['model'].add_cluster_labels(df_clean)
     dbscan_stats = dbscan_result['model'].get_cluster_statistics(df_dbscan)
     print(dbscan_stats.to_string(index=False))
     dbscan_stats.to_csv('data/outputs/dbscan_cluster_stats.csv', index=False)
     
-    # =============================================================================
-    # PART 6: Final Recommendations
-    # =============================================================================
+    # Final Recommendations
     print("\n" + "=" * 80)
     print("FINAL RECOMMENDATIONS")
     print("=" * 80)
@@ -218,7 +208,7 @@ def main():
     kmeans_silhouette = kmeans_result['silhouette_score']
     dbscan_silhouette = dbscan_result['silhouette_score']
     
-    print(f"\n🎯 Model Performance Summary:")
+    print(f"\nModel Performance Summary:")
     print(f"   K-Means (k={optimal_k}):")
     print(f"     - Silhouette Score: {kmeans_silhouette:.3f}" if kmeans_silhouette else "     - Silhouette Score: N/A")
     print(f"     - Davies-Bouldin: {kmeans_result['davies_bouldin_score']:.3f}" if kmeans_result['davies_bouldin_score'] else "     - Davies-Bouldin: N/A")
@@ -233,19 +223,19 @@ def main():
     
     if kmeans_silhouette is not None and dbscan_silhouette is not None:
         if kmeans_silhouette > dbscan_silhouette:
-            print(f"\n✅ RECOMMENDED: K-Means with k={optimal_k}")
+            print(f"\nRECOMMENDED: K-Means with k={optimal_k}")
             print(f"   Reason: Higher silhouette score ({kmeans_silhouette:.3f} vs {dbscan_silhouette:.3f})")
         else:
-            print(f"\n✅ RECOMMENDED: DBSCAN with eps={optimal_eps}, min_samples={optimal_min_samples}")
+            print(f"\nRECOMMENDED: DBSCAN with eps={optimal_eps}, min_samples={optimal_min_samples}")
             print(f"   Reason: Higher silhouette score ({dbscan_silhouette:.3f} vs {kmeans_silhouette:.3f})")
     elif kmeans_silhouette is not None:
-        print(f"\n✅ RECOMMENDED: K-Means with k={optimal_k}")
+        print(f"\nRECOMMENDED: K-Means with k={optimal_k}")
         print(f"   Reason: DBSCAN failed to produce valid clusters for this dataset")
         print(f"   Note: Geographic data may be too sparse for density-based clustering")
     else:
-        print(f"\n⚠️ Both methods encountered issues. Manual review recommended.")
+        print(f"\nBoth methods encountered issues. Manual review recommended.")
     
-    print("\n💡 Usage Recommendations:")
+    print("\nUsage Recommendations:")
     print("   - K-Means: Best for identifying fixed number of geographic regions")
     print("   - DBSCAN: Best for finding natural density-based clusters")
     print("   - For thesis: Use K-Means k=5 for consistent, interpretable results")
