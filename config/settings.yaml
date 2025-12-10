@@ -1,6 +1,6 @@
 project:
   name: missing-person-heatmap
-  description: Missing person analytics and mapping prototype for the Philippines.
+  description: Missing person analytics and mapping prototype for the City of Manila.
 
 data:
   raw_dir: data/raw
@@ -19,10 +19,11 @@ features:
 
 modeling:
   clustering_method: dbscan
+  prediction_model: poisson 
   spatial_bandwidth_km: 25
   random_seed: 42
 
 app:
-  default_start_year: 2015
-  default_end_year: 2024
+  default_start_year: 2019
+  default_end_year: 2025
   map_tile_provider: cartodbpositron
