@@ -121,7 +121,14 @@ agg_2024 = df_train[df_train['Year'] == 2024].groupby('District_Cleaned').agg({
 agg_2024.rename(columns={'Person_ID': 'Case_Count_2024'}, inplace=True)
 
 # Create 2025 prediction features for each district
-unique_districts = df_train['District_Cleaned'].unique()
+# Use ALL unique districts from both train and test to maximize coverage
+unique_districts = pd.concat([df_train['District_Cleaned'], df_test['District_Cleaned']]).unique()
+
+# Calculate dataset-wide averages for filling missing values
+overall_mean_lat = df_train['Latitude'].mean()
+overall_mean_lon = df_train['Longitude'].mean()
+overall_mean_age = df_train['AGE'].mean()
+
 X_test_list = []
 
 for district in unique_districts:
@@ -129,16 +136,27 @@ for district in unique_districts:
     prev_count = agg_2024[agg_2024['District_Cleaned'] == district]['Case_Count_2024'].values
     prev_count = prev_count[0] if len(prev_count) > 0 else 0
     
-    # Get average coordinates and age
+    # Get district-specific data from training data
     district_data = df_train[df_train['District_Cleaned'] == district]
+    
+    # If district exists in training data, use its values; otherwise use overall averages
+    if len(district_data) > 0:
+        lat = district_data['Latitude'].mean()
+        lon = district_data['Longitude'].mean()
+        age = district_data['AGE'].mean()
+    else:
+        # For new districts, use dataset-wide averages
+        lat = overall_mean_lat
+        lon = overall_mean_lon
+        age = overall_mean_age
     
     X_test_list.append({
         'District_Cleaned': district,
-        'Latitude': district_data['Latitude'].mean(),
-        'Longitude': district_data['Longitude'].mean(),
+        'Latitude': lat,
+        'Longitude': lon,
         'Year': 2025,
         'Prev_Year_Count': prev_count,
-        'AGE': district_data['AGE'].mean()
+        'AGE': age
     })
 
 df_test_features = pd.DataFrame(X_test_list)
@@ -388,6 +406,109 @@ print(f"✓ Saved: {OUTPUT_DIR / 'predictor_comparison_2025.csv'}")
 # Save 2025 predictions
 df_2025_predictions.to_csv(OUTPUT_DIR / 'predictions_2025_by_district.csv', index=False)
 print(f"✓ Saved: {OUTPUT_DIR / 'predictions_2025_by_district.csv'}")
+
+# ==============================================================================
+# GENERATE 2026 PREDICTIONS WITH BEST MODEL
+# ==============================================================================
+print("\n\n🔮 Generating 2026 Predictions...")
+print("-" * 80)
+print("Note: Retraining best model on full 2020-2025 dataset for operational forecasting")
+
+# ==============================================================================
+# STEP 1: RETRAIN BEST MODEL ON FULL 2020-2025 DATA
+# ==============================================================================
+print("\n📚 Retraining on complete 2020-2025 dataset...")
+
+# Combine train + test for full 2020-2025 dataset
+X_full = pd.concat([X_train, X_test], ignore_index=True)
+y_full = pd.concat([y_train, y_test], ignore_index=True)
+
+print(f"  Full training samples: {len(X_full)} (2020-2025)")
+print(f"  Full training cases: {y_full.sum():.0f}")
+
+# Refit scaler on full dataset
+scaler_full = StandardScaler()
+X_full_scaled = scaler_full.fit_transform(X_full)
+
+# Retrain best model on full 2020-2025 data
+if best_model == 'Gradient Boosting':
+    print(f"  Retraining Gradient Boosting with best params: {gbr_grid_search.best_params_}")
+    model_full = GradientBoostingRegressor(**gbr_grid_search.best_params_, random_state=42)
+else:
+    print(f"  Retraining Poisson Regression with best params: {poisson_grid_search.best_params_}")
+    model_full = PoissonRegressor(**poisson_grid_search.best_params_)
+
+model_full.fit(X_full_scaled, y_full)
+print("✓ Retraining complete on full 2020-2025 dataset")
+
+# ==============================================================================
+# STEP 2: PREPARE 2026 FEATURES WITH 2025 LAG
+# ==============================================================================
+print("\n🔧 Preparing 2026 features...")
+
+# Get 2025 actual counts as lag feature for 2026 prediction
+agg_2025 = df_test.groupby('District_Cleaned').agg({
+    'Person_ID': 'count',
+    'Latitude': 'mean',
+    'Longitude': 'mean',
+    'AGE': 'mean'
+}).reset_index()
+agg_2025.rename(columns={'Person_ID': 'Case_Count_2025'}, inplace=True)
+
+# Create 2026 prediction features for each district
+X_2026_list = []
+for district in unique_districts:
+    # Get 2025 count (or 0 if district had no cases in 2025)
+    prev_count = agg_2025[agg_2025['District_Cleaned'] == district]['Case_Count_2025'].values
+    prev_count = prev_count[0] if len(prev_count) > 0 else 0
+    
+    # Get average coordinates and age from all historical data (2020-2025)
+    district_data = df[df['District_Cleaned'] == district]
+    
+    # If district exists, use its values; otherwise use overall averages
+    if len(district_data) > 0:
+        lat = district_data['Latitude'].mean()
+        lon = district_data['Longitude'].mean()
+        age = district_data['AGE'].mean()
+    else:
+        # For new districts, use dataset-wide averages
+        lat = overall_mean_lat
+        lon = overall_mean_lon
+        age = overall_mean_age
+    
+    X_2026_list.append({
+        'District_Cleaned': district,
+        'Latitude': lat,
+        'Longitude': lon,
+        'Year': 2026,
+        'Prev_Year_Count': prev_count,
+        'AGE': age
+    })
+
+df_2026_features = pd.DataFrame(X_2026_list)
+X_2026 = df_2026_features[regression_features]
+X_2026_scaled = scaler_full.transform(X_2026)
+
+# ==============================================================================
+# STEP 3: GENERATE 2026 PREDICTIONS
+# ==============================================================================
+print("\n🎯 Generating 2026 predictions using retrained model...")
+y_pred_2026 = model_full.predict(X_2026_scaled)
+
+# Create formatted output matching notebook format
+df_2026_predictions = df_2026_features[['District_Cleaned', 'Latitude', 'Longitude', 'Prev_Year_Count']].copy()
+df_2026_predictions['Predicted_Cases'] = y_pred_2026
+df_2026_predictions = df_2026_predictions.rename(columns={'District_Cleaned': 'Barangay District'})
+df_2026_predictions = df_2026_predictions[['Barangay District', 'Latitude', 'Longitude', 'Predicted_Cases', 'Prev_Year_Count']]
+df_2026_predictions = df_2026_predictions.sort_values('Predicted_Cases', ascending=False)
+
+# Save 2026 predictions
+df_2026_predictions.to_csv(OUTPUT_DIR / '2026_predictions.csv', index=False)
+print(f"✓ Saved 2026 predictions: {OUTPUT_DIR / '2026_predictions.csv'}")
+print(f"  Model used: {best_model}")
+print(f"  Total predicted cases for 2026: {y_pred_2026.sum():.0f}")
+print(f"\n🔝 Top 5 predicted hotspots for 2026:")
+print(df_2026_predictions.head(5).to_string(index=False))
 
 # Save comprehensive evaluation summary
 evaluation_summary = {
