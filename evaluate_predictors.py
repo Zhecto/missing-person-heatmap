@@ -412,6 +412,39 @@ print(f"✓ Saved: {OUTPUT_DIR / 'predictions_2025_by_district.csv'}")
 # ==============================================================================
 print("\n\n🔮 Generating 2026 Predictions...")
 print("-" * 80)
+print("Note: Retraining best model on full 2020-2025 dataset for operational forecasting")
+
+# ==============================================================================
+# STEP 1: RETRAIN BEST MODEL ON FULL 2020-2025 DATA
+# ==============================================================================
+print("\n📚 Retraining on complete 2020-2025 dataset...")
+
+# Combine train + test for full 2020-2025 dataset
+X_full = pd.concat([X_train, X_test], ignore_index=True)
+y_full = pd.concat([y_train, y_test], ignore_index=True)
+
+print(f"  Full training samples: {len(X_full)} (2020-2025)")
+print(f"  Full training cases: {y_full.sum():.0f}")
+
+# Refit scaler on full dataset
+scaler_full = StandardScaler()
+X_full_scaled = scaler_full.fit_transform(X_full)
+
+# Retrain best model on full 2020-2025 data
+if best_model == 'Gradient Boosting':
+    print(f"  Retraining Gradient Boosting with best params: {gbr_grid_search.best_params_}")
+    model_full = GradientBoostingRegressor(**gbr_grid_search.best_params_, random_state=42)
+else:
+    print(f"  Retraining Poisson Regression with best params: {poisson_grid_search.best_params_}")
+    model_full = PoissonRegressor(**poisson_grid_search.best_params_)
+
+model_full.fit(X_full_scaled, y_full)
+print("✓ Retraining complete on full 2020-2025 dataset")
+
+# ==============================================================================
+# STEP 2: PREPARE 2026 FEATURES WITH 2025 LAG
+# ==============================================================================
+print("\n🔧 Preparing 2026 features...")
 
 # Get 2025 actual counts as lag feature for 2026 prediction
 agg_2025 = df_test.groupby('District_Cleaned').agg({
@@ -423,7 +456,6 @@ agg_2025 = df_test.groupby('District_Cleaned').agg({
 agg_2025.rename(columns={'Person_ID': 'Case_Count_2025'}, inplace=True)
 
 # Create 2026 prediction features for each district
-# Use the same districts from the 2025 test set (including any new districts)
 X_2026_list = []
 for district in unique_districts:
     # Get 2025 count (or 0 if district had no cases in 2025)
@@ -455,13 +487,13 @@ for district in unique_districts:
 
 df_2026_features = pd.DataFrame(X_2026_list)
 X_2026 = df_2026_features[regression_features]
-X_2026_scaled = scaler_reg.transform(X_2026)
+X_2026_scaled = scaler_full.transform(X_2026)
 
-# Predict using best model
-if best_model == 'Gradient Boosting':
-    y_pred_2026 = best_gbr.predict(X_2026_scaled)
-else:
-    y_pred_2026 = best_poisson.predict(X_2026_scaled)
+# ==============================================================================
+# STEP 3: GENERATE 2026 PREDICTIONS
+# ==============================================================================
+print("\n🎯 Generating 2026 predictions using retrained model...")
+y_pred_2026 = model_full.predict(X_2026_scaled)
 
 # Create formatted output matching notebook format
 df_2026_predictions = df_2026_features[['District_Cleaned', 'Latitude', 'Longitude', 'Prev_Year_Count']].copy()
