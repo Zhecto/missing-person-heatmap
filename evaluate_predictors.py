@@ -1,11 +1,11 @@
 """
 Comprehensive Prediction Model Evaluation with Hyperparameter Tuning
-Predicts 2025 missing person hotspots based on 2019-2024 historical data.
+Predicts 2025 missing person hotspots based on 2020-2024 historical data.
 
 Approach:
-- Train on 2019-2024 (500 records)
-- Test on 2025 (100 records)
-- Predict case counts per barangay for next year
+- Train on 2020-2024
+- Test on 2025
+- Predict case counts per district for next year
 """
 
 import pandas as pd
@@ -31,7 +31,7 @@ from core.ingestion.data_loader import DataLoader
 from core.preprocessing.data_cleaner import DataCleaner
 
 # Configuration
-DATA_PATH = "data/sample_data.csv"
+DATA_PATH = "notebook/Missing People - cleaned.csv"
 OUTPUT_DIR = Path("data/outputs")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
@@ -39,7 +39,7 @@ print("=" * 80)
 print("🔮 PREDICTION MODEL EVALUATION - 2025 HOTSPOT FORECASTING")
 print("=" * 80)
 print(f"Dataset: {DATA_PATH}")
-print(f"Approach: Train on 2019-2024 → Test on 2025")
+print(f"Approach: Train on 2020-2024 → Test on 2025")
 print(f"Output: {OUTPUT_DIR}")
 print("=" * 80)
 
@@ -52,27 +52,24 @@ print("-" * 80)
 loader = DataLoader()
 cleaner = DataCleaner()
 
-# Load data
+# Load data (already cleaned)
 df = loader.load_csv(DATA_PATH)
-print(f"✓ Loaded {len(df)} records")
+print(f"✓ Loaded {len(df)} records (pre-cleaned dataset)")
 
-# Clean data
-df = cleaner.handle_missing_values(df, strategy='smart')
-print(f"✓ Cleaned: {len(df)} records remain")
-
-# Parse dates
+# Parse dates and convert AGE to numeric
 df['Date Reported Missing'] = pd.to_datetime(df['Date Reported Missing'], errors='coerce')
 df['Year'] = df['Date Reported Missing'].dt.year
 df['Month'] = df['Date Reported Missing'].dt.month
 df['Quarter'] = df['Date Reported Missing'].dt.quarter
 df['DayOfWeek'] = df['Date Reported Missing'].dt.dayofweek
+df['AGE'] = pd.to_numeric(df['AGE'], errors='coerce')
 
 # Temporal split: Train on 2019-2024, Test on 2025
 df_train = df[df['Year'] < 2025].copy()
 df_test = df[df['Year'] == 2025].copy()
 
 print(f"\n📊 Temporal Split:")
-print(f"  Training: 2019-2024 → {len(df_train)} records")
+print(f"  Training: 2020-2024 → {len(df_train)} records")
 print(f"  Testing:  2025      → {len(df_test)} records")
 
 year_counts = df['Year'].value_counts().sort_index()
@@ -86,73 +83,73 @@ for year, count in year_counts.items():
 print("\n\n" + "=" * 80)
 print("📈 PART 2: HOTSPOT INTENSITY PREDICTION TASK")
 print("=" * 80)
-print("Goal: Predict number of cases per barangay in 2025")
+print("Goal: Predict number of cases per district in 2025")
 print("-" * 80)
 
 # Aggregate training data by location and year
-agg_train = df_train.groupby(['Barangay District', 'Year']).agg({
-    'Person ID': 'count',
+agg_train = df_train.groupby(['District_Cleaned', 'Year']).agg({
+    'Person_ID': 'count',
     'Latitude': 'mean',
     'Longitude': 'mean',
-    'Age': 'mean'
+    'AGE': 'mean'
 }).reset_index()
-agg_train.rename(columns={'Person ID': 'Case_Count'}, inplace=True)
+agg_train.rename(columns={'Person_ID': 'Case_Count'}, inplace=True)
 
 # Create lag features (previous year's count)
-agg_train = agg_train.sort_values(['Barangay District', 'Year'])
-agg_train['Prev_Year_Count'] = agg_train.groupby('Barangay District')['Case_Count'].shift(1)
+agg_train = agg_train.sort_values(['District_Cleaned', 'Year'])
+agg_train['Prev_Year_Count'] = agg_train.groupby('District_Cleaned')['Case_Count'].shift(1)
 agg_train = agg_train.dropna(subset=['Prev_Year_Count'])
 
 print(f"✓ Training samples: {len(agg_train)} (location-year combinations)")
-print(f"  Features: Latitude, Longitude, Year, Prev_Year_Count, Age")
+print(f"  Features: Latitude, Longitude, Year, Prev_Year_Count, AGE")
 print(f"  Target: Case_Count per location")
 
 # Prepare features and target for training
-regression_features = ['Latitude', 'Longitude', 'Year', 'Prev_Year_Count', 'Age']
+regression_features = ['Latitude', 'Longitude', 'Year', 'Prev_Year_Count', 'AGE']
 X_train = agg_train[regression_features]
 y_train = agg_train['Case_Count']
 
 print(f"  Target range: {y_train.min():.0f} - {y_train.max():.0f} cases")
 
 # For 2025 prediction, we need 2024 case counts as lag feature
-agg_2024 = df_train[df_train['Year'] == 2024].groupby('Barangay District').agg({
-    'Person ID': 'count',
+agg_2024 = df_train[df_train['Year'] == 2024].groupby('District_Cleaned').agg({
+    'Person_ID': 'count',
     'Latitude': 'mean',
     'Longitude': 'mean',
-    'Age': 'mean'
+    'AGE': 'mean'
 }).reset_index()
-agg_2024.rename(columns={'Person ID': 'Case_Count_2024'}, inplace=True)
+agg_2024.rename(columns={'Person_ID': 'Case_Count_2024'}, inplace=True)
 
-# Create 2025 prediction features for each barangay
-unique_barangays = df_train['Barangay District'].unique()
+# Create 2025 prediction features for each district
+unique_districts = df_train['District_Cleaned'].unique()
 X_test_list = []
 
-for barangay in unique_barangays:
-    # Get 2024 count (or 0 if barangay had no cases in 2024)
-    prev_count = agg_2024[agg_2024['Barangay District'] == barangay]['Case_Count_2024'].values
+for district in unique_districts:
+    # Get 2024 count (or 0 if district had no cases in 2024)
+    prev_count = agg_2024[agg_2024['District_Cleaned'] == district]['Case_Count_2024'].values
     prev_count = prev_count[0] if len(prev_count) > 0 else 0
     
     # Get average coordinates and age
-    barangay_data = df_train[df_train['Barangay District'] == barangay]
+    district_data = df_train[df_train['District_Cleaned'] == district]
     
     X_test_list.append({
-        'Barangay District': barangay,
-        'Latitude': barangay_data['Latitude'].mean(),
-        'Longitude': barangay_data['Longitude'].mean(),
+        'District_Cleaned': district,
+        'Latitude': district_data['Latitude'].mean(),
+        'Longitude': district_data['Longitude'].mean(),
         'Year': 2025,
         'Prev_Year_Count': prev_count,
-        'Age': barangay_data['Age'].mean()
+        'AGE': district_data['AGE'].mean()
     })
 
 df_test_features = pd.DataFrame(X_test_list)
 X_test = df_test_features[regression_features]
 
-# Actual 2025 counts per barangay
-actual_2025 = df_test.groupby('Barangay District')['Person ID'].count().to_dict()
-y_test = df_test_features['Barangay District'].map(actual_2025).fillna(0)
+# Actual 2025 counts per district
+actual_2025 = df_test.groupby('District_Cleaned')['Person_ID'].count().to_dict()
+y_test = df_test_features['District_Cleaned'].map(actual_2025).fillna(0)
 
-print(f"\n✓ Test samples: {len(X_test)} barangays")
-print(f"  Actual 2025 cases: {y_test.sum():.0f} total across all barangays")
+print(f"\n✓ Test samples: {len(X_test)} districts")
+print(f"  Actual 2025 cases: {y_test.sum():.0f} total across all districts")
 
 # Scale features
 scaler_reg = StandardScaler()
@@ -313,7 +310,8 @@ df_2025_predictions['Predicted_Cases_Poisson'] = y_pred_poisson_test
 df_2025_predictions = df_2025_predictions.sort_values('Actual_Cases', ascending=False)
 
 print(f"\n🔝 TOP 10 HOTSPOTS IN 2025 (Actual):")
-print(df_2025_predictions[['Barangay District', 'Actual_Cases', f'Predicted_Cases_{best_model.split()[0]}']].head(10).to_string(index=False))
+pred_col = 'Predicted_Cases_GB' if best_model == 'Gradient Boosting' else 'Predicted_Cases_Poisson'
+print(df_2025_predictions[['District_Cleaned', 'Actual_Cases', pred_col]].head(10).to_string(index=False))
 
 # Create visualization
 fig, axes = plt.subplots(2, 2, figsize=(15, 12))
@@ -356,16 +354,17 @@ ax3.set_title(f'2025 Prediction Accuracy ({best_model})')
 ax3.legend()
 ax3.grid(alpha=0.3)
 
-# Plot 4: Top 10 Barangays - Actual vs Predicted
+# Plot 4: Top 10 Districts - Actual vs Predicted
 ax4 = axes[1, 1]
 top10 = df_2025_predictions.head(10)
 x_pos = np.arange(len(top10))
 width = 0.35
 
+pred_col = 'Predicted_Cases_GB' if best_model == 'Gradient Boosting' else 'Predicted_Cases_Poisson'
 ax4.barh(x_pos - width/2, top10['Actual_Cases'], width, label='Actual', alpha=0.8)
-ax4.barh(x_pos + width/2, top10[f'Predicted_Cases_{best_model.split()[0]}'], width, label='Predicted', alpha=0.8)
+ax4.barh(x_pos + width/2, top10[pred_col], width, label='Predicted', alpha=0.8)
 ax4.set_yticks(x_pos)
-ax4.set_yticklabels(top10['Barangay District'].values, fontsize=8)
+ax4.set_yticklabels(top10['District_Cleaned'].values, fontsize=8)
 ax4.set_xlabel('Number of Cases')
 ax4.set_title('Top 10 Hotspots: Actual vs Predicted (2025)')
 ax4.legend()
@@ -387,13 +386,13 @@ regression_comparison.to_csv(OUTPUT_DIR / 'predictor_comparison_2025.csv', index
 print(f"✓ Saved: {OUTPUT_DIR / 'predictor_comparison_2025.csv'}")
 
 # Save 2025 predictions
-df_2025_predictions.to_csv(OUTPUT_DIR / 'predictions_2025_by_barangay.csv', index=False)
-print(f"✓ Saved: {OUTPUT_DIR / 'predictions_2025_by_barangay.csv'}")
+df_2025_predictions.to_csv(OUTPUT_DIR / 'predictions_2025_by_district.csv', index=False)
+print(f"✓ Saved: {OUTPUT_DIR / 'predictions_2025_by_district.csv'}")
 
 # Save comprehensive evaluation summary
 evaluation_summary = {
     'evaluation_date': pd.Timestamp.now().isoformat(),
-    'approach': 'Time series forecasting: Train on 2019-2024, Test on 2025',
+    'approach': 'Time series forecasting: Train on 2020-2024, Test on 2025',
     'dataset': {
         'path': DATA_PATH,
         'total_records': len(df),
@@ -444,7 +443,7 @@ print(f"  ✅ Test R² (2025): {best_r2:.4f}")
 print(f"  ✅ Prediction Accuracy: {(1 - abs(actual_total - predicted_total)/actual_total)*100:.1f}%")
 
 print("\n💡 FOR THESIS DEFENSE:")
-print(f"  1. Model trained on 2019-2024 ({len(df_train)} records)")
+print(f"  1. Model trained on 2020-2024 ({len(df_train)} records)")
 print(f"  2. Successfully predicted 2025 hotspots with R²={best_r2:.4f}")
 print(f"  3. Predicted {predicted_total:.0f} cases vs {actual_total:.0f} actual")
 print(f"  4. Top predictive features: Latitude, Longitude, Previous Year Count")

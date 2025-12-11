@@ -34,29 +34,51 @@ def main():
     print("\nLoading data...")
     loader = DataLoader()
     
-    # Try to load uploaded data first, fall back to sample data
+    # Load the cleaned Manila City dataset
     try:
-        df = loader.load_csv('data/uploaded_data.csv')
-        print("Loaded uploaded_data.csv")
-    except:
-        try:
-            df = loader.load_csv('data/sample_data.csv')
-            print("Loaded sample_data.csv")
-        except Exception as e:
-            print(f"Error loading data: {e}")
-            return
+        df = loader.load_csv('notebook/Missing People - cleaned.csv')
+        print("Loaded Missing People - cleaned.csv")
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return
     
     print(f"   - Records: {len(df)}")
     print(f"   - Columns: {list(df.columns)}")
     
-    # Preprocess data
-    print("\nPreprocessing data...")
-    cleaner = DataCleaner()
-    df_clean = cleaner.preprocess_pipeline(df)
+    # Load district coordinates for geocoding
+    print("\nLoading district coordinates...")
+    with open('data/metro_manila_districts.json', 'r', encoding='utf-8') as f:
+        districts_data = json.load(f)
     
-    # Remove any rows with missing coordinates
-    df_clean = df_clean.dropna(subset=['Latitude', 'Longitude'])
-    print(f"Clean records with coordinates: {len(df_clean)}")
+    # Create district lookup dictionary (for Manila City only)
+    district_coords = {}
+    for city in districts_data:
+        if city['city'] == 'Manila':
+            for district in city.get('districts', []):
+                district_name = district['name']
+                coords = district['coordinates']
+                district_coords[district_name] = {
+                    'latitude': coords['latitude'],
+                    'longitude': coords['longitude']
+                }
+    
+    print(f"Loaded coordinates for {len(district_coords)} Manila districts")
+    
+    # Geocode missing coordinates using district data
+    print("\nGeocoding records using district coordinates...")
+    df_clean = df.copy()
+    
+    # Fill missing coordinates based on District_Cleaned
+    for idx, row in df_clean.iterrows():
+        if pd.isna(row['Latitude']) or pd.isna(row['Longitude']):
+            district = row.get('District_Cleaned')
+            if district and district in district_coords:
+                df_clean.at[idx, 'Latitude'] = district_coords[district]['latitude']
+                df_clean.at[idx, 'Longitude'] = district_coords[district]['longitude']
+    
+    # Filter for valid coordinates
+    df_clean = df_clean.dropna(subset=['Latitude', 'Longitude']).copy()
+    print(f"Records with coordinates after geocoding: {len(df_clean)}")
     
     # Define features for clustering
     features = ['Latitude', 'Longitude']
