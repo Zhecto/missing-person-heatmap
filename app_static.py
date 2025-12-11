@@ -136,8 +136,7 @@ if page == "📊 Current Cases":
             ("Missing Values Overview", "missing_values_bar.png"),
             ("Monthly Timeline", "monthly_timeline.png"),
             ("Seasonality Pattern", "seasonality_polar_plot.png"),
-            ("Top Districts", "top_districts_bar.png"),
-            ("DBSCAN Clusters Scatter", "dbscan_clusters_scatter.png")
+            ("Top Districts", "top_districts_bar.png")
         ]
         
         for title, filename in png_files:
@@ -148,7 +147,6 @@ if page == "📊 Current Cases":
         
         # Display HTML maps
         html_files = [
-            ("DBSCAN Clusters Map", "dbscan_clusters_map.html")
         ]
         
         for title, filename in html_files:
