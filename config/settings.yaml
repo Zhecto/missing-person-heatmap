@@ -19,7 +19,7 @@ features:
 
 modeling:
   clustering_method: dbscan
-  prediction_model: poisson 
+  prediction_model: gradient_boosting 
   spatial_bandwidth_km: 25
   random_seed: 42
 
