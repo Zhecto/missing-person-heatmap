@@ -36,7 +36,7 @@ OUTPUT_DIR = Path("data/outputs")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 print("=" * 80)
-print("🔮 PREDICTION MODEL EVALUATION - 2025 HOTSPOT FORECASTING")
+print("PREDICTION MODEL EVALUATION - 2025 HOTSPOT FORECASTING")
 print("=" * 80)
 print(f"Dataset: {DATA_PATH}")
 print(f"Approach: Train on 2020-2024 → Test on 2025")
@@ -46,7 +46,7 @@ print("=" * 80)
 # ==============================================================================
 # PART 1: DATA LOADING & TEMPORAL SPLIT
 # ==============================================================================
-print("\n📂 PART 1: Loading and splitting data by year...")
+print("\nPART 1: Loading and splitting data by year...")
 print("-" * 80)
 
 loader = DataLoader()
@@ -54,7 +54,7 @@ cleaner = DataCleaner()
 
 # Load data (already cleaned)
 df = loader.load_csv(DATA_PATH)
-print(f"✓ Loaded {len(df)} records (pre-cleaned dataset)")
+print(f"Loaded {len(df)} records (pre-cleaned dataset)")
 
 # Parse dates and convert AGE to numeric
 df['Date Reported Missing'] = pd.to_datetime(df['Date Reported Missing'], errors='coerce')
@@ -68,20 +68,20 @@ df['AGE'] = pd.to_numeric(df['AGE'], errors='coerce')
 df_train = df[df['Year'] < 2025].copy()
 df_test = df[df['Year'] == 2025].copy()
 
-print(f"\n📊 Temporal Split:")
+print(f"\nTemporal Split:")
 print(f"  Training: 2020-2024 → {len(df_train)} records")
 print(f"  Testing:  2025      → {len(df_test)} records")
 
 year_counts = df['Year'].value_counts().sort_index()
 for year, count in year_counts.items():
-    marker = "🔵 TRAIN" if year < 2025 else "🟢 TEST"
+    marker = "TRAIN" if year < 2025 else "TEST"
     print(f"    {year}: {count:3d} records {marker}")
 
 # ==============================================================================
 # PART 2: AGGREGATE BY LOCATION-YEAR FOR HOTSPOT PREDICTION
 # ==============================================================================
 print("\n\n" + "=" * 80)
-print("📈 PART 2: HOTSPOT INTENSITY PREDICTION TASK")
+print("PART 2: HOTSPOT INTENSITY PREDICTION TASK")
 print("=" * 80)
 print("Goal: Predict number of cases per district in 2025")
 print("-" * 80)
@@ -100,16 +100,16 @@ agg_train = agg_train.sort_values(['District_Cleaned', 'Year'])
 agg_train['Prev_Year_Count'] = agg_train.groupby('District_Cleaned')['Case_Count'].shift(1)
 agg_train = agg_train.dropna(subset=['Prev_Year_Count'])
 
-print(f"✓ Training samples: {len(agg_train)} (location-year combinations)")
-print(f"  Features: Latitude, Longitude, Year, Prev_Year_Count, AGE")
-print(f"  Target: Case_Count per location")
+print(f"Training samples: {len(agg_train)} (location-year combinations)")
+print(f"Features: Latitude, Longitude, Year, Prev_Year_Count, AGE")
+print(f"Target: Case_Count per location")
 
 # Prepare features and target for training
 regression_features = ['Latitude', 'Longitude', 'Year', 'Prev_Year_Count', 'AGE']
 X_train = agg_train[regression_features]
 y_train = agg_train['Case_Count']
 
-print(f"  Target range: {y_train.min():.0f} - {y_train.max():.0f} cases")
+print(f"Target range: {y_train.min():.0f} - {y_train.max():.0f} cases")
 
 # For 2025 prediction, we need 2024 case counts as lag feature
 agg_2024 = df_train[df_train['Year'] == 2024].groupby('District_Cleaned').agg({
@@ -166,8 +166,8 @@ X_test = df_test_features[regression_features]
 actual_2025 = df_test.groupby('District_Cleaned')['Person_ID'].count().to_dict()
 y_test = df_test_features['District_Cleaned'].map(actual_2025).fillna(0)
 
-print(f"\n✓ Test samples: {len(X_test)} districts")
-print(f"  Actual 2025 cases: {y_test.sum():.0f} total across all districts")
+print(f"\nTest samples: {len(X_test)} districts")
+print(f"Actual 2025 cases: {y_test.sum():.0f} total across all districts")
 
 # Scale features
 scaler_reg = StandardScaler()
@@ -178,13 +178,13 @@ X_test_scaled = scaler_reg.transform(X_test)
 # PART 3: MODEL TRAINING WITH HYPERPARAMETER TUNING
 # ==============================================================================
 print("\n\n" + "=" * 80)
-print("🤖 PART 3: TRAINING PREDICTION MODELS")
+print("PART 3: TRAINING PREDICTION MODELS")
 print("=" * 80)
 print("Note: Random Forest removed due to severe overfitting (0.71 gap)")
 print("Testing: Gradient Boosting vs Poisson Regression")
 
 # --- Model 1: Gradient Boosting Regressor ---
-print("\n\n🚀 Gradient Boosting Regressor - Hyperparameter Tuning...")
+print("\n\nGradient Boosting Regressor - Hyperparameter Tuning...")
 print("-" * 80)
 
 gbr_param_grid = {
@@ -209,7 +209,7 @@ print(f"Testing {len(gbr_param_grid['n_estimators']) * len(gbr_param_grid['learn
 
 gbr_grid_search.fit(X_train_scaled, y_train)
 
-print(f"\n✓ Best parameters:")
+print(f"\nBest parameters:")
 for param, value in gbr_grid_search.best_params_.items():
     print(f"  {param}: {value}")
 
@@ -224,7 +224,7 @@ gbr_train_rmse = np.sqrt(mean_squared_error(y_train, y_pred_gbr_train))
 gbr_test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_gbr_test))
 gbr_test_mae = mean_absolute_error(y_test, y_pred_gbr_test)
 
-print(f"\n📊 Gradient Boosting Regressor Results:")
+print(f"\nGradient Boosting Regressor Results:")
 print(f"  Train R²:   {gbr_train_r2:.4f}")
 print(f"  Test R² (2025):    {gbr_test_r2:.4f}")
 print(f"  Train RMSE: {gbr_train_rmse:.4f}")
@@ -232,7 +232,7 @@ print(f"  Test RMSE (2025):  {gbr_test_rmse:.4f}")
 print(f"  Test MAE (2025):   {gbr_test_mae:.4f}")
 
 # --- Model 2: Poisson Regressor ---
-print("\n\n📊 Poisson Regressor - Hyperparameter Tuning...")
+print("\n\nPoisson Regressor - Hyperparameter Tuning...")
 print("-" * 80)
 
 poisson_param_grid = {
@@ -255,7 +255,7 @@ print(f"Testing {len(poisson_param_grid['alpha']) * len(poisson_param_grid['max_
 
 poisson_grid_search.fit(X_train_scaled, y_train)
 
-print(f"\n✓ Best parameters:")
+print(f"\nBest parameters:")
 for param, value in poisson_grid_search.best_params_.items():
     print(f"  {param}: {value}")
 
@@ -270,7 +270,7 @@ poisson_train_rmse = np.sqrt(mean_squared_error(y_train, y_pred_poisson_train))
 poisson_test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_poisson_test))
 poisson_test_mae = mean_absolute_error(y_test, y_pred_poisson_test)
 
-print(f"\n📊 Poisson Regressor Results:")
+print(f"\nPoisson Regressor Results:")
 print(f"  Train R²:   {poisson_train_r2:.4f}")
 print(f"  Test R² (2025):    {poisson_test_r2:.4f}")
 print(f"  Train RMSE: {poisson_train_rmse:.4f}")
@@ -281,7 +281,7 @@ print(f"  Test MAE (2025):   {poisson_test_mae:.4f}")
 # PART 4: MODEL COMPARISON & VISUALIZATION
 # ==============================================================================
 print("\n\n" + "=" * 80)
-print("📊 PART 4: MODEL COMPARISON & 2025 PREDICTION ACCURACY")
+print("PART 4: MODEL COMPARISON & 2025 PREDICTION ACCURACY")
 print("=" * 80)
 
 # Regression models comparison
@@ -297,14 +297,14 @@ regression_comparison = pd.DataFrame({
     ]
 })
 
-print("\n🏆 2025 PREDICTION PERFORMANCE:")
+print("\n2025 PREDICTION PERFORMANCE:")
 print(regression_comparison.to_string(index=False))
 
 # Determine best model
 best_model_idx = regression_comparison['Test_R2_2025'].idxmax()
 best_model = regression_comparison.loc[best_model_idx, 'Model']
 best_r2 = regression_comparison.loc[best_model_idx, 'Test_R2_2025']
-print(f"\n✅ BEST MODEL: {best_model} (Test R² = {best_r2:.4f})")
+print(f"\nBEST MODEL: {best_model} (Test R² = {best_r2:.4f})")
 
 # Calculate actual vs predicted totals
 actual_total = y_test.sum()
@@ -313,7 +313,7 @@ if best_model == 'Gradient Boosting':
 else:  # Poisson
     predicted_total = y_pred_poisson_test.sum()
 
-print(f"\n📍 2025 TOTAL CASES:")
+print(f"\n2025 TOTAL CASES:")
 print(f"  Actual:    {actual_total:.0f} cases")
 print(f"  Predicted: {predicted_total:.0f} cases")
 print(f"  Error:     {abs(actual_total - predicted_total):.0f} cases ({abs(actual_total - predicted_total)/actual_total*100:.1f}%)")
@@ -327,7 +327,7 @@ df_2025_predictions['Predicted_Cases_Poisson'] = y_pred_poisson_test
 # Sort by actual cases
 df_2025_predictions = df_2025_predictions.sort_values('Actual_Cases', ascending=False)
 
-print(f"\n🔝 TOP 10 HOTSPOTS IN 2025 (Actual):")
+print(f"\nTOP 10 HOTSPOTS IN 2025 (Actual):")
 pred_col = 'Predicted_Cases_GB' if best_model == 'Gradient Boosting' else 'Predicted_Cases_Poisson'
 print(df_2025_predictions[['District_Cleaned', 'Actual_Cases', pred_col]].head(10).to_string(index=False))
 
@@ -390,34 +390,34 @@ ax4.grid(axis='x', alpha=0.3)
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'predictor_evaluation_2025.png', dpi=300, bbox_inches='tight')
-print(f"\n✓ Saved visualization: {OUTPUT_DIR / 'predictor_evaluation_2025.png'}")
+print(f"\nSaved visualization: {OUTPUT_DIR / 'predictor_evaluation_2025.png'}")
 
 # ==============================================================================
 # PART 5: SAVE COMPREHENSIVE RESULTS
 # ==============================================================================
 print("\n\n" + "=" * 80)
-print("💾 PART 5: SAVING RESULTS")
+print("PART 5: SAVING RESULTS")
 print("=" * 80)
 
 # Save regression comparison
 regression_comparison.to_csv(OUTPUT_DIR / 'predictor_comparison_2025.csv', index=False)
-print(f"✓ Saved: {OUTPUT_DIR / 'predictor_comparison_2025.csv'}")
+print(f"Saved: {OUTPUT_DIR / 'predictor_comparison_2025.csv'}")
 
 # Save 2025 predictions
 df_2025_predictions.to_csv(OUTPUT_DIR / 'predictions_2025_by_district.csv', index=False)
-print(f"✓ Saved: {OUTPUT_DIR / 'predictions_2025_by_district.csv'}")
+print(f"Saved: {OUTPUT_DIR / 'predictions_2025_by_district.csv'}")
 
 # ==============================================================================
 # GENERATE 2026 PREDICTIONS WITH BEST MODEL
 # ==============================================================================
-print("\n\n🔮 Generating 2026 Predictions...")
+print("\n\nGenerating 2026 Predictions...")
 print("-" * 80)
 print("Note: Retraining best model on full 2020-2025 dataset for operational forecasting")
 
 # ==============================================================================
 # STEP 1: RETRAIN BEST MODEL ON FULL 2020-2025 DATA
 # ==============================================================================
-print("\n📚 Retraining on complete 2020-2025 dataset...")
+print("\nRetraining on complete 2020-2025 dataset...")
 
 # Combine train + test for full 2020-2025 dataset
 X_full = pd.concat([X_train, X_test], ignore_index=True)
@@ -439,12 +439,12 @@ else:
     model_full = PoissonRegressor(**poisson_grid_search.best_params_)
 
 model_full.fit(X_full_scaled, y_full)
-print("✓ Retraining complete on full 2020-2025 dataset")
+print("Retraining complete on full 2020-2025 dataset")
 
 # ==============================================================================
 # STEP 2: PREPARE 2026 FEATURES WITH 2025 LAG
 # ==============================================================================
-print("\n🔧 Preparing 2026 features...")
+print("\nPreparing 2026 features...")
 
 # Get 2025 actual counts as lag feature for 2026 prediction
 agg_2025 = df_test.groupby('District_Cleaned').agg({
@@ -492,7 +492,7 @@ X_2026_scaled = scaler_full.transform(X_2026)
 # ==============================================================================
 # STEP 3: GENERATE 2026 PREDICTIONS
 # ==============================================================================
-print("\n🎯 Generating 2026 predictions using retrained model...")
+print("\nGenerating 2026 predictions using retrained model...")
 y_pred_2026 = model_full.predict(X_2026_scaled)
 
 # Create formatted output matching notebook format
@@ -504,10 +504,10 @@ df_2026_predictions = df_2026_predictions.sort_values('Predicted_Cases', ascendi
 
 # Save 2026 predictions
 df_2026_predictions.to_csv(OUTPUT_DIR / '2026_predictions.csv', index=False)
-print(f"✓ Saved 2026 predictions: {OUTPUT_DIR / '2026_predictions.csv'}")
+print(f"Saved 2026 predictions: {OUTPUT_DIR / '2026_predictions.csv'}")
 print(f"  Model used: {best_model}")
 print(f"  Total predicted cases for 2026: {y_pred_2026.sum():.0f}")
-print(f"\n🔝 Top 5 predicted hotspots for 2026:")
+print(f"\nTop 5 predicted hotspots for 2026:")
 print(df_2026_predictions.head(5).to_string(index=False))
 
 # Save comprehensive evaluation summary
@@ -549,40 +549,40 @@ evaluation_summary = {
 
 with open(OUTPUT_DIR / 'predictor_evaluation_summary_2025.json', 'w') as f:
     json.dump(evaluation_summary, f, indent=2)
-print(f"✓ Saved: {OUTPUT_DIR / 'predictor_evaluation_summary_2025.json'}")
+print(f"Saved: {OUTPUT_DIR / 'predictor_evaluation_summary_2025.json'}")
 
 # ==============================================================================
 # PART 6: FINAL RECOMMENDATIONS
 # ==============================================================================
 print("\n\n" + "=" * 80)
-print("🎯 PART 6: FINAL RECOMMENDATIONS")
+print("PART 6: FINAL RECOMMENDATIONS")
 print("=" * 80)
 
-print(f"\n📈 2025 HOTSPOT PREDICTION:")
-print(f"  ✅ Best Model: {best_model}")
-print(f"  ✅ Test R² (2025): {best_r2:.4f}")
-print(f"  ✅ Prediction Accuracy: {(1 - abs(actual_total - predicted_total)/actual_total)*100:.1f}%")
+print(f"\n2025 HOTSPOT PREDICTION:")
+print(f"  Best Model: {best_model}")
+print(f"  Test R² (2025): {best_r2:.4f}")
+print(f"  Prediction Accuracy: {(1 - abs(actual_total - predicted_total)/actual_total)*100:.1f}%")
 
-print("\n💡 FOR THESIS DEFENSE:")
+print("\nFOR THESIS DEFENSE:")
 print(f"  1. Model trained on 2020-2024 ({len(df_train)} records)")
 print(f"  2. Successfully predicted 2025 hotspots with R²={best_r2:.4f}")
 print(f"  3. Predicted {predicted_total:.0f} cases vs {actual_total:.0f} actual")
 print(f"  4. Top predictive features: Latitude, Longitude, Previous Year Count")
 
-print("\n🔮 INTERPRETATION:")
+print("\nINTERPRETATION:")
 if best_r2 > 0.3:
-    print(f"  ✅ STRONG: R²={best_r2:.4f} indicates good predictive power")
+    print(f"  STRONG: R²={best_r2:.4f} indicates good predictive power")
 elif best_r2 > 0.15:
-    print(f"  🟡 MODERATE: R²={best_r2:.4f} captures basic patterns, room for improvement")
+    print(f"  MODERATE: R²={best_r2:.4f} captures basic patterns, room for improvement")
 else:
-    print(f"  🟠 WEAK: R²={best_r2:.4f} suggests need for more features or data")
+    print(f"  WEAK: R²={best_r2:.4f} suggests need for more features or data")
 
-print("\n🚀 FUTURE IMPROVEMENTS:")
+print("\nFUTURE IMPROVEMENTS:")
 print("  1. Add external features: population density, transport hubs, crime rates")
 print("  2. Collect more historical data (10+ years preferred)")
 print("  3. Try spatial models: Spatial lag regression, kriging")
 print("  4. Implement deep learning: LSTM for temporal patterns")
 
 print("\n" + "=" * 80)
-print("✅ 2025 PREDICTION EVALUATION COMPLETE!")
+print("2025 PREDICTION EVALUATION COMPLETE!")
 print("=" * 80)
