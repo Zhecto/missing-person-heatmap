@@ -122,40 +122,6 @@ if page == "📊 Current Cases":
         # Show data preview
         with st.expander("View Data"):
             st.dataframe(df_map[['Person_ID', 'AGE', 'GENDER', 'District_Cleaned', 'Date Reported Missing', 'Latitude', 'Longitude']])
-        
-        # Show analysis outputs
-        st.subheader("📊 Analysis Outputs")
-        outputs_path = Path(__file__).parent / "notebook" / "outputs"
-        
-        # Display PNG images
-        png_files = [
-            ("Age Group Distribution", "age_group_distribution.png"),
-            ("Hourly Missing Pattern", "hourly_pattern.png"),
-            ("Location Completeness", "location_completeness_pie.png"),
-            ("Metro Manila City Counts", "metro_manila_city_counts.png"),
-            ("Missing Values Overview", "missing_values_bar.png"),
-            ("Monthly Timeline", "monthly_timeline.png"),
-            ("Seasonality Pattern", "seasonality_polar_plot.png"),
-            ("Top Districts", "top_districts_bar.png")
-        ]
-        
-        for title, filename in png_files:
-            filepath = outputs_path / filename
-            if filepath.exists():
-                with st.expander(title):
-                    st.image(str(filepath), use_container_width=True)
-        
-        # Display HTML maps
-        html_files = [
-        ]
-        
-        for title, filename in html_files:
-            filepath = outputs_path / filename
-            if filepath.exists():
-                with st.expander(title):
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        html_content = f.read()
-                    st.components.v1.html(html_content, height=600, scrolling=True)
     
     except Exception as e:
         st.error(f"Error loading data: {e}")
@@ -259,54 +225,55 @@ elif page == "🔮 Predictions":
                 gradient={0.4: 'blue', 0.5: 'lime', 0.65: 'yellow', 0.8: 'orange', 1.0: 'red'}
             ).add_to(m)
         
-        # Add district markers with prediction info
-        for idx, row in df_pred.iterrows():
-            if prediction_year == "2025":
-                # For 2025, compare predicted vs actual
-                actual = row.get('Actual_Cases_2025', 0)
-                change = row['Predicted_Cases'] - actual
-                if abs(change) <= 1:
-                    color = 'green'  # Good prediction
-                elif abs(change) <= 2:
-                    color = 'orange'  # Moderate error
-                else:
-                    color = 'red'  # Large error
+        # Add district markers with prediction info (skip for 2025 actual view)
+        if not (prediction_year == "2025" and map_view == "Actual"):
+            for idx, row in df_pred.iterrows():
+                if prediction_year == "2025":
+                    # For 2025, compare predicted vs actual
+                    actual = row.get('Actual_Cases_2025', 0)
+                    change = row['Predicted_Cases'] - actual
+                    if abs(change) <= 1:
+                        color = 'green'  # Good prediction
+                    elif abs(change) <= 2:
+                        color = 'orange'  # Moderate error
+                    else:
+                        color = 'red'  # Large error
+                    
+                    popup_text = f"""
+                        <b>District:</b> {row['Barangay District']}<br>
+                        <b>Predicted 2025:</b> {row['Predicted_Cases']:.1f} cases<br>
+                        <b>Actual 2025:</b> {actual:.0f} cases<br>
+                        <b>Error:</b> {change:+.1f} cases
+                    """
+                else:  # 2026
+                    # For 2026, compare predicted vs previous year
+                    change = row['Predicted_Cases'] - row['Prev_Year_Count']
+                    if change > 1:
+                        color = 'red'
+                    elif change > 0:
+                        color = 'orange'
+                    elif change < -1:
+                        color = 'green'
+                    else:
+                        color = 'blue'
+                    
+                    popup_text = f"""
+                        <b>District:</b> {row['Barangay District']}<br>
+                        <b>Predicted 2026:</b> {row['Predicted_Cases']:.1f} cases<br>
+                        <b>Previous Year:</b> {row['Prev_Year_Count']:.0f} cases<br>
+                        <b>Change:</b> {change:+.1f} ({(change/row['Prev_Year_Count']*100) if row['Prev_Year_Count'] > 0 else 0:+.1f}%)
+                    """
                 
-                popup_text = f"""
-                    <b>District:</b> {row['Barangay District']}<br>
-                    <b>Predicted 2025:</b> {row['Predicted_Cases']:.1f} cases<br>
-                    <b>Actual 2025:</b> {actual:.0f} cases<br>
-                    <b>Error:</b> {change:+.1f} cases
-                """
-            else:  # 2026
-                # For 2026, compare predicted vs previous year
-                change = row['Predicted_Cases'] - row['Prev_Year_Count']
-                if change > 1:
-                    color = 'red'
-                elif change > 0:
-                    color = 'orange'
-                elif change < -1:
-                    color = 'green'
-                else:
-                    color = 'blue'
-                
-                popup_text = f"""
-                    <b>District:</b> {row['Barangay District']}<br>
-                    <b>Predicted 2026:</b> {row['Predicted_Cases']:.1f} cases<br>
-                    <b>Previous Year:</b> {row['Prev_Year_Count']:.0f} cases<br>
-                    <b>Change:</b> {change:+.1f} ({(change/row['Prev_Year_Count']*100) if row['Prev_Year_Count'] > 0 else 0:+.1f}%)
-                """
-            
-            folium.CircleMarker(
-                location=[row['Latitude'], row['Longitude']],
-                radius=8,
-                color=color,
-                fill=True,
-                fillColor=color,
-                fillOpacity=0.6,
-                weight=2,
-                popup=popup_text
-            ).add_to(m)
+                folium.CircleMarker(
+                    location=[row['Latitude'], row['Longitude']],
+                    radius=8,
+                    color=color,
+                    fill=True,
+                    fillColor=color,
+                    fillOpacity=0.6,
+                    weight=2,
+                    popup=popup_text
+                ).add_to(m)
         
         # Add district labels if toggle is on
         if show_pred_labels:
@@ -337,16 +304,7 @@ elif page == "🔮 Predictions":
         st.components.v1.html(m._repr_html_(), height=600)
         
         if prediction_year == "2025":
-            if map_view == "Actual":
-                st.info("""
-                📍 **Map Legend (2025 Actual Cases):**
-                - Heatmap shows actual case locations from 2025 data
-                - Markers show actual case counts per district
-                - 🟢 Green: Accurate prediction (error ≤1 case)
-                - 🟠 Orange: Moderate error (1-2 cases)
-                - 🔴 Red: Large error (>2 cases)
-                """)
-            else:
+            if map_view == "Predicted":
                 st.info("""
                 📍 **Map Legend (2025 Prediction Accuracy):**
                 - Heatmap shows predicted case distribution
